@@ -1,4 +1,4 @@
-<p align="center"><h1>PharmaSys<h1/></p>
+<h1>PharmaSys<h1/>
 
 ## About PharmaSys
 <p>PharmaSys is Laravel based web application used to manage all the possible operations needed in a pharmacy.</p>
