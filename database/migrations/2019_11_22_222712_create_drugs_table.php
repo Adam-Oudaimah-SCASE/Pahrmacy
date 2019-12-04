@@ -18,7 +18,6 @@ class CreateDrugsTable extends Migration
             $table->string('name_english');
             $table->string('name_arabic')->nullable();
             $table->string('chemical_composition');
-            $table->string('content')->nullable();
             $table->string('shape');
             $table->string('manufacturer')->nullable();
             $table->string('volume_unit')->nullable();
