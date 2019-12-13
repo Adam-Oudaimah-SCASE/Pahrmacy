@@ -16,6 +16,7 @@ class CreateWarehousesTable extends Migration
         Schema::create('warehouses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->dateTime('weekly_date')->nullable();
             $table->string('delegate_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecialCustomersTable extends Migration
+class CreateInsuranceCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateSpecialCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('special_customers', function (Blueprint $table) {
+        Schema::create('insurance_companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('national_id');
-            $table->string('phone');
-            $table->string('whats_app');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->float('discount')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateSpecialCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('special_customers');
+        Schema::dropIfExists('insurance_companies');
     }
 }

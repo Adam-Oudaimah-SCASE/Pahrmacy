@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecialCustomersTable extends Migration
+class CreatePrescriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSpecialCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('special_customers', function (Blueprint $table) {
+        Schema::create('prescriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('national_id');
-            $table->string('phone');
-            $table->string('whats_app');
+            $table->unsignedBigInteger('special_customer_id')->nullable();
+            $table->foreign('special_customer_id')->references('id')->on('special_customers')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateSpecialCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('special_customers');
+        Schema::dropIfExists('prescriptions');
     }
 }

@@ -19,15 +19,16 @@ class CreateDrugsTable extends Migration
             $table->string('name_arabic')->nullable();
             $table->string('chemical_composition');
             $table->string('shape');
-            $table->string('manufacturer')->nullable();
             $table->string('volume_unit')->nullable();
             $table->integer('net_price');
             $table->integer('sell_price');
             $table->integer('lic_palte')->nullable();
             $table->string('local_barcode');
             $table->string('global_barcode');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('drug_categories')->onUpdate('cascade');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('drug_categories')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }
