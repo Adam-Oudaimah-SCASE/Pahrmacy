@@ -53,4 +53,12 @@ class Drug extends Model
     {
         return $this->belongsToMany(Invoice::class, 'drug_invoice');
     }
+
+    /**
+     * Get drug current quantity and dates.
+     */
+    public function repo()
+    {
+        return $this->hasMany(DrugsRepo::class, 'drug_id');
+    }
 }
