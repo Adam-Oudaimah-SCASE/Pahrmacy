@@ -3,15 +3,57 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Drug;
 use App\Models\DrugShape;
 use App\Models\DrugCategory;
 use App\Models\DrugsRepo;
-use App\Models\WareHouse;
 use App\Models\Company;
 
 class DrugController extends Controller
 {
+    /**
+     * Helper method to get all the drugs and its detials from the repo.
+     * 
+     * @return List All the drugs with all its details
+     */
+    public function get_drugs_details()
+    {
+        return DB::table('drugs')
+        ->join('drugs_repo', 'drugs.id', '=', 'drugs_repo.drug_id')
+        ->groupBy('drugs.id')
+        ->orederBy('drugs_repo.exp_date', 'DESC')
+        ->orederBy('drugs_repo.packages_number', 'DESC')
+        ->orederBy('drugs_repo.units_number', 'DESC')
+        ->get();
+    }
+
+    /**
+     * Helper method to get the drug using its bar code.
+     * 
+     * @return Drug Object for the targeted drug
+     */
+    public function get_drug_by_bracode($barcode)
+    {
+        return Drug::where('local_barcode', $barcode)->get();
+    }
+
+    /**
+     * Helper method to get the drug with its details from the repo.
+     * 
+     * @return Drug Object for the targeted drug
+     */
+    public function get_drug_details($drug)
+    {
+        return DB::table('drugs')
+        ->join('drugs_repo', 'drugs.id', '=', 'drugs_repo.drug_id')
+        ->where('drugs.id', $drug->id)
+        ->groupBy('drugs.id')
+        ->orederBy('drugs_repo.exp_date', 'DESC')
+        ->orederBy('drugs_repo.packages_number', 'DESC')
+        ->orederBy('drugs_repo.units_number', 'DESC')
+        ->get();
+    }
 
     /**
      * Display a listing of the resource.
@@ -20,8 +62,9 @@ class DrugController extends Controller
      */
     public function index()
     {
-        // Get all the drugs
-        $drugs = Drug::all();
+        // Get all the drugs with all its details from the repo using the query builder
+        $drugs = $this->get_drugs_details();
+
         // Return the appropriate view
         return view('')->withDrugs($drugs);
     }
@@ -37,12 +80,10 @@ class DrugController extends Controller
         $categories = DrugCategory::all();
         $shapes = DrugShape::all();
         $companies = Company::all();
-        $warehouses = WareHouse::all();
          return view('')->with([
              'categories' => $categories,
              'shapes' => $shapes,
-             'companies' => $companies,
-             'warehouses' => $warehouses,
+             'companies' => $companies
          ]);
     }
 
@@ -96,41 +137,40 @@ class DrugController extends Controller
         $drug_repo->drug()->save($drug);
 
         // Get all the drugs
-        $drugs = Drug::all();
+        $drugs = $this->get_drugs_details();
         // Return the appropriate view
         return view('')->withDrugs($drugs);
     }
 
     /**
-     * Get the drug using its bar code.
+     * Get the drug repo to update.
      * 
-     * This method will be used by the event of the bar code reader.
-     */
-    public function get_drug_by_bracode($barcode)
-    {
-        return Drug::where('local_barcode', $barcode)->get();
-    }
-
-    /**
-     * Get the drug repo to update
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function edit_drug_repo(Request $request)
     {
         // Get the corresponding drug
-        $drug = Drug::find($request->input('drug_id'));
+        $drug = $this->get_drug_details(Drug::find($request->input('drug_id')));
         // Return the appropriate view
         return view('')->withDrug($drug);
     }
 
     /**
      * Update the repo of a certain drug.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function update_drug_repo(Request $request)
     {
         // Get the corresponding drug
-        $drug = Drug::find($request->input('drug_id'));
+        $drug = $this->get_drug_details(Drug::find($request->input('drug_id')));
         // Get its repo
-        $drug_repo = $drug->repo()->where('isDisposed', false)->firstOrFail();
+        /**
+         * @todo: The targeted details of the drug has to be specified by the expiration date or other attribute by the user
+         */
+        $drug_repo = null;
 
         if ($request->input('units_number') != null || str($request->input('units_number')) != "0") {
             $drug_repo->packages_number = (int) ($request->input('units_number') / $drug->unit_number);
@@ -143,5 +183,10 @@ class DrugController extends Controller
 
         // Puclish the new attributes to the repo
         $drug_repo->save();
+
+        // Get all the drugs
+        $drugs = $this->get_drugs_details();
+        // Return the appropriate view
+        return view('')->withDrugs($drugs);
     }
 }
