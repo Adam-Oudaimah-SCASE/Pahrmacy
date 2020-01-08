@@ -21,7 +21,7 @@ class CreateDrugsRepoTable extends Migration
             $table->integer('packages_number');
             $table->boolean('isDisposed')->default(false);
             $table->unsignedBigInteger('drug_id');
-            $table->foreign('drug_id')->references('id')->on('drugs')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('drug_id')->references('id')->on('drugs')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
