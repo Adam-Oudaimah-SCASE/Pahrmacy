@@ -68,7 +68,7 @@ class DrugController extends Controller
         $drugs = $this->get_drugs_details();
 
         // Return the appropriate view
-        return view('')->withDrugs($drugs);
+        return view('drugs')->withDrugs($drugs);
     }
 
     /**
@@ -80,12 +80,13 @@ class DrugController extends Controller
     {
         // Get all the required data
         $categories = DrugCategory::all();
+        $drugs = Drug::all();
         $shapes = DrugShape::all();
         $companies = Company::all();
-         return view('')->with([
+         return view('addDrug')->with([
              'categories' => $categories,
              'shapes' => $shapes,
-             'companies' => $companies
+             'companies' => $companies,
          ]);
     }
 
@@ -154,7 +155,7 @@ class DrugController extends Controller
         // Get all the drugs
         $drugs = $this->get_drugs_details();
         // Return the appropriate view
-        return view('')->withDrugs($drugs);
+        return view('drugs')->withDrugs($drugs);
     }
 
     /**
@@ -237,7 +238,7 @@ class DrugController extends Controller
             $drug_exp_date = $drug_info[4];
             $drug_pro_date = $drug_info[5];
             $drug_package_sell_price = $drug_info[6];
-            $drug_package_net_price = $drug_info[7;
+            $drug_package_net_price = $drug_info[7];
             $drug_unit_sell_price = $drug_info[8];
             $drug_unit_net_price = $drug_info[9];
 
