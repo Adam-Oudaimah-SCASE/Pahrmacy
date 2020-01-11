@@ -17,7 +17,7 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('')->withCompanies($companies);
+        return view('company')->withCompanies($companies);
     }
 
     /**
@@ -57,7 +57,7 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('')->withCompanies($companies);
+        return view('company')->withCompanies($companies);
     }
 
     /**

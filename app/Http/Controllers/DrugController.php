@@ -23,7 +23,7 @@ class DrugController extends Controller
         // Get all the drugs
         $drugs = Drug::all();
         // Return the appropriate view
-        return view('')->withDrugs($drugs);
+        return view('drugs')->withDrugs($drugs);
     }
 
     /**
@@ -35,14 +35,16 @@ class DrugController extends Controller
     {
         // Get all the required data
         $categories = DrugCategory::all();
+        $drugs = Drug::all();
         $shapes = DrugShape::all();
         $companies = Company::all();
         $warehouses = WareHouse::all();
-         return view('')->with([
+         return view('addDrug')->with([
              'categories' => $categories,
              'shapes' => $shapes,
              'companies' => $companies,
              'warehouses' => $warehouses,
+           
          ]);
     }
 
@@ -98,7 +100,7 @@ class DrugController extends Controller
         // Get all the drugs
         $drugs = Drug::all();
         // Return the appropriate view
-        return view('')->withDrugs($drugs);
+        return view('drugs')->withDrugs($drugs);
     }
 
     /**

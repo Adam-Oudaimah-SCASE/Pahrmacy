@@ -17,7 +17,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('')->withCategories($categories);
+        return view('category')->withCategories($categories);
     }
 
     /**
@@ -51,7 +51,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('')->withCategories($categories);
+        return view('category')->withCategories($categories);
     }
 
     /**
