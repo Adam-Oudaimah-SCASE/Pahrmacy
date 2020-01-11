@@ -19,15 +19,10 @@ class DrugController extends Controller
      *
      * @return List All the drugs with all its details
      */
+    // TODO: No need to get all drug details from the repo, only needed when pressing on the drug
     public function get_drugs_details()
     {
-        return DB::table('drugs')
-        ->join('drugs_repo', 'drugs.id', '=', 'drugs_repo.drug_id')
-        ->groupBy('drugs.id')
-        ->orederBy('drugs_repo.exp_date', 'DESC')
-        ->orederBy('drugs_repo.packages_number', 'DESC')
-        ->orederBy('drugs_repo.units_number', 'DESC')
-        ->get();
+        return DB::table('drugs')->get();
     }
 
     /**
@@ -47,14 +42,7 @@ class DrugController extends Controller
      */
     public function get_drug_details($drug)
     {
-        return DB::table('drugs')
-        ->join('drugs_repo', 'drugs.id', '=', 'drugs_repo.drug_id')
-        ->where('drugs.id', $drug->id)
-        ->groupBy('drugs.id')
-        ->orederBy('drugs_repo.exp_date', 'DESC')
-        ->orederBy('drugs_repo.packages_number', 'DESC')
-        ->orederBy('drugs_repo.units_number', 'DESC')
-        ->get();
+        return $drug->repo()->get();
     }
 
     /**
@@ -110,13 +98,13 @@ class DrugController extends Controller
         $drug->local_barcode = $request->input('local_barcode');
         $drug->global_barcode = $request->input('global_barcode');
 
+        // Associate the foreign keys
+        $drug->company()->associate(Company::find($request->input('company_id')));
+        $drug->category()->associate(DrugCategory::find($request->input('category_id')));
+        $drug->shape()->associate(DrugShape::find($request->input('shape_id')));
+
         // Save the new drug
         $drug->save();
-
-        // Associate the foreign keys
-        $drug->company()->save(Company::find($request->input('company_id')));
-        $drug->category()->save(DrugCategory::find($request->input('category_id')));
-        $drug->shape()->save(DrugShape::find($request->input('shape_id')));
 
         // Assign the default unit number for this drug
         $drug_repo->unit_number = $request->input('unit_number');
@@ -125,7 +113,7 @@ class DrugController extends Controller
         $drug_repo->exp_date = $request->input('exp_date');
 
         // Check if units are inserted
-        if ($request->input('units_number') != null || str($request->input('units_number')) != "0") {
+        if ($request->input('units_number') != null || $request->input('units_number') != "0") {
             $drug_repo->packages_number = (int) ($request->input('units_number') / $drug_repo->unit_number);
             $drug_repo->units_number = $request->input('units_number');
         }
@@ -149,8 +137,8 @@ class DrugController extends Controller
         }
 
         // Puclish the new attributes to the repo and bind it with the appropriate drug
+        $drug_repo->drug()->associate($drug);
         $drug_repo->save();
-        $drug_repo->drug()->save($drug);
 
         // Get all the drugs
         $drugs = $this->get_drugs_details();
@@ -206,8 +194,8 @@ class DrugController extends Controller
           }
 
           // Puclish the new attributes to the repo
+          $drug_repo->drug()->associate($drug);
           $drug_repo->save();
-          $drug_repo->drug()->save($drug);
       }
 
       // Return the final result
@@ -273,8 +261,8 @@ class DrugController extends Controller
             }
 
             // Puclish the new attributes to the repo
+            $drug_repo->drug()->associate($drug);
             $drug_repo->save();
-            $drug_repo->drug()->save($drug);
         }
         return true;
     }

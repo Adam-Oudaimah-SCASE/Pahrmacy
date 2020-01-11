@@ -17,7 +17,7 @@ class DrugsRepo extends Model
     /**
      * Get the drug which this repo belongs to.
      */
-    public function drug() 
+    public function drug()
     {
         return $this->belongsTo(Drug::class);
     }

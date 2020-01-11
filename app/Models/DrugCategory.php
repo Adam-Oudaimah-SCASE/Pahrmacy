@@ -13,4 +13,12 @@ class DrugCategory extends Model
      * @var string
      */
     protected $table = 'drug_categories';
+
+    /**
+     * Get the drugs of this categories.
+     */
+    public function drugs()
+    {
+        return $this->hasMany(Drug::class);
+    }
 }

@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 // Drug Routes
-Route::resource('drugs', 'DrugController');
-
+Route::get('drugs/addDrug', 'DrugController@create')->name('addDrug');
+Route::post('drugs/addDrug', 'DrugController@store')->name('storeDrug');
 
 
 // Company Routes
