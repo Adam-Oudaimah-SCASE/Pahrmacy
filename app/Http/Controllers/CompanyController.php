@@ -71,7 +71,7 @@ class CompanyController extends Controller
         // Get the targeted company
         $company = Company::find($id);
         // Return the appropriate view
-        return view('')->withCompanies($company);
+        return view('')->withCompany($company);
     }
 
     /**
@@ -85,7 +85,7 @@ class CompanyController extends Controller
         // Get the targeted company
         $company = Company::find($id);
         // Return the appropriate view
-        return view('')->withCompanies($company);
+        return view('')->withCompany($company);
     }
 
     /**
