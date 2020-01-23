@@ -97,7 +97,7 @@ class DrugController extends Controller
         $drug->save();
 
         // Assign the default unit number for this drug
-        $drug_repo->unit_number = $request->input('unit_number');
+        $drug_repo->unit_number = $request->input('unit_number') == null ? 1 : $request->input('unit_number');
         // Add the appropriate drugs repo record
         $drug_repo->pro_date = $request->input('pro_date');
         $drug_repo->exp_date = $request->input('exp_date');
@@ -145,7 +145,7 @@ class DrugController extends Controller
     *
     * @return List [Full net price of the selled drugs, Full sell price of the selled drugs]
     */
-    public function update_drug_repo_from_sell_invoice($drugs_info)
+    public function update_drug_repo_from_sell_invoice($invoice_id, $drugs_info)
     {
       $full_net_price = 0;
       $full_sell_price = 0;
@@ -155,22 +155,32 @@ class DrugController extends Controller
           $drug_id = $drug_info[0];
           // Get the oldest drug repo
           $drug_repos = DrugsRepo::where([['drug_id', '=', $drug_id], ['isDisposed', '=', false]])->orederBy('exp_date', 'DESC')->get();
-          $drug_repo = $drug_repos[0];
+          $drug_repo = count($drug_repos) > 1 ? $drug_repos[0] : $drug_repos;
           $drug_packages_number = $drug_info[1];
           $drug_units_number = $drug_info[2];
           $drug_package_new_sell_price = $drug_info[3];
           $drug_unit_new_sell_price = $drug_info[4];
 
+          // Create the drugs invoice records for this sell invoice
+          $drugs_invoice = new DrugInvoice;
+          $drugs_invoice->drug_id = $drug_id;
+          $drugs_invoice->invoice_id = $invoice_id;
+
           // Manipulate the quantity and the price
           if ($drug_units_number != null) {
-              $drug_repo->packages_number -= (int) ($drug_units_number / $drug->unit_number);
+              $drug_repo->packages_number -= (int) ($drug_units_number / $drug_repo->unit_number);
               $drug_repo->units_number -= $drug_units_number;
               $full_net_price += $drug_repo->unit_net_price * $drug_units_number;
               if ($drug_unit_new_sell_price != null) {
-                  $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
+                    $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
+                    $drugs_invoice->modified_drug_unit_sell_price = $drug_unit_new_sell_price;
               } else {
-                  $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
+                    $drugs_invoice->modified_drug_unit_sell_price = 0;
+                    $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
               }
+              $drugs_invoice->drug_unit_number = $drug_units_number;
+              $drugs_invoice->drug_package_number = (int) ($drugs_invoice->drug_unit_number / $drug_repo->unit_number);
+              $drugs_invoice->modified_drug_package_sell_price = 0;
           }
           else {
               $drug_repo->packages_number -= $drug_packages_number;
@@ -178,13 +188,19 @@ class DrugController extends Controller
               $full_net_price += $drug_repo->package_net_price * $drug_packages_number;
               if ($drug_package_new_sell_price != null) {
                   $full_sell_price += $drug_packages_number * $drug_package_new_sell_price;
+                  $drugs_invoice->modified_drug_package_sell_price = $drug_package_new_sell_price;
               } else {
+                  $drugs_invoice->modified_drug_package_sell_price = 0;
                   $full_sell_price += $drug_packages_number * $drug_repo->package_sell_price;
               }
+              $drugs_invoice->drug_package_number = $drug_packages_number;
+              $drugs_invoice->drug_unit_number = $drugs_invoice->drug_package_number * $drug_repo->unit_number;
+              $drugs_invoice->modified_drug_unit_sell_price = 0;
           }
 
           // Puclish the new attributes to the repo
           $drug_repo->save();
+          $drugs_invoice->save();
       }
 
       // Return the final result
@@ -207,8 +223,7 @@ class DrugController extends Controller
         // Loop over each drug
         foreach ($drugs_info as $drug_info) {
             // Grap the required drug information
-            $drug_id = $drug_info[0];
-            $drug = Drug::find($drug_id);
+            $drug = Drug::find($drug_info[0]);
             $drug_unit_number = $drug_info[1];
             $drug_packages_number = $drug_info[2];
             $drug_units_number = $drug_info[3];
@@ -222,6 +237,12 @@ class DrugController extends Controller
             // Initiate a new drug repo instance
             $drug_repo = new DrugsRepo;
 
+            if ($drug_unit_number != null) {
+                $drug_repo->unit_number = $drug_unit_number;
+            } else {
+                $drug_repo->unit_number = 1;
+            }
+
             // Manipulate the quantity and prices
             if ($drug_units_number != null) {
                 $drug_repo->packages_number = (int) ($drug_units_number / $drug_repo->unit_number);
@@ -229,13 +250,13 @@ class DrugController extends Controller
             }
             else {
                 $drug_repo->packages_number = $drug_packages_number;
-                $drug_repo->units_number = $drug_unit_number * $drug_repo->packages_number;
+                $drug_repo->units_number = $drug_repo->unit_number * $drug_repo->packages_number;
             }
             // Set the prices
             if ($drug_package_sell_price != null) {
                 $drug_repo->package_sell_price = $drug_package_sell_price;
                 if ($drug_unit_sell_price == null) {
-                    $drug_repo->unit_sell_price = (int)$drug_repo->package_sell_price / $drug_repo->unit_number;
+                    $drug_repo->unit_sell_price = $drug_repo->package_sell_price / $drug_repo->unit_number;
                 } else {
                     $drug_repo->unit_sell_price = $drug_unit_sell_price;
                 }
@@ -243,13 +264,14 @@ class DrugController extends Controller
             if ($drug_package_net_price != null) {
                 $drug_repo->package_net_price = $drug_package_net_price;
                 if ($drug_unit_net_price == null) {
-                    $drug_repo->unit_net_price = (int)$drug_repo->package_net_price / $drug_repo->unit_number;
+                    $drug_repo->unit_net_price = $drug_repo->package_net_price / $drug_repo->unit_number;
                 } else {
                     $drug_repo->unit_net_price = $drug_unit_net_price;
                 }
             }
 
             // Puclish the new attributes to the repo
+            $drug_repo->drug()->associate($drug);
             $drug_repo->save();
         }
         return true;
