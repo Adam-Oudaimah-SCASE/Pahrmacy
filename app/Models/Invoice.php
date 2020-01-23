@@ -9,7 +9,6 @@ class Invoice extends Model
 
     /**
      * The corresponding table name.
-     *
      * @var string
      */
     protected $table = 'invoices';
