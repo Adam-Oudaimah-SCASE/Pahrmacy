@@ -113,7 +113,7 @@
         height:35px;
         line-height:35px;
         padding: 0 10px;
-        text-align: left;
+        text-align: right;
     }
     #sidebar > ul > li > a i{
         /*display: none !important;*/
@@ -139,7 +139,7 @@
         background: transparent !important ;
     }
     #sidebar > ul > li > ul.sub > li > a:hover {
-        
+
     }
 
 
@@ -481,7 +481,3 @@
         display: none;
     }
 }
-
-
-
-

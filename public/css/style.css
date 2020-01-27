@@ -181,7 +181,7 @@ hr {
 }
 
 .goleft {
-	text-align: left;
+	text-align: right;
 }
 
 .goright {
@@ -208,7 +208,7 @@ hr {
 /*Exclusive Theme Colors Configuration*/
 
 .label-theme {
-	background-color: #4ECDC4;
+	background-color: rgb(7,60,94);
 }
 
 .bg-theme {
@@ -328,7 +328,7 @@ ul.sidebar-menu li ul.sub li a:hover {
 }
 
 ul.sidebar-menu li ul.sub li.active a {
-    color: #4ECDC4;
+    color:rgb(43,173,74) ;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -896,7 +896,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .y-axis {
     color: #555555;
     position: absolute;
-    text-align: left;
+    text-align: right;
     width: 100%;
     font-size: 11px;
 }
@@ -1552,7 +1552,7 @@ PANELS CONFIGURATIONS
     width: 100%;
 }
 .chart .heading {
-    text-align: left;
+    text-align: right;
 }
 .chart .heading span {
     display: block;
@@ -1741,7 +1741,7 @@ background: #fffbcc !important;
 	margin: 10px;
 	padding: 10px;
 	box-shadow: 0px 3px 2px #aab2bd;
-	text-align: left;
+	text-align: right;
 }
 
 label {
@@ -1761,7 +1761,7 @@ label {
 
 @media (min-width: 768px) {
 		.form-horizontal .control-label {
-		text-align: left;
+		text-align: right;
 	}
 }
 
@@ -1790,7 +1790,7 @@ label {
     line-height: 1.231;
     overflow: hidden;
     position: relative;
-    text-align: left;
+    text-align: right;
     width: 80px;
     -webkit-mask: url('../img/mask.png') 0 0 no-repeat;
     mask: url('../img/mask.png') 0 0 no-repeat;
