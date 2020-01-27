@@ -2,7 +2,7 @@
  @section('content')
  <!--main content start-->
  <section id="main-content">
-     <section class="wrapper" dir="rtl">
+     <section class="wrapper" >
          <h3><i class="fa fa-angle-right"></i>إضافة صنف</h3>
          <!-- BASIC FORM ELELEMNTS -->
          <div class="row mt" dir="rtl">
@@ -17,19 +17,19 @@
                                  <input type="text" class="form-control" name="name">
                              </div>
                          </div>
-                    
+
                  </div>
                  <button type="submit" class="btn btn-theme">إضافة صنف</button>
              </form>
-          
+
          </div>
          <!-- col-lg-12-->
          </div>
          <!-- /row -->
-      
-         
-         
-        
+
+
+
+
      </section>
      <!-- /wrapper -->
  </section>

@@ -2,22 +2,22 @@
  @section('content')
  <!--main content start-->
  <section id="main-content">
-     <section class="wrapper" dir="rtl">
+     <section class="wrapper" >
          <h3><i class="fa fa-angle-right"></i>إضافة شركة</h3>
          <!-- BASIC FORM ELELEMNTS -->
-         <div class="row mt" dir="rtl">
+         <div class="row mt" >
              <div class="col-lg-12">
                  <div class="form-panel">
                      <h4 class="mb"><i class="fa fa-angle-right"></i> معلومات الشركة</h4>
                      <form class="form-horizontal style-form" action="{{route('company.store')}}" method="POST">
                      {{ csrf_field() }}
-                         <div class="form-group" dir="rtl">
+                         <div class="form-group">
                              <label class="col-sm-2 col-sm-2 control-label">اسم الشركة:</label>
                              <div class="col-sm-10">
                                  <input type="text" class="form-control" name="name">
                              </div>
                          </div>
-                         <div class="form-group" dir="rtl">
+                         <div class="form-group" >
                              <label class="col-sm-2 col-sm-2 control-label">الاسم الانكليزي</label>
                              <div class="col-sm-10">
                                  <input type="text" class="form-control" name="delegate_name">
@@ -61,15 +61,15 @@
                  </div>
                  <button type="submit" class="btn btn-theme">Add Company</button>
              </form>
-          
+
          </div>
          <!-- col-lg-12-->
          </div>
          <!-- /row -->
-      
-         
-         
-        
+
+
+
+
      </section>
      <!-- /wrapper -->
  </section>
