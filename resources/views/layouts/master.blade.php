@@ -12,7 +12,7 @@
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-
+<link href="lib/Droid Sans Arabic.ttf">
   <link
                       rel="stylesheet"
                       href="https://cdn.rtlcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
