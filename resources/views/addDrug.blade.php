@@ -1,4 +1,4 @@
-@extends('/layouts.master')
+@extends('layouts.master')
 @section('content')
 <!--main content start-->
 <section id="main-content">
@@ -90,7 +90,7 @@
                             </div>
                         </div>
 
-                      
+
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> الصنف </label>
                             <div class="col-sm-10">
@@ -113,7 +113,7 @@
 
                             </div>
                         </div>
-                        
+
 
 
                         <button type="submit" class="btn btn-theme">إضافة</button>

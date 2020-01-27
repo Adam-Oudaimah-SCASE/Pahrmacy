@@ -139,10 +139,10 @@
               <li><a href="/company">الشركات</a></li>
               <li><a href="/category">الأصناف الدوائية</a></li>
               <li><a href="/shape">الأشكال</a></li>
-              <li><a href="font_awesome.html">Font Awesome</a></li>
+          
             </ul>
           </li>
-          
+
         </ul>
         <!-- sidebar menu end-->
       </div>

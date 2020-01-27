@@ -37,3 +37,8 @@ Route::resource('category', 'DrugCategoryController');
 Route::get('addCategory', function () {
     return view('addCategory');
 });
+
+//invoice Routes
+Route::get('invoice', function () {
+    return view('invoice');
+});
