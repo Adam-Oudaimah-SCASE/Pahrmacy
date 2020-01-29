@@ -44,7 +44,13 @@ Route::get('invoice', function () {
 });
 
 //report routes
-//invoice Routes
+
 Route::get('report', function () {
     return view('report');
+});
+
+//techsupport routes
+
+Route::get('techsupport', function () {
+    return view('techsupport');
 });
