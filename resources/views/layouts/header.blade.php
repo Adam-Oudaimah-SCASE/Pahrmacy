@@ -26,7 +26,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="profile.html">
           <div class="img-container">
-          <img src="img/logo.png" class="img-circle" width="80">
+          <img src="/img/logo.png" class="img-circle" width="80">
           </div>
           </a></p>
           <h5 class="centered">NODES PHARMA</h5>
@@ -139,7 +139,7 @@
               <li><a href="/company">الشركات</a></li>
               <li><a href="/category">الأصناف الدوائية</a></li>
               <li><a href="/shape">الأشكال</a></li>
-          
+
             </ul>
           </li>
 

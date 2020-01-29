@@ -42,3 +42,9 @@ Route::get('addCategory', function () {
 Route::get('invoice', function () {
     return view('invoice');
 });
+
+//report routes
+//invoice Routes
+Route::get('report', function () {
+    return view('report');
+});
