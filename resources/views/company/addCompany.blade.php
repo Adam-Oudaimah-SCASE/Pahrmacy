@@ -59,7 +59,7 @@
                              </div>
                          </div>
                  </div>
-                 <button type="submit" class="btn btn-theme">Add Company</button>
+                 <button type="submit" class="btn btn-theme">إضافة شركة </button>
              </form>
           
          </div>

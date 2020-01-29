@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\WareHouse;
 
-class WareHouseContrller extends Controller
+class WareHouseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class WareHouseContrller extends Controller
         // Get all the ware houses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('')->withWarehouses($warehouses);
+        return view('warehouse.wareHouse')->withWarehouses($warehouses);
     }
 
     /**
@@ -28,7 +28,7 @@ class WareHouseContrller extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('');
+        return view('warehouse.addWareHouse');
     }
 
     /**
@@ -57,7 +57,7 @@ class WareHouseContrller extends Controller
         // Get all the ware houses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('')->withWarehouses($warehouses);
+        return view('warehouse.wareHouse')->withWarehouses($warehouses);
     }
 
     /**
@@ -85,7 +85,7 @@ class WareHouseContrller extends Controller
         // Get the targeted ware house
         $warehouse = WareHouse::find($id);
         // Return the appropriate view
-        return view('')->withWarehouse($warehouse);
+        return view('warehouse.editWarehouse')->withWarehouse($warehouse);
     }
 
     /**
@@ -115,7 +115,8 @@ class WareHouseContrller extends Controller
         // Get all the ware houses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('')->withWarehouses($warehouses);
+        return Redirect('warehouse')->withWarehouses($warehouses);
+        
     }
 
     /**
@@ -135,6 +136,6 @@ class WareHouseContrller extends Controller
         // Get all the ware houses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('')->withWarehouses($warehouses);
+        return Redirect('warehouse')->withWarehouses($warehouses);
     }
 }

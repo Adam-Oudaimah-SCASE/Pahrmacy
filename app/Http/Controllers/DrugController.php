@@ -56,7 +56,7 @@ class DrugController extends Controller
         $drugs = $this->get_drugs_details();
 
         // Return the appropriate view
-        return view('drugs')->withDrugs($drugs);
+        return view('drug.drugs')->withDrugs($drugs);
     }
 
     /**
@@ -71,7 +71,7 @@ class DrugController extends Controller
         $drugs = Drug::all();
         $shapes = DrugShape::all();
         $companies = Company::all();
-         return view('addDrug')->with([
+         return view('drug.addDrug')->with([
              'categories' => $categories,
              'shapes' => $shapes,
              'companies' => $companies,
@@ -143,11 +143,11 @@ class DrugController extends Controller
         // Get all the drugs
         $drugs = $this->get_drugs_details();
         // Return the appropriate view
-        return view('drugs')->withDrugs($drugs);
+        return view('drug.drugs')->withDrugs($drugs);
     }
 
     /**
-    * Update the repo when a sell invoice is generated.
+    * Update the repo when a sell invoice is generat .
     * The update will happen on the oldest drug repo (according to the expiration date).
     * The passed drugs info will be a list of lists.
     * Each element of this list contains the following information:

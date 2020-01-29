@@ -17,7 +17,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('category')->withCategories($categories);
+        return view('category.category')->withCategories($categories);
     }
 
     /**
@@ -28,7 +28,7 @@ class DrugCategoryController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('');
+        return view('category.addCategory');
     }
 
     /**
@@ -51,7 +51,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('category')->withCategories($categories);
+        return view('category.category')->withCategories($categories);
     }
 
     /**
@@ -79,7 +79,7 @@ class DrugCategoryController extends Controller
         // Get the targeted category
         $category = DrugCategory::find($id);
         // Return the appropriate view
-        return view('')->withCategory($category);
+        return view('category.editCategory')->withCategory($category);
     }
 
     /**
@@ -103,7 +103,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('')->withCategories($categories);
+        return Redirect('category')->withCategories($categories);
     }
 
     /**
@@ -123,6 +123,6 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('')->withCategories($categories);
+        return Redirect('category')->withCategories($categories);
     }
 }

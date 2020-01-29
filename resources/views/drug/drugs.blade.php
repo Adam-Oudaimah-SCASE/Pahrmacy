@@ -7,8 +7,8 @@
           <div class="col-md-12">
             <div class="content-panel">
               <table class="table table-striped table-advance table-hover">
-                <h4><i class="fa fa-angle-right"></i> الأدوية</h4>
-                <a type="submit" class="btn btn-theme" href="{{route('drugs.create')}}" style="margin-left:10px;"> إضافة دواء</a>
+                <h4><i class="fa fa-angle-left"></i> الأدوية</h4>
+                <a type="submit" class="btn btn-theme" href="{{route('drugs.create')}}" style="margin-right:10px;"> إضافة دواء</a>
                 <hr>
                 <thead>
                   <tr>
@@ -16,10 +16,8 @@
                     <th class="hidden-phone"><i class="fa fa-question-circle"></i> الاسم الانكليزي </th>
                     <th><i class="fa fa-bookmark"></i> التركيبة الكيميائية</th>
                     <th><i class=" fa fa-edit"></i>حجم العبوة</th>
-                    <th>عدد الوحدات</th>
-                    <th>رقم الترخيص الخاص بالمنتج الدوائي</th>
-                    <th>السعر الصافي</th>
-                    <th>سعر المبيع</th>
+                
+                  
                   </tr>
                 </thead>
                 <tbody>
@@ -33,10 +31,9 @@
                     </td>
                     <td>{{$drug->chemical_composition}} </td>
                     <td>{{$drug->volume_unit}}</td>
-                    <td>{{$drug->unit_number}}</td>
-                    <td>{{$drug->lic_palte}}</td>
-                    <td>{{$drug->net_price}}</td>
-                    <td>{{$drug->sell_price}}</td>
+                
+                
+                 
                   
                   
                     <td>
