@@ -54,3 +54,9 @@ Route::get('report', function () {
 Route::get('techsupport', function () {
     return view('techsupport');
 });
+
+//about us routes
+
+Route::get('aboutus', function () {
+    return view('aboutus');
+});
