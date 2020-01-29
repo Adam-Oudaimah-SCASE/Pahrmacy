@@ -17,7 +17,7 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('company')->withCompanies($companies);
+        return view('company.company')->withCompanies($companies);
     }
 
     /**
@@ -28,7 +28,7 @@ class CompanyController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('');
+        return view('company.addCompany');
     }
 
     /**
@@ -57,7 +57,7 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('company')->withCompanies($companies);
+        return view('company.company')->withCompanies($companies);
     }
 
     /**
@@ -85,7 +85,7 @@ class CompanyController extends Controller
         // Get the targeted company
         $company = Company::find($id);
         // Return the appropriate view
-        return view('')->withCompany($company);
+        return view('company.editCompany')->withCompany($company);
     }
 
     /**
@@ -115,7 +115,9 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('')->withCompanies($companies);
+        return Redirect('company')->withCompanies($companies);
+
+
     }
 
     /**
@@ -135,6 +137,6 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('')->withCompanies($companies);
+        return Redirect('company')->withCompanies($companies);
     }
 }

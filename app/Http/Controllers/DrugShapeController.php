@@ -17,7 +17,7 @@ class DrugShapeController extends Controller
         // Get all the shapes
         $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('shape')->withShapes($shapes);
+        return view('shape.shape')->withShapes($shapes);
     }
 
     /**
@@ -28,7 +28,7 @@ class DrugShapeController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('');
+        return view('shape.addShape');
     }
 
     /**
@@ -51,7 +51,7 @@ class DrugShapeController extends Controller
         // Get all the shapes
         $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('shape')->withShapes($shapes);
+        return view('shape.shape')->withShapes($shapes);
     }
 
     /**
@@ -79,7 +79,7 @@ class DrugShapeController extends Controller
         // Get the targeted shape
         $shape = DrugShape::find($id);
         // Return the appropriate view
-        return view('')->withShape($shape);
+        return view('shape.editShape')->withShape($shape);
     }
 
     /**
@@ -103,7 +103,8 @@ class DrugShapeController extends Controller
         // Get all the shapes
         $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('')->withShapes($shapes);
+        return Redirect('shape')->withShapes($shapes);
+       
     }
 
     /**
@@ -123,6 +124,6 @@ class DrugShapeController extends Controller
         // Get all the shapes
         $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('')->withShapes($shapes);
+        return Redirect('shape')->withShapes($shapes);
     }
 }

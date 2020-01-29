@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <div class="form-panel">
                     <h4 class="mb"><i class="fa fa-angle-right"></i> معلومات الدواء</h4>
-                    <form class="form-horizontal style-form" action="{{route('storeDrug')}}" method="POST">
+                    <form class="form-horizontal style-form" action="{{route('drugs.store')}}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الاسم العربي</label>
@@ -113,9 +113,33 @@
 
                             </div>
                         </div>
-                        
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label"> عدد الوحدات</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="units_number">
+                            </div>
+                        </div>
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label"> عدد العلب </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="packages_number">
+                            </div>
+                        </div>
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label"> تاريخ الانتاج </label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="pro_date">
+                            </div>
+                        </div>
 
-
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label"> تاريخ انتهاء الصلاحية </label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="exp_date">
+                            </div>
+                        </div>
+                      
+                         
                         <button type="submit" class="btn btn-theme">إضافة</button>
 
                     </form>

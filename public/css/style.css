@@ -12,13 +12,13 @@ Website: http://Alvarez.is/
 */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
+
 
 /* BASIC THEME CONFIGURATION */
 body {
     color: #797979;
 	background: #eaeaea;
-    font-family: 'Ruda', sans-serif;
+    font-family:'Droid Sans Arabic',sans-serif;
     padding: 0px !important;
     margin: 0px !important;
     font-size:13px;
@@ -97,8 +97,8 @@ a, a:hover, a:focus {
 
 .btn-theme {
   color: #fff;
-  background-color: #4ECDC4;
-  border-color: #48bcb4;
+  background-color: rgb(43,173,74);
+  border-color: rgb(43,173,74);
 }
 .btn-theme:hover,
 .btn-theme:focus,
@@ -181,7 +181,7 @@ hr {
 }
 
 .goleft {
-	text-align: left;
+	text-align: right;
 }
 
 .goright {
@@ -208,7 +208,7 @@ hr {
 /*Exclusive Theme Colors Configuration*/
 
 .label-theme {
-	background-color: #4ECDC4;
+	background-color: rgb(7,60,94);
 }
 
 .bg-theme {
@@ -220,10 +220,10 @@ ul.top-menu > li > .logout {
 	font-size: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+	border: 1px solid rgb(43,173,74) !important;
 	padding: 5px 15px;
-	margin-right: 15px;
-	background: #4ECDC4;
+	margin-left: 15px;
+	background: rgb(43,173,74);
 	margin-top: 15px;
 }
 
@@ -231,10 +231,11 @@ ul.top-menu > li > .logout {
 /*sidebar navigation*/
 
 #sidebar {
+  right: 0;
     width: 210px;
     height: 100%;
     position: fixed;
-    background: #2f323a;
+    background: rgba(2, 26, 41, 1);
 }
 
 #sidebar h5 {
@@ -297,10 +298,10 @@ ul.sidebar-menu {
 }
 
 ul.sidebar-menu li ul.sub li{
-    background: #2f323a;
+    background: rgba(2, 26, 41, 1);;
     margin-bottom: 0;
-    margin-left: 0;
     margin-right: 0;
+    margin-left: 0;
 }
 
 ul.sidebar-menu li ul.sub li:last-child{
@@ -327,7 +328,7 @@ ul.sidebar-menu li ul.sub li a:hover {
 }
 
 ul.sidebar-menu li ul.sub li.active a {
-    color: #4ECDC4;
+    color:rgb(43,173,74) ;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -339,7 +340,7 @@ ul.sidebar-menu li ul.sub li.active a {
 ul.sidebar-menu li{
     /*line-height: 20px !important;*/
     margin-bottom: 5px;
-    margin-left:10px;
+    margin-right:10px;
     margin-right:10px;
 }
 
@@ -366,7 +367,7 @@ ul.sidebar-menu li a{
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: #4ECDC4;
+    background: rgb(43,173,74);
     color: #fff;
     display: block;
 
@@ -399,7 +400,7 @@ ul.sidebar-menu li a.active i {
 
 /* MAIN CONTENT CONFIGURATION */
 #main-content {
-    margin-left: 210px;
+    margin-right:  210px;
 }
 
 .header, .footer {
@@ -415,9 +416,17 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #22242a;
+    background: rgb(2,26,41,1);
     border-bottom: 1px solid #393d46;
 }
+
+    .img-container {
+        border-radius: 50%;
+        background-color: #ffffff;
+        width: 85px;
+        height: 85px;
+        margin: 0 auto;
+    }
 
 .wrapper {
     display: inline-block;
@@ -432,7 +441,7 @@ ul.sidebar-menu li a.active i {
 a.logo {
     font-size: 24px;
     color: #f2f2f2;
-    float: left;
+    float: right;
     margin-top: 15px;
     text-transform: uppercase;
 }
@@ -453,13 +462,13 @@ a.logo span {
 
 /*notification*/
 #top_menu .nav > li, ul.top-menu > li {
-    float: left;
+    float: right;
 }
 
 .notify-row {
-    float: left;
+    float: right;
     margin-top: 15px;
-    margin-left: 92px;
+    margin-right: 92px;
 }
 
 .notify-row .notification span.label {
@@ -476,7 +485,7 @@ ul.top-menu > li > a {
     -webkit-border-radius: 4px;
     border:1px solid #666666 !important;
     padding: 2px 6px;
-    margin-right: 15px;
+    margin-left: 15px;
 }
 
 ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
@@ -558,7 +567,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.tasks-bar .task-info .percent {
     display: inline-block;
-    float: right;
+    float: left;
     font-size: 13px;
     font-weight: 600;
     padding-left: 10px;
@@ -572,9 +581,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.inbox li a .photo img {
     border-radius: 2px 2px 2px 2px;
-    float: left;
+    float: right;
     height: 40px;
-    margin-right: 4px;
+    margin-left: 4px;
     width: 40px;
 }
 
@@ -610,19 +619,19 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .top-nav li.dropdown .dropdown-menu {
-    float: right;
+    float: left;
     right: 0;
     left: auto;
 }
 
 .dropdown-menu.extended.logout > li {
-    float: left;
+    float: right;
     text-align: center;
     width: 33.3%;
 }
 
 .dropdown-menu.extended.logout > li:last-child {
-    float: left;
+    float: right;
     text-align: center;
     width: 100%;
     background: #a9d96c;
@@ -671,10 +680,10 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     -webkit-border-radius: 4px;
     padding: 6px;
     background: none;
-    margin-right: 0;
+    margin-left: 0;
 }
 .top-nav ul.top-menu > li {
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .top-nav ul.top-menu > li > a:hover, .top-nav ul.top-menu > li > a:focus {
@@ -739,7 +748,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 /*--sidebar toggle---*/
 
 .sidebar-toggle-box {
-    float: left;
+    float:right;
     padding-right: 15px;
     margin-top: 20px;
 }
@@ -756,11 +765,11 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .sidebar-closed #main-content {
-    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .sidebar-closed #sidebar {
-    margin-left: -180px;
+    margin-right: -180px;
 }
 
 
@@ -795,12 +804,12 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 	width: 30px;
 	margin: 0 10px 0 20px;
 	display: block;
-	float: left;
+	float: right;
 }
 
 .ds .details {
 	width: 170px;
-	float: left;
+	float:right;
 }
 
 .ds > .desc p {
@@ -838,7 +847,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .custom-bar-chart {
     height: 290px;
     margin-top: 20px;
-    margin-left: 10px;
+    margin-right: 10px;
     position: relative;
     border-bottom: 1px solid #c9cdd7;
 }
@@ -848,7 +857,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     position: relative;
     width: 6%;
     margin: 0px 4%;
-    float: left;
+    float:right;
     text-align: center;
     z-index: 10;
 }
@@ -887,7 +896,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .y-axis {
     color: #555555;
     position: absolute;
-    text-align: left;
+    text-align: right;
     width: 100%;
     font-size: 11px;
 }
@@ -950,13 +959,13 @@ PANELS CONFIGURATIONS
 	margin-top: 10px;
 }
 .grey-panel p {
-	margin-left: 5px;
+	margin-right: 5px;
 }
 /* Specific Conf for Donut Charts*/
 .donut-chart p {
 	margin-top: 20px;
 	font-weight: 700;
-	margin-left: 15px;
+	margin-right: 15px;
 }
 .donut-chart h2 {
 	font-weight: 900;
@@ -987,8 +996,8 @@ PANELS CONFIGURATIONS
 	color: white;
 }
 .darkblue-panel footer h5 {
-	margin-left:10px;
-	margin-right: 10px;
+	margin-right:10px;
+	margin-left: 10px;
 	font-weight: 700;
 }
 
@@ -1085,7 +1094,7 @@ PANELS CONFIGURATIONS
 	padding-bottom: 5px;
 }
 .content-panel h4 {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 /*WEATHER PANELS*/
@@ -1121,15 +1130,15 @@ PANELS CONFIGURATIONS
 }
 .weather-2 .weather-2-header p {
 	color: white;
-	margin-left: 5px;
 	margin-right: 5px;
+	margin-left: 5px;
 }
 .weather-2 .weather-2-header p small {
 	font-size: 10px;
 }
 .weather-2 .data {
-	margin-right: 10px;
 	margin-left: 10px;
+	margin-right: 10px;
 	color: #272b34;
 }
 .weather-2 .data h5 {
@@ -1169,8 +1178,8 @@ PANELS CONFIGURATIONS
 	margin-bottom: 0px;
 }
 .weather-3 .info p {
-	margin-left: 10px;
 	margin-right: 10px;
+	margin-left: 10px;
 	margin-bottom: 16px;
 	color: #c2c2c2;
 	font-size: 15px;
@@ -1193,7 +1202,7 @@ PANELS CONFIGURATIONS
 	margin-top: 10px;
 }
 .message-p p {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 .message-p .small {
 	font-size: 11px;
@@ -1208,7 +1217,7 @@ PANELS CONFIGURATIONS
 	font-size: 12px;
 }
 .message-p .form-inline {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 .message-p .form-inline .form-group {
 	width: 80%;
@@ -1320,7 +1329,7 @@ PANELS CONFIGURATIONS
 	font-size: 20px
 }
 .followers {
-	margin-left: 5px;
+	margin-right: 5px;
 	margin-top: 5px;
 }
 
@@ -1367,8 +1376,8 @@ PANELS CONFIGURATIONS
 	width: 120px;
 }
 .blog-text {
-	margin-left: 8px;
 	margin-right: 8px;
+	margin-left: 8px;
 	margin-top: 15px;
 	font-size: 12px;
 }
@@ -1531,7 +1540,7 @@ PANELS CONFIGURATIONS
 }
 .pr2-social i {
 	margin-top: 15px;
-	margin-right: 12px;
+	margin-left: 12px;
 	font-size: 20px;
 }
 
@@ -1543,7 +1552,7 @@ PANELS CONFIGURATIONS
     width: 100%;
 }
 .chart .heading {
-    text-align: left;
+    text-align: right;
 }
 .chart .heading span {
     display: block;
@@ -1563,7 +1572,7 @@ PANELS CONFIGURATIONS
     display: inline-block;
 }
 .panel.green-chart .chart-tittle .value {
-    float: right;
+    float: left;
     color: #c0f080;
 }
 .panel.green-chart {
@@ -1575,7 +1584,7 @@ PANELS CONFIGURATIONS
     color: #797979;
 }
 .panel.terques-chart .chart-tittle .value {
-    float: right;
+    float: left;
     color: #fff;
 }
 .panel.terques-chart .chart-tittle .value a {
@@ -1619,7 +1628,7 @@ PANELS CONFIGURATIONS
 }
 
 .fontawesome-list i {
-	margin-right: 8px;
+	margin-left: 8px;
 }
 
 /* Grid Showcase*/
@@ -1643,7 +1652,7 @@ PANELS CONFIGURATIONS
 	cursor: move;
 	display: inline-block !important;
 	margin-bottom: 7px !important;
-	margin-right: 7px !important;
+	margin-left: 7px !important;
 	padding: 10px;
 }
 
@@ -1713,7 +1722,7 @@ PANELS CONFIGURATIONS
 
 /* EZ Checklist */
 .ez-checkbox {
-	margin-right: 5px;
+	margin-left: 5px;
 }
 
 .ez-checkbox, .ez-radio {
@@ -1732,7 +1741,7 @@ background: #fffbcc !important;
 	margin: 10px;
 	padding: 10px;
 	box-shadow: 0px 3px 2px #aab2bd;
-	text-align: left;
+	text-align: right;
 }
 
 label {
@@ -1752,7 +1761,7 @@ label {
 
 @media (min-width: 768px) {
 		.form-horizontal .control-label {
-		text-align: left;
+		text-align: right;
 	}
 }
 
@@ -1762,7 +1771,7 @@ label {
 }
 
 .add-on {
-	float: right;
+	float: left;
 	margin-top: -37px;
 	padding: 3px;
 	text-align: center;
@@ -1781,7 +1790,7 @@ label {
     line-height: 1.231;
     overflow: hidden;
     position: relative;
-    text-align: left;
+    text-align: right;
     width: 80px;
     -webkit-mask: url('../img/mask.png') 0 0 no-repeat;
     mask: url('../img/mask.png') 0 0 no-repeat;
@@ -1835,7 +1844,7 @@ label {
     cursor: pointer;
     font-size: 14.994px;
     font-weight: 700;
-    float: left;
+    float: right;
     height: 29px;
     line-height: 19px;
     margin: 0;
@@ -1873,7 +1882,7 @@ label {
     border: 4px solid #2A3542;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    float: left;
+    float: right;
     height: 29px;
     margin: 0 -21px 0 -14px;
     padding: 0;
@@ -1917,7 +1926,7 @@ label {
 
 /* TABLES CONF*/
 .dataTables_paginate.paging_bootstrap.pagination {
-	float: right;
+	float: left;
 	margin-top: -5px;
 	margin-bottom: 15px;
 }
@@ -1926,7 +1935,7 @@ label {
 	padding: 15px 0;
 }
 .dataTables_paginate.paging_bootstrap.pagination li {
-	float: left;
+	float: right;
 	margin: 0 1px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
@@ -2045,7 +2054,7 @@ ul li {
 }
 
 profile-text p {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .right-divider {
@@ -2056,8 +2065,8 @@ profile-text p {
 .panel-heading .nav {
 	border: medium none;
 	font-size: 13px;
-	margin-left: 0px;
 	margin-right: 0px;
+	margin-left: 0px;
 	text-transform: uppercase;
 }
 
@@ -2086,13 +2095,13 @@ profile-text p {
 ul.my-friends {
 	margin: 0px;
 	margin-top: 16px;
-	margin-left: 10px;
+	margin-right: 10px;
 	padding: 0;
 }
 
 ul.my-friends li .friends-pic {
 	display: inline-block;
-	float: left;
+	float:riht;
 	overflow: hidden;
 	margin: 4px;
 }
@@ -2144,7 +2153,7 @@ ul.my-friends li .friends-pic {
 
 /* INVOICE CONF */
 .well.green {
-	background-color: #48cfad;
+	background-color: #2bad49;
 	color: #fff;
 	border: none;
 }
@@ -2159,7 +2168,7 @@ ul.my-friends li .friends-pic {
 	font-weight: 900;
 }
 .invoice-body h4 {
-	margin-left: 0px;
+	margin-right: 0px;
 }
 
 /* Map Wrap*/
@@ -2315,19 +2324,19 @@ ul.my-friends li .friends-pic {
     border-right:3px solid #4ECDC4;
 }
 .mail-nav>li+li {
-    margin-left:0;
+    margin-right:0;
     margin-top:0px;
 }
 .mail-nav i {
     font-size:16px;
-    margin-right:10px;
+    margin-left:10px;
 }
 .inbox-notification {
     margin-top:-2px;
 }
 .user-head .inbox-avatar {
     width:65px;
-    float:left;
+    float:right;
 }
 .user-head .inbox-avatar img {
     border-radius:4px;
@@ -2443,7 +2452,7 @@ ul.labels-info li a:hover,ul.labels-info li a:focus {
     background:none;
 }
 ul.labels-info li img {
-    margin-right:10px;
+    margin-left:10px;
 }
 .nav.nav-pills.nav-stacked.labels-info p {
     margin-bottom:0;
@@ -2470,7 +2479,7 @@ ul.labels-info li img {
     border:none;
     box-shadow:none;
     padding:0 10px;
-    float:left;
+    float:right;
     border-radius:4px 0 0 4px;
     color:#8a8a8a;
 }
@@ -2495,7 +2504,7 @@ ul.labels-info li img {
     margin:0 -15px;
 }
 .mail-checkbox {
-    margin-right:10px;
+    margin-left:10px;
 }
 .table-inbox {
     margin:0;
@@ -2531,10 +2540,10 @@ ul.labels-info li img {
 }
 
 ul.inbox-pagination {
-    float:right;
+    float:left;
 }
 ul.inbox-pagination li {
-    float:left;
+    float:right;
 }
 
 .pagination li a {
@@ -2546,10 +2555,10 @@ ul.inbox-pagination li {
     width:100%;
 }
 .mail-option .chk-all {
-    float:left;
+    float:right;
 }
 .mail-option .chk-all,.mail-option .btn-group {
-    margin-right:5px;
+    margin-left:5px;
 }
 .mail-option .chk-all,.mail-option .btn-group a.btn {
     border:1px solid #e7e7e7;
@@ -2582,7 +2591,7 @@ ul.inbox-pagination li {
 .inbox-pagination li span {
     display:inline-block;
     margin-top:7px;
-    margin-right:5px;
+    margin-left:5px;
 }
 .fileinput-button {
     border:1px solid #e6e6e6;
@@ -2601,11 +2610,11 @@ ul.inbox-pagination li {
 }
 .modal-header h4.modal-title {
     font-weight:300;
-    font-family:'Open Sans',sans-serif;
+    font-family:'Droid Sans Arabic ',sans-serif;
 }
 .modal-body label {
     font-weight:400;
-    font-family: 'Open Sans',sans-serif;
+    font-family:'Droid Sans Arabic ',sans-serif;
 }
 
 .compose-mail {
@@ -2630,7 +2639,7 @@ ul.inbox-pagination li {
     border:none;
     padding: 0;
     width: 80%;
-    float: left;
+    float: right;
 }
 .compose-mail .form-group {
     border:1px solid #F2F3F6;
@@ -2642,7 +2651,7 @@ ul.inbox-pagination li {
 .compose-mail .form-group label {
     line-height: 34px;
     width: 10%;
-    float: left;
+    float:right;
     padding-left: 5px;
     margin-bottom: 0;
 }
@@ -2658,7 +2667,7 @@ ul.inbox-pagination li {
 }
 
 .compose-btn {
-    float: left;
+    float: right;
     margin-top: 6px;
 }
 
@@ -2697,9 +2706,9 @@ ul.inbox-pagination li {
 }
 
 .attachment-mail ul li  {
-    float: left;
+    float: right;
     width: 200px;
-    margin-right: 15px;
+    margin-left: 15px;
     margin-top: 15px;
     list-style: none;
 }
@@ -2711,7 +2720,7 @@ ul.inbox-pagination li {
 }
 
 .attachment-mail ul li a.name span {
-    float: right;
+    float:left;
     color: #767676;
 }
 
@@ -2759,9 +2768,9 @@ ul.inbox-pagination li {
 
 
 .chat-room .user-head i {
-   float: left;
+   float: right;
    font-size: 40px;
-   margin-right: 10px;
+   margin-left: 10px;
 }
 
 .chat-room .user-head h3 {
@@ -2930,7 +2939,7 @@ ul.chat-user li a:hover{
 }
 
 .chat-tools {
-    float: right;
+    float: left;
     padding: 3px;
     width: 40px;
     height: 35px;
@@ -2939,13 +2948,13 @@ ul.chat-user li a:hover{
     -webkit-border-radius: 3px;
     text-align: center;
     margin-top: 6px;
-    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .chat-tools i {
     font-size: 16px !important;
     float: none !important;
-    margin-right: 0 !important;
+    margin-left: 0 !important;
     color: #fff;
 }
 
@@ -2980,12 +2989,12 @@ ul.chat-available-user li a:hover {
 
 .group-rom {
     width: 100%;
-    float: left;
+    float: right;
     border-bottom: 1px solid #eaebee;
 }
 
 .group-rom .first-part, .group-rom .second-part, .group-rom .third-part {
-    float: left;
+    float:right;
     padding: 15px;
 }
 
@@ -3013,9 +3022,9 @@ ul.chat-available-user li a:hover {
 }
 
 .chat-txt {
-    float: left;
+    float: right;
     width: 75%;
-    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .lobby {
@@ -3037,7 +3046,7 @@ ul.chat-available-user li a:hover {
 }
 .ullist li {
     display:inline-block;
-    margin-left:5px;
+    margin-right:5px;
 }
 .ullist li a {
     display:inline-block;
@@ -3177,7 +3186,7 @@ ul.chat-available-user li a:hover {
 }
 
 .panel-footer.revenue-foot ul li {
-    float: left;
+    float: right;
     width: 33.33%;
 }
 
@@ -3320,7 +3329,7 @@ ul.chat-available-user li a:hover {
 
 /*footer*/
 .site-footer {
-    background: #4ECDC4;
+    background:rgba(2,26,41,1);
     color: #fff;
     padding: 15px 0;
 }
@@ -3334,9 +3343,9 @@ ul.chat-available-user li a:hover {
 }
 
 .go-top {
-    margin-right: 1%;
+    margin-left: 1%;
     margin-top: -25px;
-    float: right;
+    float: left;
     background: rgba(255,255,255,.5);
     width: 20px;
     height: 20px;
@@ -3483,4 +3492,10 @@ ul.chat-available-user li a:hover {
 
 #copyrights a {
   color: #fff;
+}
+
+
+
+.delete-form{
+    display:inline;
 }
