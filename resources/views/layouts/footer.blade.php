@@ -4,7 +4,7 @@
         <p>
           &copy; جميع الحقوق محفوظة
         </p>
-        
+
         <a href="form_component.html#" class="go-top">
           <i class="fa fa-angle-up"></i>
           </a>

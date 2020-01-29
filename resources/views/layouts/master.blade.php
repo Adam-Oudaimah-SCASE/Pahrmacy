@@ -40,10 +40,6 @@
 @include('layouts.footer')
 <!--  Footer Area End  -->
 </section>
-
-
-
-
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="https://cdn.rtlcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

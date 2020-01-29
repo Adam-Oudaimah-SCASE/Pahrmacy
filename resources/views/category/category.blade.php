@@ -2,7 +2,7 @@
  @section('content')
  <section id="main-content">
      <section class="wrapper">
-      
+
  <div class="row mt">
           <div class="col-md-12">
             <div class="content-panel">
@@ -13,34 +13,25 @@
                 <thead>
                   <tr>
                     <th><i class="fa fa-bullhorn"></i> الصنف الدوائي</th>
-            
                   </tr>
                 </thead>
                 <tbody>
-              
                   <tr>
                   @foreach($categories as $category)
                     <td>
                     {{$category->name}}
                     </td>
-                  
-                
                     <td>
                       <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                       <a href="{{route('category.edit', $category->id)}}"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
                       <form class="delete-form" action="{{route('category.destroy', $category->id)}}" method="POST">
                      @csrf
                      @method('DELETE')
-                    
                    <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i class="fa fa-trash-o "></i></button>
                    </form>
                     </td>
                   </tr>
                   @endforeach
-                 
-                
-                 
-                
                 </tbody>
               </table>
             </div>
@@ -48,16 +39,9 @@
           </div>
           <!-- /col-md-12 -->
         </div>
-
-       
         </section>
      <!-- /wrapper -->
  </section>
  <!-- /MAIN CONTENT -->
  <!--main content end-->
-
-
-
-
-
  @endsection

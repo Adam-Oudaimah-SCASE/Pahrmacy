@@ -2,7 +2,7 @@
  @section('content')
  <section id="main-content">
      <section class="wrapper">
-      
+
  <div class="row mt">
           <div class="col-md-12">
             <div class="content-panel">
@@ -20,13 +20,13 @@
                   </tr>
                 </thead>
                 <tbody>
-              
+
                   <tr>
                   @foreach($warehouses as $warehouse)
                     <td>
                     {{$warehouse->name}}
                     </td>
-                   
+
                     <td> {{$warehouse->phone}}</td>
                     <td>{{$warehouse->address}} </td>
                     <td>{{$warehouse->email}}</td>
@@ -37,17 +37,13 @@
                       <form class="delete-form" action="{{route('warehouse.destroy', $warehouse->id)}}" method="POST">
                      @csrf
                      @method('DELETE')
-                    
+
                    <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i class="fa fa-trash-o "></i></button>
                    </form>
                     </td>
-                   
+
                   </tr>
                   @endforeach
-                 
-                
-                 
-                
                 </tbody>
               </table>
             </div>
@@ -55,16 +51,9 @@
           </div>
           <!-- /col-md-12 -->
         </div>
-
-       
         </section>
      <!-- /wrapper -->
  </section>
  <!-- /MAIN CONTENT -->
  <!--main content end-->
-
-
-
-
-
  @endsection

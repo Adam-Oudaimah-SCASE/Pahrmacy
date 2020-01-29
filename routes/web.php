@@ -15,23 +15,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Drug Routes
-//Route::get('drugs/addDrug', 'DrugController@create')->name('addDrug');
-//Route::post('drugs/addDrug', 'DrugController@store')->name('storeDrug');
-
 Route::resource('drugs', 'DrugController');
 
 // Company Routes
 Route::resource('company', 'CompanyController');
 
-
 // Shape Routes
 Route::resource('shape', 'DrugShapeController');
-
 
 // Category Routes
 Route::resource('category', 'DrugCategoryController');
 
-
 // WareHouses Routes
 Route::resource('warehouse', 'WareHouseController');
+
+// Invoice Routes
+Route::get('invoice', function () {
+    return view('invoice');
+});
+
+// Report routes
+Route::get('report', function () {
+    return view('report');
+});
+
+// Techsupport routes
+Route::get('techsupport', function () {
+    return view('techsupport');
+});
+
+// About us routes
+Route::get('aboutus', function () {
+    return view('aboutus');
+});
