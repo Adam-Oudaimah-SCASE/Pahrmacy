@@ -17,7 +17,7 @@ class DrugCategoryController extends Controller
         // Get all the categories
         $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('category.category')->withCategories($categories);
+        return view('category.index')->withCategories($categories);
     }
 
     /**
@@ -28,7 +28,7 @@ class DrugCategoryController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('category.addCategory');
+        return view('category.create');
     }
 
     /**
@@ -48,24 +48,8 @@ class DrugCategoryController extends Controller
         // Save the new category
         $category->save();
 
-        // Get all the categories
-        $categories = DrugCategory::all();
         // Return the appropriate view
-        return view('category.category')->withCategories($categories);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Get the targeted category
-        $category = DrugCategory::find($id);
-        // Return the appropriate view
-        return view('')->withCategory($category);
+        return redirect()->route('category.index');
     }
 
     /**
@@ -100,10 +84,8 @@ class DrugCategoryController extends Controller
         // Save the updates
         $category->save();
 
-        // Get all the categories
-        $categories = DrugCategory::all();
         // Return the appropriate view
-        return Redirect('category')->withCategories($categories);
+        return redirect()->route('category.index');
     }
 
     /**
@@ -120,9 +102,7 @@ class DrugCategoryController extends Controller
         // Delete the record
         $category->delete();
 
-        // Get all the categories
-        $categories = DrugCategory::all();
         // Return the appropriate view
-        return Redirect('category')->withCategories($categories);
+        return redirect()->route('category');
     }
 }

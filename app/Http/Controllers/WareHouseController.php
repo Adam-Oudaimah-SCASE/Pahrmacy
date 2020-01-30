@@ -17,7 +17,7 @@ class WareHouseController extends Controller
         // Get all the ware houses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('warehouse.wareHouse')->withWarehouses($warehouses);
+        return view('warehouse.index')->withWarehouses($warehouses);
     }
 
     /**
@@ -28,7 +28,7 @@ class WareHouseController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('warehouse.addWareHouse');
+        return view('warehouse.create');
     }
 
     /**
@@ -54,24 +54,8 @@ class WareHouseController extends Controller
         // Save the new ware house
         $warehouse->save();
 
-        // Get all the ware houses
-        $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('warehouse.wareHouse')->withWarehouses($warehouses);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Get the targeted ware house
-        $warehouse = WareHouse::find($id);
-        // Return the appropriate view
-        return view('')->withWarehouse($warehouse);
+        return redirect()->route('warehouse.index');
     }
 
     /**
@@ -85,7 +69,7 @@ class WareHouseController extends Controller
         // Get the targeted ware house
         $warehouse = WareHouse::find($id);
         // Return the appropriate view
-        return view('warehouse.editWarehouse')->withWarehouse($warehouse);
+        return view('warehouse.edit')->withWarehouse($warehouse);
     }
 
     /**
@@ -112,11 +96,9 @@ class WareHouseController extends Controller
         // Save the updates
         $warehouse->save();
 
-        // Get all the ware houses
-        $warehouses = WareHouse::all();
         // Return the appropriate view
-        return Redirect('warehouse')->withWarehouses($warehouses);
-        
+        return redirect()->route('warehouse.index');
+
     }
 
     /**
@@ -133,9 +115,7 @@ class WareHouseController extends Controller
         // Delete the record
         $warehouse->delete();
 
-        // Get all the ware houses
-        $warehouses = WareHouse::all();
         // Return the appropriate view
-        return Redirect('warehouse')->withWarehouses($warehouses);
+        return Redirect('warehouse.index');
     }
 }

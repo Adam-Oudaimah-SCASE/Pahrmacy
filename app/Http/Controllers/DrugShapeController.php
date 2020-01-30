@@ -17,7 +17,7 @@ class DrugShapeController extends Controller
         // Get all the shapes
         $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('shape.shape')->withShapes($shapes);
+        return view('shape.index')->withShapes($shapes);
     }
 
     /**
@@ -28,7 +28,7 @@ class DrugShapeController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('shape.addShape');
+        return view('shape.create');
     }
 
     /**
@@ -48,24 +48,8 @@ class DrugShapeController extends Controller
         // Save the new shape
         $shape->save();
 
-        // Get all the shapes
-        $shapes = DrugShape::all();
         // Return the appropriate view
-        return view('shape.shape')->withShapes($shapes);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Get the targeted shape
-        $shape = DrugShape::find($id);
-        // Return the appropriate view
-        return view('')->withShape($shape);
+        return redirect()->route('shape.index');
     }
 
     /**
@@ -79,7 +63,7 @@ class DrugShapeController extends Controller
         // Get the targeted shape
         $shape = DrugShape::find($id);
         // Return the appropriate view
-        return view('shape.editShape')->withShape($shape);
+        return view('shape.edit')->withShape($shape);
     }
 
     /**
@@ -100,11 +84,9 @@ class DrugShapeController extends Controller
         // Save the updates
         $shape->save();
 
-        // Get all the shapes
-        $shapes = DrugShape::all();
         // Return the appropriate view
-        return Redirect('shape')->withShapes($shapes);
-       
+        return redirect()->route('shape.index');
+
     }
 
     /**
@@ -121,9 +103,7 @@ class DrugShapeController extends Controller
         // Delete the record
         $shape->delete();
 
-        // Get all the shapes
-        $shapes = DrugShape::all();
         // Return the appropriate view
-        return Redirect('shape')->withShapes($shapes);
+        return redirect()->route('shape.index');
     }
 }

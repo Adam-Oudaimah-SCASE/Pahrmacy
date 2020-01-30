@@ -17,7 +17,7 @@ class CompanyController extends Controller
         // Get all the companies
         $companies = Company::all();
         // Return the appropriate view
-        return view('company.company')->withCompanies($companies);
+        return view('company.index')->withCompanies($companies);
     }
 
     /**
@@ -28,7 +28,7 @@ class CompanyController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('company.addCompany');
+        return view('company.create');
     }
 
     /**
@@ -54,24 +54,8 @@ class CompanyController extends Controller
         // Save the new company
         $company->save();
 
-        // Get all the companies
-        $companies = Company::all();
         // Return the appropriate view
-        return view('company.company')->withCompanies($companies);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Get the targeted company
-        $company = Company::find($id);
-        // Return the appropriate view
-        return view('')->withCompany($company);
+        return redirect()->route('company.index');
     }
 
     /**
@@ -85,7 +69,7 @@ class CompanyController extends Controller
         // Get the targeted company
         $company = Company::find($id);
         // Return the appropriate view
-        return view('company.editCompany')->withCompany($company);
+        return view('company.edit')->withCompany($company);
     }
 
     /**
@@ -112,12 +96,8 @@ class CompanyController extends Controller
         // Save the updates
         $company->save();
 
-        // Get all the companies
-        $companies = Company::all();
         // Return the appropriate view
-        return Redirect('company')->withCompanies($companies);
-
-
+        return redirect()->route('company.index');
     }
 
     /**
@@ -134,9 +114,7 @@ class CompanyController extends Controller
         // Delete the record
         $company->delete();
 
-        // Get all the companies
-        $companies = Company::all();
         // Return the appropriate view
-        return Redirect('company')->withCompanies($companies);
+        return redirect()->route('company.index');
     }
 }

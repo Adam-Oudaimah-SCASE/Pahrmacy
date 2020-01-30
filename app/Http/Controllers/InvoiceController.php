@@ -89,7 +89,7 @@ class InvoiceController extends Controller
                 $invoice->is_paid = false;
                 $invoice->save();
                 // Go the payment view
-                return view('')->with([invoice => $invoice]);
+                return view('')->with(['invoice' => $invoice]);
                 break;
 
             default:

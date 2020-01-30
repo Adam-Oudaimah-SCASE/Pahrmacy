@@ -14,20 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+// Drugs Routes
 Route::resource('drugs', 'DrugController');
 
 // Company Routes
-Route::resource('company', 'CompanyController');
+Route::resource('company', 'CompanyController')->except(['show']);
 
 // Shape Routes
-Route::resource('shape', 'DrugShapeController');
+Route::resource('shape', 'DrugShapeController')->except(['show']);
 
 // Category Routes
-Route::resource('category', 'DrugCategoryController');
+Route::resource('category', 'DrugCategoryController')->except(['show']);
 
 // WareHouses Routes
-Route::resource('warehouse', 'WareHouseController');
+Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Invoice Routes
 Route::get('invoice', function () {

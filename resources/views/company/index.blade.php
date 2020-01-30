@@ -2,7 +2,6 @@
 @section('content')
 <section id="main-content">
     <section class="wrapper">
-
         <div class="row mt">
             <div class="col-md-12">
                 <div class="content-panel">
@@ -25,7 +24,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <tr>
                                     @foreach($companies as $company)
                                     <td>
@@ -44,39 +42,21 @@
                                         <a href="{{route('company.edit', $company->id)}}"><button
                                                 class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
                                         <form class="delete-form" action="{{route('company.destroy', $company->id)}}"
-                                            method="POST">
+                                            method="post">
                                             @csrf
                                             @method('DELETE')
-
                                             <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i
                                                     class="fa fa-trash-o "></i></button>
                                         </form>
                                     </td>
-
                                 </tr>
                                 @endforeach
-
-
-
-
                             </tbody>
                         </table>
-                        </div>
                     </div>
-                    <!-- /content-panel -->
                 </div>
-                <!-- /col-md-12 -->
             </div>
-
-
+        </div>
     </section>
-    <!-- /wrapper -->
 </section>
-<!-- /MAIN CONTENT -->
-<!--main content end-->
-
-
-
-
-
 @endsection
