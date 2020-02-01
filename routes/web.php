@@ -31,7 +31,10 @@ Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Invoice Routes
 Route::get('invoice', function () {
-    return view('invoice');
+    return view('invoice.invoice');
+});
+Route::get('createinvoice', function () {
+    return view('invoice.createinvoice');
 });
 
 // Report routes
