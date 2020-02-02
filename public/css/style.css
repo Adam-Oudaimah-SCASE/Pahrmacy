@@ -1951,7 +1951,7 @@ ul li {
 }
 .dataTables_paginate.paging_bootstrap.pagination li:hover a, .dataTables_paginate.paging_bootstrap.pagination li.active a {
 	color: #fff;
-	background: #4ECDC4;
+	background: #2bad49;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 }

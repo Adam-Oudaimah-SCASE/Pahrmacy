@@ -10,7 +10,10 @@
         <div class="content-panel">
           <h4><i class="fa fa-angle-right"></i> قسم معين</h4>
           <section id="unseen">
-            <table class="table table-bordered table-striped table-condensed">
+          <div class="adv-table">
+          <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+
+
               <thead>
                 <tr>
                   <th>اسم الدواء</th>
@@ -178,6 +181,7 @@
               </tbody>
             </table>
           </section>
+         </div>
         </div>
         <!-- /content-panel -->
       </div>
