@@ -13,4 +13,13 @@ class WareHouse extends Model
      * @var string
      */
     protected $table = 'warehouses';
+
+    /**
+    * Get the orders from this warehouse.
+    *
+    */
+    public function orders()
+    {
+        return $this->morphToMany(Order::class, 'orderable');
+    }
 }

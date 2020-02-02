@@ -21,4 +21,13 @@ class Company extends Model
     {
         return $this->hasMany(Drug::class);
     }
+
+    /**
+    * Get the orders from this company.
+    *
+    */
+    public function orders()
+    {
+        return $this->morphToMany(Order::class, 'orderable');
+    }
 }

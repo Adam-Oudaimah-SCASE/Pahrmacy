@@ -31,22 +31,22 @@ class InvoiceController extends Controller
     */
     function store_invoice(Request $request)
     {
-        // Create the new sell invoice instance
-        $invoice = new Invoice;
-
-        // Assign the shared invoce values from the request
-        $invoice->date = $request->input('date');
-        $invoice->notes = $reques->input('notes');
-
+        // Initiate the drugs reposotray controller
+        $repo_controller = new DrugController;
         // Get the invoice type
         $invoice_type = InvoiceType::find($request->input('invoice_type_id'));
         // Associate the invoice type
         $invoice->invoice_type()->associate($invoice_type);
         switch ($invoice_type->name) {
             case 'sell':
+                // Create the new sell invoice instance
+                $invoice = new Invoice;
+
+                // Assign the shared invoce values from the request
+                $invoice->date = $request->input('date');
+                $invoice->notes = $reques->input('notes');
                 // Set the discount reason if any
                 $invoice->discount_reason = $request->input('discount_reason') == null ? 'لا يوجد سبب' : $request->input('discount_reason');
-                $sell_invoice = new DrugController;
 
                 // Get the drugs isds
                 $drugs_ids = $request->input('drugs.ids.*');
@@ -66,7 +66,7 @@ class InvoiceController extends Controller
                     array_push($drugs_info, $drug_info);
                 }
                 // Calculate the prices and update the drugs reposotary
-                $prices = $sell_invoice->update_drug_repo_from_sell_invoice($sell_invoice->id, $drugs_info);
+                $prices = $repo_controller->update_drug_repo_from_sell_invoice($repo_controller->id, $drugs_info);
                 $invoice->net_price = $prices[0];
                 $invoice->sell_price = $prices[1];
 
@@ -91,6 +91,12 @@ class InvoiceController extends Controller
                 // Go the payment view
                 return view('')->with(['invoice' => $invoice]);
                 break;
+
+            case 'buy_order':
+
+            case 'buy_recieve':
+
+            case 'dispose':
 
             default:
                 // code...
