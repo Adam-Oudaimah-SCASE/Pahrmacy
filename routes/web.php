@@ -51,3 +51,7 @@ Route::get('techsupport', function () {
 Route::get('aboutus', function () {
     return view('aboutus');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
