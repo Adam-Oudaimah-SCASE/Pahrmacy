@@ -13,6 +13,9 @@ use App\Models\WareHouse;
 use App\Models\Company;
 use App\Models\DrugOrderSend;
 use App\Models\DrugOrderReceive;
+use App\Models\Balance;
+use App\Models\AccountingType;
+use App\Models\AccountingOperation;
 use DrugController;
 
 class InvoiceController extends Controller
@@ -114,6 +117,19 @@ class InvoiceController extends Controller
         $prices = $repo_controller->update_drug_repo_from_sell_invoice($invoice->id, $drugs_info);
         $invoice->net_price = $prices[0];
         $invoice->sell_price = $prices[1];
+
+        // Create the appropriate accounting operation
+        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات');
+        $accounting_operation = new AccountingOperation;
+        $accounting_operation->date = $request->input('date');
+        $accounting_operation->amount = $invoice->sell_price;
+        $accounting_operation->type()->associate($accounting_type);
+        $accounting_operation->save();
+
+        // Add it to the balance table
+        $balance = Balance::all();
+        $balance->balance += $invoice->sell_price;
+        $balance->save();
 
         if ($request->input('discount_amount') != null) {
             $invoice->discount_amount = $request->input('discount_amount');
@@ -218,6 +234,19 @@ class InvoiceController extends Controller
         {
             $order->is_delivered = true;
             $order->net_price = $request->input('price');
+
+            // Add the appropriate accounting operation
+            $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية');
+            $accounting_operation = new AccountingOperation;
+            $accounting_operation->date = $request->input('date');
+            $accounting_operation->amount = $order->net_price;
+            $accounting_operation->type()->associate($accounting_type);
+            $accounting_operation->save();
+
+            // Add it to the balance table
+            $balance = Balance::all();
+            $balance->balance -= $order->net_price;
+            $balance->save();
             return true;
         }
         else {
