@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Drug;
+use App\Models\DrugInvoice;
 use App\Models\DrugShape;
 use App\Models\DrugCategory;
 use App\Models\DrugsRepo;
@@ -218,7 +219,7 @@ class DrugController extends Controller
      *
      * @return boolean True if storing all the new quantites completed successuly, unhandled exception otherwise
      */
-    public function update_drugs_repo_from_incoming_invoice($drugs_info)
+    public function update_drugs_repo_from_incoming_invoice($order_id, $drugs_info)
     {
         // Loop over each drug
         foreach ($drugs_info as $drug_info) {
@@ -236,6 +237,9 @@ class DrugController extends Controller
 
             // Initiate a new drug repo instance
             $drug_repo = new DrugsRepo;
+
+            // Bind each repo with the appropriate order
+            $drug_repo->order_id = $order_id;
 
             if ($drug_unit_number != null) {
                 $drug_repo->unit_number = $drug_unit_number;
