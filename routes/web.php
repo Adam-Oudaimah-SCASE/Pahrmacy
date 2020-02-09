@@ -51,3 +51,11 @@ Route::get('techsupport', function () {
 Route::get('aboutus', function () {
     return view('aboutus');
 });
+// Order routes
+Route::get('createOrder', function () {
+    return view('order.createOrder');
+});
+Route::get('receiveOrder', function () {
+    return view('order.receiveOrder');
+});
+Route::get('/order/{invoice_type}', 'InvoiceController@store_invoice');

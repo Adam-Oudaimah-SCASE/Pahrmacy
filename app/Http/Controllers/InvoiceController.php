@@ -15,7 +15,7 @@ use App\Models\WareHouse;
 use App\Models\Company;
 use App\Models\DrugOrderSend;
 use App\Models\DrugOrderReceive;
-use DrugController;
+use App\Http\Controllers\DrugController;
 
 class InvoiceController extends Controller
 {
@@ -131,7 +131,7 @@ class InvoiceController extends Controller
                 $order->save();
 
                 // Return to sent orders page
-                return view('')->with(['orders' => Order::all()]);
+                return view('orderList')->with(['orders' => Order::all()]);
                 break;
 
             case 'buy_recieve':
