@@ -16,7 +16,7 @@ use App\Models\DrugOrderReceive;
 use App\Models\Balance;
 use App\Models\AccountingType;
 use App\Models\AccountingOperation;
-use DrugController;
+use App\Http\Controllers\DrugController;
 
 class InvoiceController extends Controller
 {
@@ -58,12 +58,56 @@ class InvoiceController extends Controller
                 // Handle the buy order send invoice
                 handle_buy_order_invoice($request);
                 // Return to sent orders page
-                return view('')->with(['orders' => Order::all()]);
+                return view('orderList')->with(['orders' => Order::all()]);
                 break;
 
             case 'buy_recieve':
+<<<<<<< HEAD
                 // Handle buy receive order invoice
                 if (handle_buy_receive_invoice($repo_controller, $request) {
+=======
+                // Get the drugs isds and information
+                $order = Order::find($request->input('order_id'));
+                $drugs_ids = $request->input('drugs.ids.*');
+                $drugs_unit_number = $request->input('drugs.unit_number.*');
+                $drugs_packages_number = $request->input('drugs.packages_number.*');
+                $drugs_units_number = $request->input('drugs.units_number.*');
+                $drugs_package_net_price = $request->input('drugs.package_net_price.*');
+                $drugs_unit_net_price = $request->input('drugs.unit_net_price.*');
+                $drugs_package_sell_price = $request->input('drugs.package_sell_price.*');
+                $drugs_unit_sell_price = $request->input('drugs.unit_sell_price.*');
+                $drugs_expiration_dates = $request->input('drugs.expiration_date.*');
+                $drugs_production_dates = $request->input('drugs.production_date.*');
+
+                // Drugs info
+                // Each element will have the following struture
+                // [Drug ID, Unit number, Packages number, Units number, Expiration date, Production date, Package Sell price, Package Net price, Unit Sell price, Unit Net price]
+                $drugs_info = array();
+
+                for ($i=0; $i<count($drugs_ids); $i++) {
+                    // Create each list entry of the drugs list
+                    $drug_info = array($drugs_ids[$i], $drugs_unit_number[$i], $drugs_packages_number[$i], $drugs_units_number[$i],
+                        $drugs_production_dates[$i], $drugs_production_dates[$i],
+                        $drugs_package_sell_price[$i], $drugs_package_net_price[$i],
+                        $drugs_package_unit_price[$i], $drugs_unit_net_price[$i],);
+                    array_push($drugs_info, $drug_info);
+                    $drug_order_receive = new DrugOrderReceive;
+                    $drug_order_receive->order()->associate($order);
+                    $drug_order_receive->unit_number = $drugs_unit_number[$i];
+                    $drug_order_receive->package_net_price = $drugs_package_net_price[$i];
+                    $drug_order_receive->unit_net_price = $drugs_unit_net_price[$i];
+                    $drug_order_receive->recieved_packages_number = $drugs_packages_number[$i];
+                    $drug_order_receive->recieved_units_number = $drugs_units_number[$i];
+                    $drug_order_receive->save();
+                }
+
+                // Update the repo
+                if ($repo_controller->update_drugs_repo_from_incoming_invoice($drugs_info))
+                {
+                    $order->is_delivered = true;
+                    $order->net_price = $request->input('price');
+
+>>>>>>> feature/Rahaf_order_views
                     // Return the appropriate view
                     return view('')->with(['orders' => Order::all()]);
                 }

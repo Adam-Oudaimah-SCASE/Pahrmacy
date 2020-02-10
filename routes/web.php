@@ -55,3 +55,15 @@ Route::get('aboutus', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Order routes
+Route::get('createOrder', function () {
+    return view('order.createOrder');
+});
+Route::get('receiveOrder', function () {
+    return view('order.receiveOrder');
+});
+Route::get('receive', function () {
+    return view('order.receive');
+});
+Route::get('/saveOrder', 'InvoiceController@store_invoice');
