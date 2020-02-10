@@ -58,4 +58,7 @@ Route::get('createOrder', function () {
 Route::get('receiveOrder', function () {
     return view('order.receiveOrder');
 });
-Route::get('/order/{invoice_type}', 'InvoiceController@store_invoice');
+Route::get('receive', function () {
+    return view('order.receive');
+});
+Route::get('/saveOrder', 'InvoiceController@store_invoice');

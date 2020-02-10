@@ -138,9 +138,9 @@ class InvoiceController extends Controller
                 // Get the drugs isds and information
                 $order = Order::find($request->input('order_id'));
                 $drugs_ids = $request->input('drugs.ids.*');
-                $drugs_unit_number = $reques->input('drugs.unit_number.*');
+                $drugs_unit_number = $request->input('drugs.unit_number.*');
                 $drugs_packages_number = $request->input('drugs.packages_number.*');
-                $drugs_units_number = $reques->input('drugs.units_number.*');
+                $drugs_units_number = $request->input('drugs.units_number.*');
                 $drugs_package_net_price = $request->input('drugs.package_net_price.*');
                 $drugs_unit_net_price = $request->input('drugs.unit_net_price.*');
                 $drugs_package_sell_price = $request->input('drugs.package_sell_price.*');
