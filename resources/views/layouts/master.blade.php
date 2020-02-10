@@ -127,6 +127,12 @@
       });
     });
   </script>
+  <script>
+function printFunction() {
+  window.print();
+}
+</script>
+
 </body>
 
 </html>

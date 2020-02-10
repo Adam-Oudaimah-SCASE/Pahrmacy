@@ -3499,3 +3499,13 @@ ul.chat-available-user li a:hover {
 .delete-form{
     display:inline;
 }
+
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+.ml{
+  margin-left: 2rem;
+}

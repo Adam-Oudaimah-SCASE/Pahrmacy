@@ -39,7 +39,7 @@ Route::get('createinvoice', function () {
 
 // Report routes
 Route::get('report', function () {
-    return view('report');
+    return view('reports/categoryReport');
 });
 
 // Techsupport routes
