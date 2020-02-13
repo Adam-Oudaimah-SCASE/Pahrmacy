@@ -121,7 +121,7 @@
     </a>
     <ul class="sub">
 
-    <li><a href="#">	فاتورة مبيعات 	 </a></li>
+    <li><a href="{{ route('invoice.create') }}">	فاتورة مبيعات 	 </a></li>
     <li><a href="/order">	فاتورة مشتريات 	 </a></li>
     <li><a href="#">	استلام فاتورة مبيعات 	 </a></li>
     <li><a href="#">	فاتورة مرتجع 	 </a></li>

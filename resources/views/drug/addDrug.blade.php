@@ -38,23 +38,37 @@
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> عدد الوحدات</label>
+                            <label class="col-sm-2 col-sm-2 control-label">عدد الوحدات</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="unit_number">
                             </div>
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> سعر المبيع</label>
+                            <label class="col-sm-2 col-sm-2 control-label">سعر المبيع للعلبة</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="sell_price">
+                                <input type="text" class="form-control" name="package_sell_price">
                             </div>
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> السعر الصافي</label>
+                            <label class="col-sm-2 col-sm-2 control-label">السعر الصافي للعلبة</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="net_price">
+                                <input type="text" class="form-control" name="package_net_price">
+                            </div>
+                        </div>
+
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label">سعر المبيع للظرف</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="unit_sell_price">
+                            </div>
+                        </div>
+
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label">السعر الصافي للظرف</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="unit_net_price">
                             </div>
                         </div>
 
@@ -89,8 +103,6 @@
 
                             </div>
                         </div>
-
-
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> الصنف </label>
                             <div class="col-sm-10">
@@ -99,7 +111,6 @@
                                     <option value="{{$category->id }}">{{$category->name }} </option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
@@ -110,7 +121,6 @@
                                     <option value="{{$shape->id }}">{{$shape->name }} </option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
@@ -138,7 +148,6 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-theme">إضافة</button>
-
                     </form>
                 </div>
             </div>

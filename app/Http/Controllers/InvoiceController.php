@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Invoice;
+use App\Models\Drug;
 use App\Models\DrugsRepo;
 use App\Models\InvoiceType;
 use App\Models\InsuranceCompany;
@@ -21,16 +22,31 @@ use App\Http\Controllers\DrugController;
 class InvoiceController extends Controller
 {
     /**
+    * Return the appropriate view to create a buy order invoice.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    function create_buy_order_invoice()
+    {
+        // Get all companies
+        $companies = Company::all();
+
+        // Get all warehouses
+        $warehouses = WareHouse::all();
+
+        // Return the appropriate view
+        return view('order.create')->with(['companies' => $companies, 'warehouses' => $warehouses]);
+    }
+
+    /**
     * Return the appropriate view to create a sell invoice.
     *
     * @return \Illuminate\Http\Response
     */
-    function create_invoice()
+    function create_sell_invoice()
     {
-        // Get all types
-        $types = InvoiceType::all();
         // Return the appropriate view
-        return view('');
+        return view('invoice.create');
     }
 
     /**
@@ -49,21 +65,19 @@ class InvoiceController extends Controller
         switch ($invoice_type->name) {
             case 'sell':
                 // Handle the sell invoice
-                handle_sell_invoice($repo_controller, $request);
-                // Go to the payment view
-                return view('')->with(['invoice' => $invoice]);
+                $this->handle_sell_invoice($invoice_type, $repo_controller, $request);
                 break;
 
             case 'buy_order':
                 // Handle the buy order send invoice
-                handle_buy_order_invoice($request);
+                $this->handle_buy_order_invoice($request);
                 // Return to sent orders page
                 return view('orderList')->with(['orders' => Order::all()]);
                 break;
 
             case 'buy_recieve':
                 // Handle buy receive order invoice
-                if (handle_buy_receive_invoice($repo_controller, $request) {
+                if ($this->handle_buy_receive_invoice($repo_controller, $request)) {
                     // Return the appropriate view
                     return view('')->with(['orders' => Order::all()]);
                 }
@@ -83,7 +97,7 @@ class InvoiceController extends Controller
     /**
     * An internal method responsible for handling the sell invoice.
     */
-    function handle_sell_invoice($repo_controller, $request)
+    function handle_sell_invoice($invoice_type, $repo_controller, $request)
     {
         // Create the new sell invoice instance
         $invoice = new Invoice;
@@ -91,15 +105,15 @@ class InvoiceController extends Controller
         $invoice->invoice_type()->associate($invoice_type);
 
         // Assign the shared invoce values from the request
-        $invoice->date = $request->input('date');
-        $invoice->notes = $reques->input('notes');
+        $invoice->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
+        $invoice->notes = $request->input('notes');
         // Set the discount reason if any
         $invoice->discount_reason = $request->input('discount_reason') == null ? 'لا يوجد سبب' : $request->input('discount_reason');
 
         // Get the drugs isds and information
         $drugs_ids = $request->input('drugs.ids.*');
         $drugs_packages_number = $request->input('drugs.packages_number.*');
-        $drugs_units_number = $reques->input('drugs.units_number.*');
+        $drugs_units_number = $request->input('drugs.units_number.*');
         $modified_drugs_package_sell_price = $request->input('drugs.modified_drugs_package_sell_price.*');
         $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
 
@@ -114,24 +128,27 @@ class InvoiceController extends Controller
             array_push($drugs_info, $drug_info);
         }
         // Calculate the prices and update the drugs reposotary
+        $invoice->is_paid = false;
+        $invoice->save();
+        // We need to save the new sell invoice in order to get its ID
         $prices = $repo_controller->update_drug_repo_from_sell_invoice($invoice->id, $drugs_info);
         $invoice->net_price = $prices[0];
         $invoice->sell_price = $prices[1];
 
         // Create the appropriate accounting operation
-        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات');
+        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات')->first();
         $accounting_operation = new AccountingOperation;
-        $accounting_operation->date = $request->input('date');
+        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
         $accounting_operation->amount = $invoice->sell_price;
         $accounting_operation->type()->associate($accounting_type);
         $accounting_operation->save();
 
         // Add it to the balance table
-        $balance = Balance::all();
+        $balance = Balance::first();
         $balance->balance += $invoice->sell_price;
         $balance->save();
 
-        if ($request->input('discount_amount') != null) {
+        /* if ($request->input('discount_amount') != null) {
             $invoice->discount_amount = $request->input('discount_amount');
             $invoice->discount_percentage = 0;
             $invoice->insurance_company_id = 0;
@@ -146,7 +163,7 @@ class InvoiceController extends Controller
                 $invoice->discount_amount = 0;
                 $invoice->insurance_company_id = 0;
             }
-        }
+        } */
         $invoice->is_paid = false;
         $invoice->save();
     }

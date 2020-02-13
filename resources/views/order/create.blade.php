@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
-	
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <section id="main-content">
     <section class="wrapper" >
@@ -23,36 +23,43 @@
                                 <input type="date" class="form-control" name="exp_date">
                             </div>
                         </div>
-                        <div class="form-group" dir="rtl">
+						<div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> الشركة </label>
                             <div class="col-sm-10">
-                            <input type="number" class="form-control" name="supplier_id">  
+                                <select name="company_id">
+                                    @foreach($companies as $company)
+                                    <option value="{{ $company->id }}"> {{ $company->name }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group" dir="rtl">
+						<div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> المستودع </label>
                             <div class="col-sm-10">
-                             
-
+                                <select name="warehouse_id">
+                                    @foreach($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->id }}">{{ $warehouse->name }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group" dir="rtl" id="dynamic_field">
                             <label class="col-sm-2 col-sm-2 control-label"> اسم الدواء</label>
                             <div class="col-sm-10">
-                                <input type="text" id="drug_name" class="form-control" name="name_arabic" autofocus> 
+                                <input type="text" id="drug_name" class="form-control" name="name_arabic" autofocus>
                             </div>
-                            
+
                         </div>
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> عدد الوحدات</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="unit_number"> 
+                                <input type="number" class="form-control" name="unit_number">
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label"> عدد العلب</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="packages_number"> 
+                                <input type="number" class="form-control" name="packages_number">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-theme">إضافة طلبية</button>
@@ -70,14 +77,14 @@ $(document).ready(function(){
 		i++;
 		$('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" id="drug_name" class="form-control" name="name_arabic" autofocus></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');
 	});
-	
+
 	$(document).on('click', '.btn_remove', function(){
-		var button_id = $(this).attr("id"); 
+		var button_id = $(this).attr("id");
 		$('#row'+button_id+'').remove();
 	});
-	
-	
-	
+
+
+
 });
 </script>-->
 @endsection

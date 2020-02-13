@@ -51,6 +51,72 @@ class DrugController extends Controller
     }
 
     /**
+    * Search for a certain drug through an AJAX request.
+    */
+    function search_drugs(Request $request)
+    {
+        $search = $request->search;
+        if ($search == ' ') {
+            $drugs = null;
+        }
+        $drugs = Drug::where('name_english', 'like', '%'.$search.'%')
+                       ->orWhere('name_arabic', 'like', '%'.$search.'%')
+                       ->orWhere('chemical_composition', 'like', '%'.$search.'%')
+                       ->get();
+        $response = array();
+        foreach($drugs as $drug) {
+            $response[] = array(
+                "id"=>$drug->id,
+                "text"=>$drug->name_arabic
+            );
+        }
+
+      echo json_encode($response);
+      exit;
+    }
+
+    /**
+    * Search for a certain drug through an AJAX request.
+    */
+    function get_drug_repo_by_id(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $data = null;
+            $output = '';
+            $drug_id = $request->input('drug_id');
+            $drug = null;
+            if ($drug_id != '')
+            {
+             $drug = Drug::find($drug_id);
+            }
+            else
+            {
+                $output = '
+                <tr>
+                 <td align="center" colspan="5">لم يتم إيجاد أي نتيجة</td>
+                </tr>
+                ';
+            }
+            $output = '
+            <tr>
+                <td id="drug_id" style="display:none">'. $drug[0]->id .'</td>
+                <td>'. $drug[0]->name_arabic .'</td>
+                <td class="text-left">'. $drug[0]->repo()->orderBy('exp_date', 'asc')->first()->exp_date .'</td>
+                <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="modified_drug_unit_sell_price"></td>
+                <td class="text-center"><input type="text" class="form-control" id="modified_drug_package_sell_price"></td>
+            </tr>';
+            $data = array(
+             'table_data'  => $output
+            );
+
+            echo json_encode($data);
+        }
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -155,8 +221,7 @@ class DrugController extends Controller
           // Grap the required drug information
           $drug_id = $drug_info[0];
           // Get the oldest drug repo
-          $drug_repos = DrugsRepo::where([['drug_id', '=', $drug_id], ['isDisposed', '=', false]])->orederBy('exp_date', 'DESC')->get();
-          $drug_repo = count($drug_repos) > 1 ? $drug_repos[0] : $drug_repos;
+          $drug_repo = DrugsRepo::where([['drug_id', '=', $drug_id], ['isDisposed', '=', false]])->orderBy('exp_date', 'DESC')->first();
           $drug_packages_number = $drug_info[1];
           $drug_units_number = $drug_info[2];
           $drug_package_new_sell_price = $drug_info[3];

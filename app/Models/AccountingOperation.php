@@ -19,6 +19,6 @@ class AccountingOperation extends Model
      */
     public function type()
     {
-        return $this->belongsTo(AccountingType::class);
+        return $this->belongsTo(AccountingType::class, 'accounting_type_id');
     }
 }
