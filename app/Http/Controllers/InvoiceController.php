@@ -46,7 +46,8 @@ class InvoiceController extends Controller
     function create_sell_invoice()
     {
         // Return the appropriate view
-        return view('invoice.create');
+        $insurance_companies = InsuranceCompany::all();
+        return view('invoice.create')->with(['insurance_companies' => $insurance_companies]);
     }
 
     /**
@@ -65,7 +66,8 @@ class InvoiceController extends Controller
         switch ($invoice_type->name) {
             case 'sell':
                 // Handle the sell invoice
-                $this->handle_sell_invoice($invoice_type, $repo_controller, $request);
+                $prices = $this->handle_sell_invoice($invoice_type, $repo_controller, $request);
+                return $prices;
                 break;
 
             case 'buy_order':
@@ -108,7 +110,7 @@ class InvoiceController extends Controller
         $invoice->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
         $invoice->notes = $request->input('notes');
         // Set the discount reason if any
-        $invoice->discount_reason = $request->input('discount_reason') == null ? 'لا يوجد سبب' : $request->input('discount_reason');
+        $invoice->discount_reason = 'لا يوجد سبب';
 
         // Get the drugs isds and information
         $drugs_ids = $request->input('drugs.ids.*');
@@ -129,43 +131,71 @@ class InvoiceController extends Controller
         }
         // Calculate the prices and update the drugs reposotary
         $invoice->is_paid = false;
+        $invoice->sell_price_after_discount = 0;
         $invoice->save();
         // We need to save the new sell invoice in order to get its ID
         $prices = $repo_controller->update_drug_repo_from_sell_invoice($invoice->id, $drugs_info);
         $invoice->net_price = $prices[0];
         $invoice->sell_price = $prices[1];
 
-        // Create the appropriate accounting operation
-        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات')->first();
-        $accounting_operation = new AccountingOperation;
-        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
-        $accounting_operation->amount = $invoice->sell_price;
-        $accounting_operation->type()->associate($accounting_type);
-        $accounting_operation->save();
+        $invoice->save();
+        $result = [];
+        array_push($result, $prices[0], $prices[1], $invoice->id);
+        // Return net and sell prices
+        return $result;
+    }
 
-        // Add it to the balance table
-        $balance = Balance::first();
-        $balance->balance += $invoice->sell_price;
-        $balance->save();
+    /**
+    * Handle the accounting operation.
+    */
+    function handle_accounting(Request $request)
+    {
+        // Get the appropriate invoice
+        $invoice = Invoice::find($request->input('invoice_id'));
 
-        /* if ($request->input('discount_amount') != null) {
+        // Handle discount
+        if ($request->input('discount_amount') != null) {
             $invoice->discount_amount = $request->input('discount_amount');
+            $invoice->sell_price_after_discount = $invoice->sell_price - $invoice->discount_amount;
+            $invoice->discount_reason = $request->input('discount_reason');
             $invoice->discount_percentage = 0;
-            $invoice->insurance_company_id = 0;
+            $invoice->insurance_company_id = null;
         } else {
             if ($request->input('insurance_company_id') != null) {
                 $insurance_company = InsuranceCompany::find($request->input('insurance_company_id'));
                 $invoice->discount_percentage = $insurance_company->discount;
-                $invoice->discount_amount = $invoice->sell_price * $invoice->discount_percentage;
+                $invoice->discount_amount = $invoice->sell_price * ($invoice->discount_percentage / 100);
+                $invoice->sell_price_after_discount = $invoice->sell_price - $invoice->discount_amount;
+                $invoice->discount_reason = $request->input('discount_reason');
                 $invoice->insurance_company()->associate($insurance_company);
             } else {
                 $invoice->discount_percentage = 0;
                 $invoice->discount_amount = 0;
-                $invoice->insurance_company_id = 0;
+                $invoice->insurance_company_id = null;
             }
-        } */
-        $invoice->is_paid = false;
+        }
+
+        $amount = $request->input('amount');
+        // Get the total payments for this invoice
+        $paid_amount = $invoice->operations()->sum('amount');
+        if ($paid_amount + $amount >= $invoice->sell_price_after_discount) {
+            $invoice->is_paid = true;
+        }
+        // Save
         $invoice->save();
+        // Create the appropriate accounting operation
+        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات')->first();
+        $accounting_operation = new AccountingOperation;
+        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
+        $accounting_operation->amount = $amount;
+        $accounting_operation->type()->associate($accounting_type);
+        $accounting_operation->invoice()->associate($invoice);
+        $accounting_operation->save();
+
+        // Add it to the balance table
+        $balance = Balance::first();
+        $balance->balance += $amount;
+        $balance->save();
     }
 
     /**

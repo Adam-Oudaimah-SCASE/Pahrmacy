@@ -9,16 +9,16 @@
         <title>برنامج إدارة الصيدليات</title>
 
         <!-- Favicons -->
-        <link href="img/favicon.png" rel="icon">
-        <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="/img/favicon.png" rel="icon">
+        <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
         <link href="/fonts/Droid Sans Arabic.ttf">
         <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <!--external css-->
         <link href="/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <!--datatable-->
-        <link href="lib/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-        <link href="lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-        <link rel="stylesheet" href="lib/advanced-datatable/css/DT_bootstrap.css" />
+        <link href="/lib/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+        <link href="/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/lib/advanced-datatable/css/DT_bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="/lib/bootstrap-datepicker/css/datepicker.css" />
         <link rel="stylesheet" type="text/css" href="/lib/bootstrap-daterangepicker/daterangepicker.css" />
         <!-- Custom styles for this template -->
@@ -31,8 +31,8 @@
         <script class="include" type="text/javascript" src="/lib/jquery.dcjqaccordion.2.7.js"></script>
         <script src="/lib/jquery.scrollTo.min.js"></script>
         <script src="/lib/jquery.nicescroll.js" type="text/javascript"></script>
-        <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
+        <script type="text/javascript" language="javascript" src="/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="/lib/advanced-datatable/js/DT_bootstrap.js"></script>
         <!--common script for all pages-->
         <script src="/lib/common-scripts.js"></script>
         <!--script for this page-->

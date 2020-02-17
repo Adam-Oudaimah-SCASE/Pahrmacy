@@ -21,4 +21,12 @@ class AccountingOperation extends Model
     {
         return $this->belongsTo(AccountingType::class, 'accounting_type_id');
     }
+
+    /**
+    * Get the related invoice for this payment.
+    */
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
 }

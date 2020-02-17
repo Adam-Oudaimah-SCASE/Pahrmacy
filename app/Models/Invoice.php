@@ -36,4 +36,12 @@ class Invoice extends Model
     {
         return $this->belongsToMany(Drug::class, 'drug_invoice');
     }
+
+    /**
+    * Get the payments for this invoice.
+    */
+    public function operations()
+    {
+        return $this->hasMany(AccountingOperation::class, 'invoice_id');
+    }
 }
