@@ -8,8 +8,8 @@
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <h4 class="mb"><i class="fa fa-angle-right"></i> معلومات الدواء</h4>
-                    <form class="form-horizontal style-form" action="{{route('drugs.store')}}" method="POST">
+                    <h4 class="mb"><i class="fa fa-angle-right"></i>معلومات الدواء</h4>
+                    <form class="form-horizontal style-form" action="{{ route('drugs.store') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الاسم العربي</label>
@@ -73,76 +73,75 @@
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> رقم الترخيص الخاص بالمنتج الدوائي</label>
+                            <label class="col-sm-2 col-sm-2 control-label">رقم الترخيص الخاص بالمنتج الدوائي</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="lic_palte">
                             </div>
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> الباركود المحلي</label>
+                            <label class="col-sm-2 col-sm-2 control-label">الباركود المحلي</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="local_barcode">
                             </div>
                         </div>
 
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> الباركود </label>
+                            <label class="col-sm-2 col-sm-2 control-label">الباركود</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="global_barcode">
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> الشركة </label>
+                            <label class="col-sm-2 col-sm-2 control-label">الشركة</label>
                             <div class="col-sm-10">
                                 <select name="company_id">
                                     @foreach($companies as $company)
-                                    <option value="{{$company->id }}">{{$company->name }} </option>
+                                    <option value="{{$company->id }}">{{ $company->name }}</option>
                                     @endforeach
                                 </select>
-
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> الصنف </label>
+                            <label class="col-sm-2 col-sm-2 control-label">الصنف</label>
                             <div class="col-sm-10">
                                 <select name="category_id">
                                     @foreach($categories as $category)
-                                    <option value="{{$category->id }}">{{$category->name }} </option>
+                                    <option value="{{$category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> الشكل </label>
+                            <label class="col-sm-2 col-sm-2 control-label">الشكل</label>
                             <div class="col-sm-10">
                                 <select name="shape_id">
                                     @foreach($shapes as $shape)
-                                    <option value="{{$shape->id }}">{{$shape->name }} </option>
+                                    <option value="{{$shape->id }}">{{ $shape->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> عدد الوحدات</label>
+                            <label class="col-sm-2 col-sm-2 control-label">عدد الوحدات</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="units_number">
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> عدد العلب </label>
+                            <label class="col-sm-2 col-sm-2 control-label">عدد العلب</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="packages_number">
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> تاريخ الانتاج </label>
+                            <label class="col-sm-2 col-sm-2 control-label">تاريخ الانتاج</label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" name="pro_date">
                             </div>
                         </div>
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label"> تاريخ انتهاء الصلاحية </label>
+                            <label class="col-sm-2 col-sm-2 control-label">تاريخ انتهاء الصلاحية</label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" name="exp_date">
                             </div>

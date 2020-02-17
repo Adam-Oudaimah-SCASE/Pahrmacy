@@ -14,8 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-// Drugs Routes
-Route::resource('drugs', 'DrugController');
 
 // Company Routes
 Route::resource('company', 'CompanyController')->except(['show']);
@@ -30,9 +28,8 @@ Route::resource('category', 'DrugCategoryController')->except(['show']);
 Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Invoice Routes
-Route::get('invoice', function () {
-    return view('invoice.invoice');
-});
+// Invoices list
+Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
 // Create a new sell invoice view
 Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
 // Store the new invoice
@@ -61,15 +58,6 @@ Route::get('aboutus', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 // Order routes
+// Create a new order
 Route::get('/orders/createOrder', 'InvoiceController@create_buy_order_invoice')->name('order.create');
-
-Route::get('receiveOrder', function () {
-    return view('order.receiveOrder');
-});
-Route::get('receive', function () {
-    return view('order.receive');
-});
-Route::get('/saveOrder', 'InvoiceController@store_invoice');
