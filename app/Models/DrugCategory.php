@@ -19,6 +19,6 @@ class DrugCategory extends Model
      */
     public function drugs()
     {
-        return $this->hasMany(Drug::class);
+        return $this->hasMany(Drug::class, 'category_id');
     }
 }

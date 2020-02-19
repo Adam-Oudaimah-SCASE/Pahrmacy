@@ -57,7 +57,7 @@ Route::get('/drugs', 'DrugController@index')->name('drug.index');
 // Create a new Drug View
 Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
-Route::post('/drugs/create', 'DrugController@create')->name('drug.create');
+Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 
 // Report routes
 Route::get('report', function () {
@@ -75,3 +75,6 @@ Route::get('aboutus', function () {
 });
 
 Auth::routes();
+
+// To test reports (Please do not delete these routes)
+Route::get('reports/category/{category_id}', 'ReportController@drugs_categories_report')->name('report.category');
