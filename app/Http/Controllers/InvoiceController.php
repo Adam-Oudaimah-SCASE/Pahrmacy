@@ -21,6 +21,16 @@ use App\Http\Controllers\DrugController;
 
 class InvoiceController extends Controller
 {
+
+    /**
+    * View all orders.
+    */
+    function get_all_orders()
+    {
+        $orders = Order::all();
+
+        return view('order.index')->with(['orders' => $orders]);
+    }
     /**
     * Return the appropriate view to create a buy order invoice.
     *
@@ -51,6 +61,17 @@ class InvoiceController extends Controller
     }
 
     /**
+    * Return the appropriate view to receive an order.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    function create_order_receive_invoice($order_id)
+    {
+        $order = Order::find($order_id);
+        return view('order.receive')->with(['order' => $order]);
+    }
+
+    /**
     * This is the route method that is responsible for handling every types of invoices.
     *
     * @param  \Illuminate\Http\Request  $request
@@ -75,15 +96,9 @@ class InvoiceController extends Controller
                 $this->handle_buy_order_invoice($request);
                 break;
 
-            case 'buy_recieve':
+            case 'buy_receive':
                 // Handle buy receive order invoice
-                if ($this->handle_buy_receive_invoice($repo_controller, $request)) {
-                    // Return the appropriate view
-                    return view('')->with(['orders' => Order::all()]);
-                }
-                else {
-                    echo "Invalid receive request";
-                }
+                $this->handle_buy_receive_invoice($repo_controller, $request);
                 break;
 
             case 'dispose':
@@ -245,9 +260,9 @@ class InvoiceController extends Controller
         $order_id = $request->input('order_id');
         $order = Order::find($order_id);
         $drugs_ids = $request->input('drugs.ids.*');
-        $drugs_unit_number = $reques->input('drugs.unit_number.*');
+        $drugs_unit_number = $request->input('drugs.unit_number.*');
         $drugs_packages_number = $request->input('drugs.packages_number.*');
-        $drugs_units_number = $reques->input('drugs.units_number.*');
+        $drugs_units_number = $request->input('drugs.units_number.*');
         $drugs_package_net_price = $request->input('drugs.package_net_price.*');
         $drugs_unit_net_price = $request->input('drugs.unit_net_price.*');
         $drugs_package_sell_price = $request->input('drugs.package_sell_price.*');
@@ -263,9 +278,9 @@ class InvoiceController extends Controller
         for ($i=0; $i<count($drugs_ids); $i++) {
             // Create each list entry of the drugs list
             $drug_info = array($drugs_ids[$i], $drugs_unit_number[$i], $drugs_packages_number[$i], $drugs_units_number[$i],
-                $drugs_production_dates[$i], $drugs_production_dates[$i],
+                $drugs_expiration_dates[$i], $drugs_production_dates[$i],
                 $drugs_package_sell_price[$i], $drugs_package_net_price[$i],
-                $drugs_package_unit_price[$i], $drugs_unit_net_price[$i],);
+                $drugs_package_net_price[$i], $drugs_unit_net_price[$i],);
             array_push($drugs_info, $drug_info);
             $drug_order_receive = new DrugOrderReceive;
             $drug_order_receive->order()->associate($order);
@@ -278,27 +293,22 @@ class InvoiceController extends Controller
         }
 
         // Update the repo
-        if ($repo_controller->update_drugs_repo_from_incoming_invoice($order_id, $drugs_info))
-        {
-            $order->is_delivered = true;
-            $order->net_price = $request->input('price');
+        $repo_controller->update_drugs_repo_from_incoming_invoice($order_id, $drugs_info);
+        $order->is_delivered = true;
+        $order->net_price = $request->input('net_price');
+        $order->save();
 
-            // Add the appropriate accounting operation
-            $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية');
-            $accounting_operation = new AccountingOperation;
-            $accounting_operation->date = $request->input('date');
-            $accounting_operation->amount = $order->net_price;
-            $accounting_operation->type()->associate($accounting_type);
-            $accounting_operation->save();
+        // Add the appropriate accounting operation
+        $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية')->get();
+        $accounting_operation = new AccountingOperation;
+        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d') : $request->input('date');
+        $accounting_operation->amount = $order->net_price;
+        $accounting_operation->type()->associate($accounting_type[0]);
+        $accounting_operation->save();
 
-            // Add it to the balance table
-            $balance = Balance::all();
-            $balance->balance -= $order->net_price;
-            $balance->save();
-            return true;
-        }
-        else {
-            false;
-        }
+        // Add it to the balance table
+        $balance = Balance::all()[0];
+        $balance->balance -= $order->net_price;
+        $balance->save();
     }
 }

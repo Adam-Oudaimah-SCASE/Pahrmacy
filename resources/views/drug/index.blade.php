@@ -8,7 +8,7 @@
             <div class="content-panel">
               <table class="table table-striped table-advance table-hover">
                 <h4><i class="fa fa-angle-left"></i> الأدوية</h4>
-                <a type="submit" class="btn btn-theme" href="{{ route('drugs.create' )}}" style="margin-right:10px;">إضافة دواء</a>
+                <a type="submit" class="btn btn-theme" href="{{ route('drug.create' )}}" style="margin-right:10px;">إضافة دواء</a>
                 <hr>
                 <thead>
                   <tr>

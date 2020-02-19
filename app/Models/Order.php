@@ -15,11 +15,19 @@ class Order extends Model
     protected $table = 'orders';
 
     /**
-    * Get the warehouses related to this order.
+    * Get the warehouse or company related to this order.
     *
     */
     public function orderable()
     {
         return $this->morphTo();
+    }
+
+    /**
+    * Get the drugs of this order (from drug_order_send table)
+    */
+    public function drugs()
+    {
+        return $this->hasMany(DrugOrderSend::class, 'order_id');
     }
 }

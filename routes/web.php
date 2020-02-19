@@ -41,6 +41,24 @@ Route::get('/invoices', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
 Route::get('/drug/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
 
+// Order routes
+// View all orders
+Route::get('/orders', 'InvoiceController@get_all_orders')->name('order.index');
+// Create a new order
+Route::get('/orders/createOrder', 'InvoiceController@create_buy_order_invoice')->name('order.create');
+// Get drug repo by drug ID (after selecting fom a Select2 event)
+Route::get('/drug/repo/order', 'DrugController@get_drug_repo_by_id_for_order')->name('drug.get_repo_by_id_for_order');
+// Receive Form
+Route::get('/orders/receive/{order_id}', 'InvoiceController@create_order_receive_invoice')->name('order.receive');
+
+// Drugs and Drugs Repo Routes
+// Drugs list
+Route::get('/drugs', 'DrugController@index')->name('drug.index');
+// Create a new Drug View
+Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
+// Store a new Drug
+Route::post('/drugs/create', 'DrugController@create')->name('drug.create');
+
 // Report routes
 Route::get('report', function () {
     return view('report');
@@ -57,11 +75,3 @@ Route::get('aboutus', function () {
 });
 
 Auth::routes();
-
-// Order routes
-// Create a new order
-Route::get('/orders/createOrder', 'InvoiceController@create_buy_order_invoice')->name('order.create');
-// Store the new invoice
-Route::post('/orders/createOrder', 'InvoiceController@store_invoice')->name('invoice.store');
-// Get drug repo by drug ID (after selecting fom a Select2 event)
-Route::get('/drug/repo/order', 'DrugController@get_drug_repo_by_id_for_order')->name('drug.get_repo_by_id_for_order');

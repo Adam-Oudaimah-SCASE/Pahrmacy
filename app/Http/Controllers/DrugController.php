@@ -47,7 +47,7 @@ class DrugController extends Controller
         $drugs = Drug::all();
 
         // Return the appropriate view
-        return view('drug.drugs')->withDrugs($drugs);
+        return view('drug.index')->withDrugs($drugs);
     }
 
     /**
@@ -169,7 +169,7 @@ class DrugController extends Controller
         $drugs = Drug::all();
         $shapes = DrugShape::all();
         $companies = Company::all();
-         return view('drug.addDrug')->with([
+         return view('drug.create')->with([
              'categories' => $categories,
              'shapes' => $shapes,
              'companies' => $companies,
@@ -241,7 +241,7 @@ class DrugController extends Controller
         // Get all the drugs
         $drugs = Drug::all();
         // Return the appropriate view
-        return view('drug.drugs')->withDrugs($drugs);
+        return view('drug.index')->withDrugs($drugs);
     }
 
     /**
@@ -343,6 +343,8 @@ class DrugController extends Controller
 
             // Initiate a new drug repo instance
             $drug_repo = new DrugsRepo;
+            $drug_repo->pro_date = $drug_pro_date;
+            $drug_repo->exp_date = $drug_exp_date;
 
             // Bind each repo with the appropriate order
             $drug_repo->order_id = $order_id;

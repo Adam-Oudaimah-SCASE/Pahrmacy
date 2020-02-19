@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <div class="form-panel">
                     <h4 class="mb"><i class="fa fa-angle-right"></i>معلومات الدواء</h4>
-                    <form class="form-horizontal style-form" action="{{ route('drugs.store') }}" method="POST">
+                    <form class="form-horizontal style-form" action="{{ route('drug.store') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الاسم العربي</label>

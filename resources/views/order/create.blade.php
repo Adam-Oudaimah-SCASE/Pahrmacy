@@ -103,9 +103,10 @@
                     'supplier_id' : supplier_id,
                     'invoice_type_id' : 2}, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
-                    console.log("ADAM");
+                    window.location.href = "/orders";
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    alert("حدث خطأ أثناء عملية استقبال فاتورة الشراء");
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
