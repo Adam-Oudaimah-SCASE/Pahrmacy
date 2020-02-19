@@ -39,7 +39,7 @@ Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting'
 // Search for drugs (AJAX request for Select2)
 Route::get('/invoices', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
-Route::get('/drug/repo', 'DrugController@get_drug_repo_by_id')->name('drug.get_repo_by_id');
+Route::get('/drug/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
 
 // Report routes
 Route::get('report', function () {
@@ -61,3 +61,7 @@ Auth::routes();
 // Order routes
 // Create a new order
 Route::get('/orders/createOrder', 'InvoiceController@create_buy_order_invoice')->name('order.create');
+// Store the new invoice
+Route::post('/orders/createOrder', 'InvoiceController@store_invoice')->name('invoice.store');
+// Get drug repo by drug ID (after selecting fom a Select2 event)
+Route::get('/drug/repo/order', 'DrugController@get_drug_repo_by_id_for_order')->name('drug.get_repo_by_id_for_order');

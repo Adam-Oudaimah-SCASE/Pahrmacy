@@ -20,6 +20,6 @@ class WareHouse extends Model
     */
     public function orders()
     {
-        return $this->morphToMany(Order::class, 'orderable');
+        return $this->morphMany(Order::class, 'orderable');
     }
 }

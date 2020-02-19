@@ -56,7 +56,7 @@ class DrugController extends Controller
     function search_drugs(Request $request)
     {
         $search = $request->search;
-        if ($search == ' ') {
+        if ($search == ' ' || $search == '' || $search == null) {
             $drugs = null;
         }
         $drugs = Drug::where('name_english', 'like', '%'.$search.'%')
@@ -76,9 +76,9 @@ class DrugController extends Controller
     }
 
     /**
-    * Search for a certain drug through an AJAX request.
+    * Search for a certain drug repo by its id through an AJAX request.
     */
-    function get_drug_repo_by_id(Request $request)
+    function get_drug_repo_by_id_for_sell(Request $request)
     {
         if ($request->ajax())
         {
@@ -107,6 +107,47 @@ class DrugController extends Controller
                 <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="modified_drug_unit_sell_price"></td>
                 <td class="text-center"><input type="text" class="form-control" id="modified_drug_package_sell_price"></td>
+            </tr>';
+            $data = array(
+             'table_data'  => $output
+            );
+
+            echo json_encode($data);
+        }
+    }
+
+    /**
+    * Search for a certain drug repo by its id through an AJAX request.
+    */
+    function get_drug_repo_by_id_for_order(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $data = null;
+            $output = '';
+            $drug_id = $request->input('drug_id');
+            $drug = null;
+            if ($drug_id != '')
+            {
+             $drug = Drug::find($drug_id);
+            }
+            else
+            {
+                $output = '
+                <tr>
+                 <td align="center" colspan="5">لم يتم إيجاد أي نتيجة</td>
+                </tr>
+                ';
+            }
+            $output = '
+            <tr>
+                <td id="drug_id" style="display:none">'. $drug[0]->id .'</td>
+                <td>'. $drug[0]->name_arabic .'</td>
+                <td class="text-left">'. $drug[0]->repo()->orderBy('exp_date', 'asc')->first()->exp_date .'</td>
+                <td class="text-center">'. $drug[0]->repo()->sum('packages_number') .'</td>
+                <td class="text-center">'. $drug[0]->repo()->sum('units_number') .'</td>
+                <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
             </tr>';
             $data = array(
              'table_data'  => $output

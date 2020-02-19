@@ -262,7 +262,7 @@
       function fetch_drugs(drug = '')
       {
        $.ajax ({
-        url:"{{ route('drug.get_repo_by_id') }}",
+        url:"{{ route('drug.get_repo_by_id_for_sell') }}",
         method:'GET',
         data:{drug_id:drug},
         dataType:'json',

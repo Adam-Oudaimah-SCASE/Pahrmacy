@@ -73,8 +73,6 @@ class InvoiceController extends Controller
             case 'buy_order':
                 // Handle the buy order send invoice
                 $this->handle_buy_order_invoice($request);
-                // Return to sent orders page
-                return view('orderList')->with(['orders' => Order::all()]);
                 break;
 
             case 'buy_recieve':
@@ -196,6 +194,8 @@ class InvoiceController extends Controller
         $balance = Balance::first();
         $balance->balance += $amount;
         $balance->save();
+
+        exit;
     }
 
     /**
@@ -206,20 +206,23 @@ class InvoiceController extends Controller
         // Create a new Order instance.
         $order = new Order;
         $order->date = $request->input('date');
+        $order->net_price = 0;
 
         // Check if the supplier is a company or a warehouse, and bind it to the order
         $supplier = WareHouse::find($request->input('supplier_id'));
         if (!$supplier) {
             $supplier = Company::find($request->input('supplier_id'));
-            $order->companies()->associate($supplier);
+            $order->orderable()->associate($supplier);
         }
         else {
-            $order->warehouses()->associate($supplier);
+            $order->orderable()->associate($supplier);
         }
+        // To generate the order ID
+        $order->save();
         // Get the required information from the request
         $drugs_ids = $request->input('drugs.ids.*');
         $drugs_packages_number = $request->input('drugs.packages_number.*');
-        $drugs_units_number = $reques->input('drugs.units_number.*');
+        $drugs_units_number = $request->input('drugs.units_number.*');
 
         // Loop over the drugs, and create an appropriate entry in the drug_order_send table
         for ($i=0; $i<count($drugs_ids); $i++) {
@@ -230,9 +233,7 @@ class InvoiceController extends Controller
             $drug_order_send->ordered_units_number = $drugs_units_number[$i];
             $drug_order_send->save();
         }
-
-        // Save the order
-        $order->save();
+        exit;
     }
 
     /**
