@@ -48,10 +48,7 @@ class InvoiceTypeController extends Controller
       // Save the new type
       $type->save();
 
-      // Get all the types
-      $types = Type::all();
-      // Return the appropriate view
-      return view('')->withTypes($types);
+      return redirect()->route('.index');
   }
 
   /**
@@ -100,10 +97,7 @@ class InvoiceTypeController extends Controller
       // Save the updates
       $type->save();
 
-      // Get all the types
-      $types = Type::all();
-      // Return the appropriate view
-      return view('')->withTypes($types);
+      return redirect()->route('.index');
   }
 
   /**
@@ -120,9 +114,7 @@ class InvoiceTypeController extends Controller
       // Delete the record
       $type->delete();
 
-      // Get all the types
-      $types = Type::all();
       // Return the appropriate view
-      return view('')->withTypes($types);
+      return redirect()->route('.index');
   }
 }

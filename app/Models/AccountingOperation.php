@@ -25,8 +25,8 @@ class AccountingOperation extends Model
     /**
     * Get the related invoice for this payment.
     */
-    public function invoice()
+    public function operationable()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->morphTo();
     }
 }

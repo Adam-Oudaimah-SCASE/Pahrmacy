@@ -15,7 +15,7 @@ class EditAccountingOperataionsTable extends Migration
     {
         Schema::table('accounting_operations', function (Blueprint $table) {
             $table->unsignedBigInteger('invoice_id')->nullable()->after('accounting_type_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

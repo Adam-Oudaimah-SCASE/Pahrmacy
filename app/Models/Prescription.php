@@ -27,6 +27,22 @@ class Prescription extends Model
      */
     public function drugs()
     {
-        return $this->belongsToMany(Drug::class, 'drug_prescription');
+        return $this->belongsToMany(Drug::class, 'drug_prescription')->withPivot('packages_number', 'units_number', 'unit_sell_price', 'package_sell_price');
+    }
+
+    /**
+     * Get the insurance company for the invoice.
+     */
+    public function insurance_company()
+    {
+        return $this->belongsTo(InsuranceCompany::class);
+    }
+
+    /**
+    * Get the payments for this invoice.
+    */
+    public function operations()
+    {
+        return $this->morphMany(AccountingOperation::class, 'operationable');
     }
 }

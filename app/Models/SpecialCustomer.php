@@ -17,7 +17,7 @@ class SpecialCustomer extends Model
     /**
      * Get the prescriptions for the customer.
      */
-    public function drugs()
+    public function prescriptions()
     {
         return $this->hasMany(Prescription::class);
     }

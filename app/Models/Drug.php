@@ -35,7 +35,7 @@ class Drug extends Model
      */
     public function prescriptions()
     {
-        return $this->belongsToMany(Prescription::class, 'drug_prescription');
+        return $this->belongsToMany(Prescription::class, 'drug_prescription')->withPivot('packages_number', 'units_number', 'unit_sell_price', 'package_sell_price');
     }
 
     /**

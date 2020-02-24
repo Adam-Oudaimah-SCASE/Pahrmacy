@@ -42,6 +42,6 @@ class Invoice extends Model
     */
     public function operations()
     {
-        return $this->hasMany(AccountingOperation::class, 'invoice_id');
+        return $this->morphMany(AccountingOperation::class, 'operationable');
     }
 }

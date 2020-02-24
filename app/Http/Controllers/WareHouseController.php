@@ -116,6 +116,6 @@ class WareHouseController extends Controller
         $warehouse->delete();
 
         // Return the appropriate view
-        return Redirect('warehouse.index');
+        return redirect()->route('warehouse.index');
     }
 }

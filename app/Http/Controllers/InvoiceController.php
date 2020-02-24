@@ -210,7 +210,7 @@ class InvoiceController extends Controller
         $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
         $accounting_operation->amount = $amount;
         $accounting_operation->type()->associate($accounting_type);
-        $accounting_operation->invoice()->associate($invoice);
+        $accounting_operation->operationable()->associate($invoice);
         $accounting_operation->save();
 
         // Add it to the balance table
@@ -288,7 +288,7 @@ class InvoiceController extends Controller
             $drug_info = array($drugs_ids[$i], $drugs_unit_number[$i], $drugs_packages_number[$i], $drugs_units_number[$i],
                 $drugs_expiration_dates[$i], $drugs_production_dates[$i],
                 $drugs_package_sell_price[$i], $drugs_package_net_price[$i],
-                $drugs_package_net_price[$i], $drugs_unit_net_price[$i],);
+                $drugs_unit_sell_price[$i], $drugs_unit_net_price[$i]);
             array_push($drugs_info, $drug_info);
             $drug_order_receive = new DrugOrderReceive;
             $drug_order_receive->order()->associate($order);

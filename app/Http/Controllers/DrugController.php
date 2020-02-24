@@ -388,4 +388,35 @@ class DrugController extends Controller
         }
         return true;
     }
+
+    /**
+     * Update the repo.
+     * This method is used when selling a prescription for a special customer.
+     * The needed information are passed as a list of lists ($drugs_info).
+     * Each element of this list contains the following information:
+     * [Drug ID, Packages number, Units number]
+     *
+     * @return boolean True if storing all the new quantites completed successuly, unhandled exception otherwise
+     */
+    public function update_drugs_repo_from_prescription_invoice($drugs_info)
+    {
+        // Loop over each drug
+        foreach ($drugs_info as $drug_info) {
+            // Grap the required drug information
+            $drug_repo = Drug::find($drug_info[0])->repo->where(['isDisposed', '=', false])->orderBy('exp_date', 'ASC')->first();
+            $drug_packages_number = $drug_info[1];
+            $drug_units_number = $drug_info[2];
+
+            // Manipulate the quantity and the price
+            if ($drug_units_number != null) {
+                $drug_repo->packages_number -= (int) ($drug_units_number / $drug_repo->unit_number);
+                $drug_repo->units_number -= $drug_units_number;
+            }
+            else {
+                $drug_repo->packages_number -= $drug_packages_number;
+                $drug_repo->units_number -= $drug_packages_number * $drug_repo->unit_number;
+            }
+        }
+        return true;
+    }
 }

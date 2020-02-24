@@ -227,7 +227,7 @@
                     'discount_reason' : discount_reason,
                     'insurance_company_id' : insurance_company_id }, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
-                    window.location.href = "/invoices/createInvoice"
+                    window.location.href = "/invoices"
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                     console.log(JSON.stringify(jqXHR));
