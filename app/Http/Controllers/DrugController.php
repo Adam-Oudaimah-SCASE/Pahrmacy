@@ -222,13 +222,13 @@ class DrugController extends Controller
 
         // Set the prices
         $drug_repo->package_sell_price = $request->input('package_sell_price');
-        if ($request->input('unit_sell_price') == null || str($request->input('unit_sell_price')) == "0") {
+        if ($request->input('unit_sell_price') == null || strval($request->input('unit_sell_price')) == "0") {
             $drug_repo->unit_sell_price = (int)$drug_repo->package_sell_price / $drug_repo->unit_number;
         } else {
             $drug_repo->unit_sell_price = $request->input('unit_sell_price');
         }
         $drug_repo->package_net_price = $request->input('package_net_price');
-        if ($request->input('unit_net_price') == null || str($request->input('unit_net_price')) == "0") {
+        if ($request->input('unit_net_price') == null || strval($request->input('unit_net_price')) == "0") {
             $drug_repo->unit_net_price = (int)$drug_repo->package_net_price / $drug_repo->unit_number;
         } else {
             $drug_repo->unit_net_price = $request->input('unit_net_price');
@@ -262,7 +262,7 @@ class DrugController extends Controller
           // Grap the required drug information
           $drug_id = $drug_info[0];
           // Get the oldest drug repo
-          $drug_repo = DrugsRepo::where([['drug_id', '=', $drug_id], ['isDisposed', '=', false]])->orderBy('exp_date', 'DESC')->first();
+          $drug_repo = DrugsRepo::where([['drug_id', '=', $drug_id], ['isDisposed', '=', false]])->orderBy('exp_date', 'ASC')->first();
           $drug_packages_number = $drug_info[1];
           $drug_units_number = $drug_info[2];
           $drug_package_new_sell_price = $drug_info[3];
