@@ -29,7 +29,7 @@ Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Invoice Routes
 // Invoices list
-Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
+Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');
 // Create a new sell invoice view
 Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
 // Store the new invoice
@@ -37,7 +37,7 @@ Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name(
 // Bayment for an invoice
 Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
 // Search for drugs (AJAX request for Select2)
-Route::get('/invoices', 'DrugController@search_drugs')->name('drug.search');
+Route::get('/invoices/search', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
 Route::get('/drug/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
 

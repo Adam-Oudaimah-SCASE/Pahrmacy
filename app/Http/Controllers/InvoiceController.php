@@ -20,6 +20,15 @@ use App\Http\Controllers\DrugController;
 
 class InvoiceController extends Controller
 {
+    /**
+    * Display all sell invoices.
+    */
+    function get_sell_invoices()
+    {
+        $invoices = Invoice::all();
+
+        return view('invoice.index')->with(['invoices' => $invoices]);
+    }
 
     /**
     * View all orders.

@@ -34,7 +34,7 @@ class Invoice extends Model
      */
     public function drugs()
     {
-        return $this->belongsToMany(Drug::class, 'drug_invoice');
+        return $this->belongsToMany(Drug::class, 'drug_invoice')->withPivot('drug_package_number', 'drug_unit_number', 'modified_drug_unit_sell_price', 'modified_drug_package_sell_price');
     }
 
     /**
