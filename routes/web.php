@@ -61,7 +61,7 @@ Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 
 // Report routes
 Route::get('report', function () {
-    return view('report');
+    return view('reports/categoryReport');
 });
 
 // Techsupport routes
