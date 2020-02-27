@@ -59,6 +59,13 @@ Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
 Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 
+// perscription  routes
+// View all perscriptions
+Route::get('/prescriptions', 'PrescriptionController@index')->name('prescription.index');
+Route::get('/prescriptions/create', 'PrescriptionController@create')->name('prescription.create');
+Route::get('/prescriptions/{id}', 'PrescriptionController@show');
+
+
 // Report routes
 Route::get('report', function () {
     return view('report');
