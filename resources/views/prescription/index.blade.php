@@ -17,8 +17,8 @@
             <div class="product-panel-2 pn">
 
               <img src="img/report .png" width="75" alt="" style="margin-left:18px;margin-top:40px">
-              <h5 class="mt">{{$p->customer->name}}</h5>
-              <h6>السعر: {{$p->sell_price}}</h6>
+              <h4 class="mt">{{$p->customer->name}}</h5>
+              <h5>السعر: {{$p->sell_price}}</h6>
             <a href="/prescriptions/{{$p->id}}">  <button class="btn btn-small btn-theme"  >الوصفة الكاملة</button></a>
             </div>
           </div>

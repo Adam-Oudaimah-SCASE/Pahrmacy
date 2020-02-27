@@ -47,7 +47,7 @@
         <script type="text/javascript" src="/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
         <script type="text/javascript" src="/lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
         <script src="/lib/form-component.js"></script>
-
+        
         <!-- Custom Scripts -->
         @yield('custom-cdns')
     </head>

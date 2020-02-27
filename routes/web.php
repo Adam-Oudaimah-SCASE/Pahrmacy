@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','InvoiceController@create_sell_invoice')->name('invoice.create');
 
 // Company Routes
 Route::resource('company', 'CompanyController')->except(['show']);
