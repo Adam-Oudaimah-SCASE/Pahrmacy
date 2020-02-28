@@ -6,14 +6,14 @@
             <div class="col-md-12">
                 <div class="content-panel">
                     <table class="table table-striped table-advance table-hover">
-                        <h4> <i class="fa fa-angle-left"></i>المستودعات</h4>
-                        <a type="submit" class="btn btn-theme" href="{{ route('warehouse.create') }}" style="margin-right:10px;">إضافة مستودع</a>
+                        <h3> <i class="fa fa-angle-left mr"></i>المستودعات</h3>
+                        <a type="submit" class="btn btn-theme mr" href="{{ route('warehouse.create') }}" >إضافة مستودع</a>
                         <hr>
                         <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i>اسم المستودع</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i>رقم الهاتف</th>
-                                <th><i class="fa fa-bookmark"></i>العنوان</th>
+                                <th><i class="fa fa-bullhorn ml"></i>اسم المستودع</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle ml"></i>رقم الهاتف</th>
+                                <th><i class="fa fa-bookmark ml"></i>العنوان</th>
                                 <th>البريد الالكتروني</th>
                                 <th>الفاكس</th>
                             </tr>

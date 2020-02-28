@@ -87,7 +87,7 @@
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الشركة</label>
                             <div class="col-sm-2">
-                                <select name="company_id">
+                                <select class="form-control" name="company_id">
                                     @foreach($companies as $company)
                                     <option value="{{$company->id }}">{{ $company->name }}</option>
                                     @endforeach
@@ -95,7 +95,7 @@
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">الصنف</label>
                             <div class="col-sm-2">
-                                <select name="category_id">
+                                <select class="form-control" name="category_id">
                                     @foreach($categories as $category)
                                     <option value="{{$category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -103,7 +103,7 @@
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">الشكل</label>
                             <div class="col-sm-2">
-                                <select name="shape_id">
+                                <select class="form-control" name="shape_id">
                                     @foreach($shapes as $shape)
                                     <option value="{{$shape->id }}">{{ $shape->name }}</option>
                                     @endforeach
