@@ -77,7 +77,7 @@
                     <ul class="sub">
                         <li><a href="{{ route('drug.index') }}">عرض الادوية</a></li>
                         <li><a href="{{ route('category.index') }}">الأقسام</a></li>
-                        <li><a href="{{ route('shape.index') }}">الاشكال الدوائية</a></li>
+                        <li><a href="{{ route('shape.index') }}">الأصناف الدوائية</a></li>
                         <li><a href="#">تقرير مبيعات الأقسام</a></li>
                         <li><a href="#">تقرير الأدوية الحالية</a></li>
                         <li><a href="#">تقرير كميات الادوية المنتهية الصلاحية</a></li>
@@ -112,7 +112,6 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ route('invoice.create') }}">فاتورة مبيعات</a></li>
-                        <li><a href="{{ route('order.create') }}">فاتورة مشتريات</a></li>
                         <li><a href="{{ route('order.index') }}">عرض فواتير الشراء</a></li>
                         <li><a href="">  فاتورة بيع مع تأمين</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
@@ -129,6 +128,7 @@
                         <span>الصندوق</span>
                     </a>
                     <ul class="sub">
+                        <li><a href="#">المصروف</a></li>
                         <li><a href="#">مبيعات خلال فترة معينة</a></li>
                         <li><a href="#">مدفوعات خلال فترة معينة</a></li>
                         <li><a href="#">تقرير شهري</a></li>

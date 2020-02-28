@@ -13,40 +13,46 @@
                     @method('PUT')
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">اسم المستودع:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" value="{{ $warehouse->name }}">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="name" value="{{ $warehouse->name }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
-                        </div>
-                        <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">عنوان المستودع</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="address" value="{{ $warehouse->address }}">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="address" value="{{ $warehouse->address }}"oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">رقم التواصل</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="phone" value="{{ $warehouse->phone }}">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="phone" value="{{ $warehouse->phone }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">موعد الزيارة الأسبوعي</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" name="weekly_date">
+                            <div class="col-sm-4">
+                              <select class="form-control" name="weekly_date" >
+
+                                <option value="السبت"><strong>السبت</strong></option>
+                                <option value="الأحد"><strong>الأحد</strong></option>
+                                <option value="الإثنين"><strong>الإثنين</strong></option>
+                                <option value="الثلاثاء"><strong>الثلاثاء</strong></option>
+                                <option value="الأربعاء"><strong>الأربعاء</strong></option>
+                                <option value="الخميس"><strong>الخميس</strong></option>
+
+                            </select>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">البريد الالكتروني</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" name="email" value="{{ $warehouse->email }}">
+                            <div class="col-sm-4">
+                                <input type="email" class="form-control" name="email" value="{{ $warehouse->email }}" oninvalid="this.setCustomValidity('رجاء إدخال عنوان بريد إلكتروني صحيحي')" onchange="this.setCustomValidity('')"  required>
                             </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">الفاكس</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="fax" value="{{ $warehouse->fax }}">
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="fax" value="{{ $warehouse->fax }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
+
                         <button type="submit" class="btn btn-theme">إضافة مستودع</button>
                     </form>
                 </div>

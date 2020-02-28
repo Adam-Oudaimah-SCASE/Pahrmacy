@@ -6,8 +6,8 @@
             <div class="col-md-12">
                 <div class="content-panel">
                     <table class="table table-striped table-advance table-hover">
-                        <h4><i class="fa fa-angle-left"></i>الأشكال</h4>
-                        <a type="submit" class="btn btn-theme" href="{{ route('shape.create') }}" style="margin-right:10px;">إضافة شكل</a>
+                        <h3><i class="fa fa-angle-left mr"></i>الأشكال</h3>
+                        <a type="submit" class="btn btn-theme mr" href="{{ route('shape.create') }}" >إضافة شكل</a>
                         <hr>
                         <thead>
                             <tr>

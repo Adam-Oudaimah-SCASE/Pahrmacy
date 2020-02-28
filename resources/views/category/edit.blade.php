@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">الصنف الدوائي</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ $category->name }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-theme">تعديل</button>

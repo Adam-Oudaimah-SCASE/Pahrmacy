@@ -10,28 +10,24 @@
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <h4 class="mb"><i class="fa fa-angle-right"></i> معلومات</h4>
+                    <h3 class="mb"><i class="fa fa-angle-right mr"></i> معلومات</h3>
                     <div class="form-group" dir="rtl">
-                        <label class="col-sm-2 col-sm-2 control-label">تاريخ الطلبية</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-2 control-label">تاريخ الطلبية</label>
+                        <div class="col-sm-2 ">
                             <input type="date" class="form-control" id="date">
                         </div>
-                    </div>
-                    <div class="form-group" dir="rtl">
                         <label class="col-sm-2 col-sm-2 control-label">الشركة</label>
-                        <div class="col-sm-10">
-                            <select id="company_id">
-                                <option value="" selected></option>
+                        <div class="col-sm-2">
+                            <select id="company_id" class="form-control">
+                                <option   value="" selected></option>
                                 @foreach($companies as $company)
                                     <option value="{{ $company->id }}">{{ $company->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group" dir="rtl">
                         <label class="col-sm-2 col-sm-2 control-label">المستودع</label>
-                        <div class="col-sm-10">
-                            <select id="warehouse_id">
+                        <div class="col-sm-2">
+                            <select class="form-control" id="warehouse_id">
                                 <option value="" selected></option>
                                 @foreach($warehouses as $warehouse)
                                     <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -39,19 +35,34 @@
                             </select>
                         </div>
                     </div>
-                    <label for="search_drugs">
-                        أبحث عن الدواء
-                        <select class="js-states form-control" multiple="multiple" id="search_drugs"></select>
-                    </label>
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    <div class="form-group" dir="rtl">
+
+
+                        <label class="col-sm-2 control-label" for="search_drugs">
+                            أبحث عن الدواء
+
+                        </label>
+                      <div class="col-sm-4">
+                        <select class="js-states form-control " multiple="multiple" id="search_drugs"></select>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
                     <table class="table">
                         <thead>
                             <tr>
                                 <th class="text-left">اسم الدواء بالعربي</th>
                                 <th class="text-left">تاريخ انتهاء الصلاحية</th>
-                                <th style="width:150px" class="text-center">عدد العلب المتوفرة</th>
-                                <th style="width:150px" class="text-center">عدد الظروف المتوفرة</th>
-                                <th style="width:150px" class="text-center">عدد العلب المراد طلبها</th>
-                                <th style="width:150px" class="text-center">عدد الظروف المراد طلبها</th>
+                                <th  class="text-center">عدد العلب المتوفرة</th>
+                                <th  class="text-center">عدد الظروف المتوفرة</th>
+                                <th  class="text-center">عدد العلب المراد طلبها</th>
+                                <th  class="text-center">عدد الظروف المراد طلبها</th>
                             </tr>
                         </thead>
                         <tbody id="drugs">

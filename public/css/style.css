@@ -21,7 +21,7 @@ body {
     font-family:'Droid Sans Arabic',sans-serif;
     padding: 0px !important;
     margin: 0px !important;
-    font-size:13px;
+    font-size:16px;
 }
 
 ul li {
@@ -217,7 +217,7 @@ hr {
 
 ul.top-menu > li > .logout {
 	color: #f2f2f2;
-	font-size: 12px;
+	font-size: 14px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border: 1px solid rgb(43,173,74) !important;
@@ -310,7 +310,7 @@ ul.sidebar-menu li ul.sub li:last-child{
 }
 
 ul.sidebar-menu li ul.sub li a {
-    font-size: 12px;
+    font-size: 14px;
     padding: 6px 0;
     line-height: 35px;
     height: 35px;
@@ -357,7 +357,7 @@ ul.sidebar-menu li a{
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
-    font-size: 12px;
+    font-size: 14px;
     outline: none;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -3506,6 +3506,8 @@ ul.chat-available-user li a:hover {
 .float-right{
   float: right;
 }
-.ml{
-  margin-left: 2rem;
+.mr{
+  margin-right: 10px;
 }
+.ml{
+  margin-left: 10px;

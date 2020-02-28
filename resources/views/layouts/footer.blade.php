@@ -1,5 +1,5 @@
     <!--footer start-->
-    <footer class="site-footer">
+    <footer class="site-footer" style="margin-top:320px">
       <div class="text-center">
         <p>
           &copy; جميع الحقوق محفوظة

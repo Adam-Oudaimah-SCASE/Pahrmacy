@@ -25,6 +25,18 @@ class PrescriptionController extends Controller
         return view('prescription.index')->withPrescriptions($prescriptions);
     }
 
+    public function show($id){
+
+      $prescriptions = Prescription::find($id);
+      return View('prescription.prescription')
+
+
+          ->with('prescriptions', $prescriptions )
+
+
+          ;
+  }
+
     /**
      * Show the form for creating a new resource.
      *
