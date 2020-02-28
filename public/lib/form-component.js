@@ -1,13 +1,9 @@
 var Script = function () {
-
-
     //checkbox and radio btn
-
     var d = document;
     var safari = (navigator.userAgent.toLowerCase().indexOf('safari') != -1) ? true : false;
     var gebtn = function(parEl,child) { return parEl.getElementsByTagName(child); };
     onload = function() {
-
         var body = gebtn(d,'body')[0];
         body.className = body.className && body.className != '' ? body.className + ' has-js' : 'has-js';
 
@@ -54,30 +50,20 @@ var Script = function () {
         };
     };
 
-
-
     $(function() {
-
         // Tags Input
         $(".tagsinput").tagsInput();
-
         // Switch
         $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
-
     });
-
-
 
     //color picker
-
-    $('.cp1').colorpicker({
+    $('.cp1').ColorPicker({
         format: 'hex'
     });
-    $('.cp2').colorpicker();
-
+    $('.cp2').ColorPicker();
 
     //date picker
-
     if (top.location != location) {
         top.location.href = document.location.href ;
     }
@@ -91,7 +77,6 @@ var Script = function () {
         $('#dp3').datepicker();
         $('#dpYears').datepicker();
         $('#dpMonths').datepicker();
-
 
         var startDate = new Date(2012,1,20);
         var endDate = new Date(2012,1,25);
@@ -144,12 +129,8 @@ var Script = function () {
             }).data('datepicker');
     });
 
-
-
     //daterange picker
-
     $('#reservation').daterangepicker();
-
     $('#reportrange').daterangepicker(
         {
             ranges: {
@@ -186,6 +167,4 @@ var Script = function () {
 
     //Set the initial state of the picker label
     $('#reportrange span').html(Date.today().add({ days: -29 }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
-
-
 }();
