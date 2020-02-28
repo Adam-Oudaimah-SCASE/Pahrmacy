@@ -77,7 +77,7 @@
                     <ul class="sub">
                         <li><a href="{{ route('drug.index') }}">عرض الادوية</a></li>
                         <li><a href="{{ route('category.index') }}">الأقسام</a></li>
-                        <li><a href="{{ route('shape.index') }}">الاشكال الدوائية</a></li>
+                        <li><a href="{{ route('shape.index') }}">الأصناف الدوائية</a></li>
                         <li><a href="#">تقرير مبيعات الأقسام</a></li>
                         <li><a href="#">تقرير الأدوية الحالية</a></li>
                         <li><a href="#">تقرير كميات الادوية المنتهية الصلاحية</a></li>

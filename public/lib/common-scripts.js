@@ -20,7 +20,7 @@ var Script = function() {
 
   jQuery('#sidebar .sub-menu > a').click(function() {
     var o = ($(this).offset());
-    diff = 250 - o.top;
+    diff = 250 + o.top;
     if (diff > 0)
       $("#sidebar").scrollTo("-=" + Math.abs(diff), 500);
     else
@@ -74,7 +74,7 @@ var Script = function() {
   $("#sidebar").niceScroll({
     styler: "fb",
     cursorcolor: "#2bad49",
-    cursorwidth: '3',
+    cursorwidth: '6',
     cursorborderradius: '10px',
     background: '#404040',
     spacebarenabled: true,

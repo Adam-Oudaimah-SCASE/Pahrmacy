@@ -33,8 +33,6 @@
         <script src="/lib/jquery.nicescroll.js" type="text/javascript"></script>
         <script type="text/javascript" language="javascript" src="/lib/advanced-datatable/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="/lib/advanced-datatable/js/DT_bootstrap.js"></script>
-        <!--common script for all pages-->
-        <script src="/lib/common-scripts.js"></script>
         <!--script for this page-->
         <script src="/lib/jquery-ui-1.9.2.custom.min.js"></script>
         <!--custom switch-->
@@ -47,7 +45,7 @@
         <script type="text/javascript" src="/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
         <script type="text/javascript" src="/lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
         <script src="/lib/form-component.js"></script>
-        
+
         <!-- Custom Scripts -->
         @yield('custom-cdns')
     </head>
@@ -59,5 +57,7 @@
         @include('layouts.footer')
         <!-- Custom Scripts -->
         @yield('scripts')
+          <!--common script for all pages-->
+          <script src="/lib/common-scripts.js"></script>
     </body>
 </html>
