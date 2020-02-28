@@ -8,17 +8,16 @@
                    <div class="adv-table">
                         <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
                             id="hidden-table-info">
-                            <h4><i class="fa fa-angle-left"></i> الشركات</h4>
-                            <a type="submit" class="btn btn-theme" href="{{ route('company.create') }}"
-                                style="margin-right:10px;">إضافة شركة</a>
+                            <h3><i class="fa fa-angle-left  mr"></i> الشركات</h3>
+                            <a type="submit" class="btn btn-theme  mr" href="{{ route('company.create') }}">إضافة شركة</a>
                             <hr>
                             <thead>
                                 <tr>
-                                    <th><i class="fa fa-bullhorn"></i>اسم الشركة</th>
-                                    <th><i class="fa fa-bullhorn"></i>الاسم الأجنبي</th>
-                                    <th class="hidden-phone"><i class="fa fa-question-circle"></i>رقم الهاتف</th>
-                                    <th><i class="fa fa-bookmark"></i>العنوان</th>
-                                    <th><i class=" fa fa-edit"></i>الموقع الالكتروني</th>
+                                    <th><i class="fa fa-bullhorn ml"></i>اسم الشركة</th>
+                                    <th><i class="fa fa-bullhorn ml"></i>الاسم الأجنبي</th>
+                                    <th class="hidden-phone "><i class="fa fa-question-circle ml"></i>رقم الهاتف</th>
+                                    <th><i class="fa fa-bookmark ml"></i>العنوان</th>
+                                    <th><i class=" fa fa-edit ml"></i>الموقع الالكتروني</th>
                                     <th>البريد الالكتروني</th>
                                     <th>الفاكس</th>
                                 </tr>

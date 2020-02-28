@@ -14,18 +14,18 @@
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">اسم المستودع:</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="name" value="{{ $warehouse->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ $warehouse->name }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">عنوان المستودع</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="address" value="{{ $warehouse->address }}">
+                                <input type="text" class="form-control" name="address" value="{{ $warehouse->address }}"oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">رقم التواصل</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="phone" value="{{ $warehouse->phone }}">
+                                <input type="text" class="form-control" name="phone" value="{{ $warehouse->phone }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">موعد الزيارة الأسبوعي</label>
                             <div class="col-sm-4">
@@ -45,11 +45,11 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">البريد الالكتروني</label>
                             <div class="col-sm-4">
-                                <input type="email" class="form-control" name="email" value="{{ $warehouse->email }}">
+                                <input type="email" class="form-control" name="email" value="{{ $warehouse->email }}" oninvalid="this.setCustomValidity('رجاء إدخال عنوان بريد إلكتروني صحيحي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">الفاكس</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="fax" value="{{ $warehouse->fax }}">
+                                <input type="text" class="form-control" name="fax" value="{{ $warehouse->fax }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
 
