@@ -6,12 +6,12 @@
             <div class="col-md-12">
                 <div class="content-panel">
                     <table class="table table-striped table-advance table-hover">
-                        <h4><i class="fa fa-angle-left"></i> الأصناف</h4>
-                        <a type="submit" class="btn btn-theme" href="{{ route('category.create') }}" style="margin-right:10px;">إضافة صنف جديد</a>
+                        <h3><i class="fa fa-angle-left  mr"></i> الأصناف</h3>
+                        <a type="submit" class="btn btn-theme  mr" href="{{ route('category.create') }}" >إضافة صنف جديد</a>
                         <hr>
                         <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i>الصنف الدوائي</th>
+                                <th><i class="fa fa-bullhorn ml"></i>الصنف الدوائي</th>
                             </tr>
                         </thead>
                         <tbody>
