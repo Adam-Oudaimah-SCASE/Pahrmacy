@@ -8,16 +8,16 @@
                    <div class="adv-table">
                         <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
                             id="hidden-table-info">
-                            <h4><i class="fa fa-angle-left"></i> الطلبيات</h4>
-                            <a type="submit" class="btn btn-theme" href="{{ route('order.create') }}"
-                                style="margin-right:10px;">إضافة طلبية</a>
+                            <h3><i class="fa fa-angle-left mr"></i> الطلبيات</h3>
+                            <a type="submit" class="btn btn-theme mr" href="{{ route('order.create') }}"
+                                >إضافة طلبية</a>
                             <hr>
                             <thead>
                                 <tr>
-                                    <th><i class="fa fa-bullhorn"></i>رقم الطلبية</th>
-                                    <th><i class="fa fa-bullhorn"></i>تاريخ الطلبية</th>
-                                    <th><i class="fa fa-bullhorn"></i>معلومات الاستلام</th>
-                                    <th><i class="fa fa-bullhorn"></i>مصدر الطلبية</th>
+                                    <th><i class="fa fa-barcode ml"></i>رقم الطلبية</th>
+                                    <th><i class="fa fa-calendar ml"></i>تاريخ الطلبية</th>
+                                    <th><i class="fa fa-info ml"></i>معلومات الاستلام</th>
+                                    <th><i class="fa fa-map ml"></i>مصدر الطلبية</th>
                                 </tr>
                             </thead>
                             <tbody>

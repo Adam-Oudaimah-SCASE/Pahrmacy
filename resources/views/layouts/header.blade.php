@@ -111,7 +111,6 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ route('invoice.create') }}">فاتورة مبيعات</a></li>
-                        <li><a href="{{ route('order.create') }}">فاتورة مشتريات</a></li>
                         <li><a href="{{ route('order.index') }}">عرض فواتير الشراء</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
                         <li><a href="#">فاتورة تالف</a></li>
