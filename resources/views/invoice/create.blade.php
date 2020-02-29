@@ -145,9 +145,9 @@
                                         <h4 class="modal-title">حفظ الفاتورة</h4>
                                     </div>
                                     <div class="modal-body">
-                                          <h4 class="">تم الحفظ بنجاح</h4>
+                                        <h4 class="">تم الحفظ بنجاح</h4>
+                                    </div>
                                     <div class="modal-footer">
-
                                         <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>
                                     </div>
                                 </div>

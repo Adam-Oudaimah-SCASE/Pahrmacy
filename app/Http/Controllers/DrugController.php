@@ -55,24 +55,25 @@ class DrugController extends Controller
     */
     function search_drugs(Request $request)
     {
-        $search = $request->search;
-        if ($search == ' ' || $search == '' || $search == null) {
-            $drugs = null;
-        }
-        $drugs = Drug::where('name_english', 'like', '%'.$search.'%')
-                       ->orWhere('name_arabic', 'like', '%'.$search.'%')
-                       ->orWhere('chemical_composition', 'like', '%'.$search.'%')
-                       ->get();
-        $response = array();
-        foreach($drugs as $drug) {
-            $response[] = array(
-                "id"=>$drug->id,
-                "text"=>$drug->name_arabic
-            );
-        }
+        if ($request->ajax()) {
+            $search = $request->search;
+            if ($search == ' ' || $search == '' || $search == null) {
+                $drugs = null;
+            }
+            $drugs = Drug::where('name_english', 'like', '%'.$search.'%')
+                           ->orWhere('name_arabic', 'like', '%'.$search.'%')
+                           ->orWhere('chemical_composition', 'like', '%'.$search.'%')
+                           ->get();
+            $response = array();
+            foreach($drugs as $drug) {
+                $response[] = array(
+                    "id"=>$drug->id,
+                    "text"=>$drug->name_arabic
+                );
+            }
 
-      echo json_encode($response);
-      exit;
+          return json_encode($response);
+        }
     }
 
     /**
@@ -112,7 +113,7 @@ class DrugController extends Controller
              'table_data'  => $output
             );
 
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 
@@ -153,7 +154,47 @@ class DrugController extends Controller
              'table_data'  => $output
             );
 
-            echo json_encode($data);
+            return json_encode($data);
+        }
+    }
+
+    /**
+    * Search for a certain drug repo by its id through an AJAX request.
+    */
+    function get_drug_by_id_for_prescription(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $data = null;
+            $output = '';
+            $drug_id = $request->input('drug_id');
+            $drug = null;
+            if ($drug_id != '')
+            {
+             $drug = Drug::find($drug_id);
+            }
+            else
+            {
+                $output = '
+                <tr>
+                 <td align="center" colspan="5">لم يتم إيجاد أي نتيجة</td>
+                </tr>
+                ';
+            }
+            $output = '
+            <tr>
+                <td id="drug_id" style="display:none">'. $drug[0]->id .'</td>
+                <td>'. $drug[0]->name_arabic .'</td>
+                <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="modified_drug_package_sell_price"></td>
+                <td class="text-center"><input type="text" class="form-control" id="modified_drug_unit_sell_price"></td>
+            </tr>';
+            $data = array(
+             'table_data'  => $output
+            );
+
+            return json_encode($data);
         }
     }
 
@@ -242,6 +283,53 @@ class DrugController extends Controller
         $drugs = Drug::all();
         // Return the appropriate view
         return view('drug.index')->withDrugs($drugs);
+    }
+
+    /**
+     * Calculate the net price of the entered drugs info.
+     * The drugs information are an array, each element has the following attributes:
+     * [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
+     *
+     * TODO: Be attention when the first available repo is not enough to fullfil the required quantity.
+     */
+    public function calculate_prices($drugs_info)
+    {
+        $full_net_price = 0;
+        $full_sell_price = 0;
+        // Loop over each drug
+        foreach ($drugs_info as $drug_info) {
+            // Grap the required drug information
+            $drug_id = $drug_info[0];
+            // Get the oldest drug repo
+            $drug_repo = DrugsRepo::where([['drug_id', $drug_id], ['isDisposed', false]])->orderBy('exp_date', 'ASC')->first();
+            $drug_packages_number = $drug_info[1];
+            $drug_units_number = $drug_info[2];
+            $drug_package_new_sell_price = $drug_info[3];
+            $drug_unit_new_sell_price = $drug_info[4];
+
+            // Manipulate the quantity and the price
+            if ($drug_units_number != null || $drug_units_number != '') {
+                $full_net_price += $drug_repo->unit_net_price * $drug_units_number;
+                if ($drug_unit_new_sell_price != null || $drug_unit_new_sell_price != '') {
+                      $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
+                } else {
+                      $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
+                }
+            }
+            else {
+                $full_net_price += $drug_repo->package_net_price * $drug_packages_number;
+                if ($drug_package_new_sell_price != null) {
+                    $full_sell_price += $drug_packages_number * $drug_package_new_sell_price;
+                } else {
+                    $full_sell_price += $drug_packages_number * $drug_repo->package_sell_price;
+                }
+            }
+        }
+
+        // Return the final result
+        $result = [];
+        array_push($result, $full_net_price, $full_sell_price);
+        return $result;
     }
 
     /**
@@ -403,12 +491,13 @@ class DrugController extends Controller
         // Loop over each drug
         foreach ($drugs_info as $drug_info) {
             // Grap the required drug information
-            $drug_repo = Drug::find($drug_info[0])->repo->where(['isDisposed', '=', false])->orderBy('exp_date', 'ASC')->first();
+            $drug = Drug::find($drug_info[0]);
+            $drug_repo = $drug->repo()->where('isDisposed', false)->orderBy('exp_date', 'ASC')->get()->first();
             $drug_packages_number = $drug_info[1];
             $drug_units_number = $drug_info[2];
 
             // Manipulate the quantity and the price
-            if ($drug_units_number != null) {
+            if ($drug_units_number != 0) {
                 $drug_repo->packages_number -= (int) ($drug_units_number / $drug_repo->unit_number);
                 $drug_repo->units_number -= $drug_units_number;
             }
@@ -416,7 +505,7 @@ class DrugController extends Controller
                 $drug_repo->packages_number -= $drug_packages_number;
                 $drug_repo->units_number -= $drug_packages_number * $drug_repo->unit_number;
             }
+            $drug_repo->save();
         }
-        return true;
     }
 }

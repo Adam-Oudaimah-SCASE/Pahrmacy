@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AccountingType;
 use App\Models\SpecialCustomer;
 use App\Models\Drug;
+use App\Models\Balance;
 use App\Models\Prescription;
 use App\Models\DrugPrescription;
 use App\Models\InsuranceCompany;
+use App\Models\AccountingOperation;
 use App\Http\Controllers\DrugController;
 
 class PrescriptionController extends Controller
@@ -25,17 +28,10 @@ class PrescriptionController extends Controller
         return view('prescription.index')->withPrescriptions($prescriptions);
     }
 
-    public function show($id){
-
+    public function show($id) {
       $prescriptions = Prescription::find($id);
-      return View('prescription.prescription')
-
-
-          ->with('prescriptions', $prescriptions )
-
-
-          ;
-  }
+      return view('prescription.prescription')->with('prescriptions', $prescriptions );
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,8 +42,42 @@ class PrescriptionController extends Controller
     {
         // Get all the special customers
         $customers = SpecialCustomer::all();
+        // Get all insurnce companies
+        $companies = InsuranceCompany::all();
         // Return the appropriate view
-        return view('prescription.create')->withCustomers($customers);
+        return view('prescription.create')->with(['customers' => $customers, 'companies' => $companies]);
+    }
+
+    /**
+     * Helper method to receive the request and calculate the prices.
+     */
+    public function calculate_request(Request $request)
+    {
+        if ($request->ajax()) {
+            // Get the drugs isds and information
+            $drugs_ids = $request->input('drugs.ids.*');
+            $drugs_packages_number = $request->input('drugs.packages_number.*');
+            $drugs_units_number = $request->input('drugs.units_number.*');
+            $modified_drugs_package_sell_price = $request->input('drugs.modified_drugs_package_sell_price.*');
+            $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
+
+            // Drugs info
+            // Each element will have the following struture
+            // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
+            $drugs_info = array();
+
+            for ($i=0; $i<count($drugs_ids); $i++) {
+                // Create each list entry of the drugs list
+                $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
+                array_push($drugs_info, $drug_info);
+            }
+
+            // Initiate a new DrugController instance
+            $drug_controller = new DrugController;
+            $prices = $drug_controller->calculate_prices($drugs_info);
+
+            return $prices;
+        }
     }
 
     /**
@@ -64,15 +94,15 @@ class PrescriptionController extends Controller
         // Associate it with a special customer
         $customer_id = $request->input('customer_id');
         $customer = SpecialCustomer::find($customer_id);
-        $prescription->associate($customer);
+        $prescription->customer()->associate($customer);
 
         // Asscosiate with an insurance company if available
         $discount_percentage = 0;
-        if ($request->input('insurance_company_id') != null || $request->input('insurance_company_id') != '') {
+        if ($request->input('insurance_company_id') != null) {
             $insurance_company_id = $request->input('insurance_company_id');
             $insurance_company = InsuranceCompany::find($insurance_company_id);
-            $discount_percentage = $insurance_company->discount_percentage / 100;
-            $prescription->associate($insurance_company);
+            $discount_percentage = $insurance_company->discount / 100;
+            $prescription->insurance_company()->associate($insurance_company);
         }
 
         // Set to zeros temporarily until calculation the prices
@@ -87,54 +117,47 @@ class PrescriptionController extends Controller
         $drugs_ids = $request->input('drugs.ids.*');
         $drugs_packages_number = $request->input('drugs.packages_number.*');
         $drugs_units_number = $request->input('drugs.units_number.*');
-        $drugs_package_sell_price = $request->input('drugs.package_sell_price.*');
-        $drugs_unit_sell_price = $request->input('drugs.unit_sell_price.*');
+        $modified_drugs_package_sell_price = $request->input('drugs.modified_drugs_package_sell_price.*');
+        $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
 
-        // Variables to holds the net and sell prcies of the whole prescription
-        $full_net_price = 0;
-        $full_sell_price = 0;
+        // Drugs info
+        // Each element will have the following struture
+        // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
+        $drugs_info = array();
+
+        for ($i=0; $i<count($drugs_ids); $i++) {
+            // Create each list entry of the drugs list
+            $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
+            array_push($drugs_info, $drug_info);
+        }
+
+        // Initiate a new DrugController instance
+        $drug_controller = new DrugController;
+        $prices = $drug_controller->calculate_prices($drugs_info);
 
         // Calculate the prcies
         for ($i=0; $i<count($drugs_ids); $i++) {
-            $drug_repo = Drug::find($drugs_ids[$i])->repo->where(['isDisposed', '=', false])->orderBy('exp_date', 'ASC')->first();
-            // Manipulate the quantity and the price
-            if ($drug_units_number != null) {
-                $full_net_price += $drug_repo->unit_net_price * $drug_units_number;
-                if ($drug_unit_new_sell_price != null) {
-                      $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
-                } else {
-                      $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
-                }
-            }
-            else {
-                $full_net_price += $drug_repo->package_net_price * $drug_packages_number;
-                if ($drug_package_new_sell_price != null) {
-                    $full_sell_price += $drug_packages_number * $drug_package_new_sell_price;
-                } else {
-                    $full_sell_price += $drug_packages_number * $drug_repo->package_sell_price;
-                }
-            }
+            $drug = Drug::find($drugs_ids[$i]);
+            $drug_repo = $drug->repo()->where('isDisposed', false)->orderBy('exp_date', 'ASC')->get()->first();
 
             // Generate the drug_prescription appropriate records
             $drug_prescription = new DrugPrescription;
             $drug_prescription->drug()->associate(Drug::find($drugs_ids[$i]));
             $drug_prescription->prescription()->associate($prescription);
-            $drug_prescription->packages_number = $drugs_packages_number[$i];
-            $drug_prescription->units_number = $drugs_units_number[$i];
-            $drug_prescription->package_sell_price = $drugs_package_sell_price[$i];
-            $drug_prescription->unit_sell_price = $drugs_unit_sell_price[$i];
+            $drug_prescription->packages_number = $drugs_packages_number[$i] == '' ? 0 : $drugs_packages_number[$i];
+            $drug_prescription->units_number = $drugs_units_number[$i] == '' ? 0 : $drugs_units_number[$i];
+            $drug_prescription->package_sell_price = $modified_drugs_package_sell_price[$i] == '' ? 0 : $modified_drugs_package_sell_price[$i];
+            $drug_prescription->unit_sell_price = $modified_drugs_unit_sell_price[$i]  == '' ? 0 : $modified_drugs_unit_sell_price[$i];
             $drug_prescription->save();
         }
 
         // Assign the calculated prcies to the prescription
-        $prescription->net_price = $full_net_price;
-        $prescription->sell_price = $full_sell_price;
-        $discount_amount = $full_sell_price * ($discount_percentage);
-        $prescription->sell_price_after_discount = $prescription->sell_price - $discount_amount;
+        $prescription->net_price = $prices[0];
+        $prescription->sell_price = $prices[1];
+        $discount_amount = $prices[1] * $discount_percentage;
+        $prescription->discount_amount = $discount_amount;
+        $prescription->sell_price_after_discount = $prices[1] - $discount_amount;
         $prescription->save();
-
-        // Return the appropriate view
-        return redirect()->route('prescription.index');
     }
 
     /**
@@ -163,7 +186,8 @@ class PrescriptionController extends Controller
         // Create the appropriate accounting operation
         $accounting_type = AccountingType::where('name', 'فاتورة زبون')->first();
         $accounting_operation = new AccountingOperation;
-        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
+        // $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
+        $accounting_operation->date = date('Y-m-d H:i:s');
         $accounting_operation->amount = $amount;
         $accounting_operation->type()->associate($accounting_type);
         $accounting_operation->operationable()->associate($prescription);
@@ -173,6 +197,7 @@ class PrescriptionController extends Controller
         $balance = Balance::first();
         $balance->balance += $amount;
         $balance->save();
+        echo "OK";
     }
 
     /**

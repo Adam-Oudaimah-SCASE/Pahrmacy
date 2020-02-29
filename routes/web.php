@@ -37,9 +37,11 @@ Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name(
 // Bayment for an invoice
 Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
 // Search for drugs (AJAX request for Select2)
-Route::get('/invoices/search', 'DrugController@search_drugs')->name('drug.search');
+Route::get('/drugs/search', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
-Route::get('/drug/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
+Route::get('/drugs/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
+// Get drug by drug ID (after selecting fom a Select2 event)
+Route::get('/drugs/search/prescription', 'DrugController@get_drug_by_id_for_prescription')->name('drug.get_drug_by_id_for_prescription');
 
 // Order routes
 // View all orders
@@ -59,11 +61,13 @@ Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
 Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 
-// perscription  routes
-// View all perscriptions
+// Perscription  routes
 Route::get('/prescriptions', 'PrescriptionController@index')->name('prescription.index');
 Route::get('/prescriptions/create', 'PrescriptionController@create')->name('prescription.create');
-Route::get('/prescriptions/{id}', 'PrescriptionController@show');
+Route::post('/prescriptions/create', 'PrescriptionController@store')->name('prescription.store');
+Route::get('/prescriptions/{id}', 'PrescriptionController@show')->name('prescription.show');
+Route::post('/prescriptions/calculate', 'PrescriptionController@calculate_request')->name('prescription.calculate');
+Route::get('/prescriptions/sell/{id}/{amount}', 'PrescriptionController@sell_prescription')->name('prescription.sell');
 
 
 // Report routes
