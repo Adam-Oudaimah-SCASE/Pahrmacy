@@ -17,7 +17,7 @@ class AccountingTypeController extends Controller
         // Get all the types
         $types = AccountingType::all();
         // Return the appropriate view
-        return view('.index')->withTypes($types);
+        return view('account.index')->withTypes($types);
     }
 
     /**
@@ -28,7 +28,7 @@ class AccountingTypeController extends Controller
     public function create()
     {
         // Return the appropriate view
-        return view('.create');
+        return view('account.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class AccountingTypeController extends Controller
         $accounting_type->save();
 
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountType.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class AccountingTypeController extends Controller
         // Get the targeted accounting type
         $accounting_type = AccountingType::find($id);
         // Return the appropriate view
-        return view('.edit')->withAccountingType($accounting_type);
+        return view('account.edit')->withAccountingType($accounting_type);
     }
 
     /**
@@ -85,7 +85,7 @@ class AccountingTypeController extends Controller
         $accounting_type->save();
 
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountType.index');
     }
 
     /**
@@ -103,6 +103,6 @@ class AccountingTypeController extends Controller
         $accounting_type->delete();
 
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountType.index');
     }
 }

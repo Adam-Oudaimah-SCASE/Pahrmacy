@@ -29,6 +29,9 @@ Route::resource('category', 'DrugCategoryController')->except(['show']);
 // WareHouses Routes
 Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
+// Accounting Routes
+Route::resource('accountType', 'AccountingTypeController');
+
 // Invoice Routes
 Route::get('invoice', function () {
     return view('invoice.invoice');
