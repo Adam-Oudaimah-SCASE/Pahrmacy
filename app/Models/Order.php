@@ -30,4 +30,12 @@ class Order extends Model
     {
         return $this->hasMany(DrugOrderSend::class, 'order_id');
     }
+  /**
+    * Get the drugs of this order (from drug_order_Receive table)
+    */
+    public function drugs_receive()
+    {
+        return $this->hasMany(DrugOrderReceive::class, 'order_id');
+    }
+    
 }

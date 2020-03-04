@@ -78,7 +78,12 @@ class InvoiceController extends Controller
         $order = Order::find($order_id);
         return view('order.receive')->with(['order' => $order]);
     }
-
+    
+    function show_order($order_id)
+    {
+        $order = Order::find($order_id);
+        return view('order.show')->with(['order' => $order]);
+    }
     /**
     * This is the route method that is responsible for handling every types of invoices.
     *

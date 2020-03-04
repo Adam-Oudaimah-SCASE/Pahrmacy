@@ -23,6 +23,7 @@ class DrugOrderSend extends Model
         return $this->belongsTo(Drug::class, 'drug_id');
     }
 
+
     /**
     * Get the order.
     *
@@ -31,4 +32,5 @@ class DrugOrderSend extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+  
 }

@@ -52,6 +52,8 @@ Route::get('/orders/createOrder', 'InvoiceController@create_buy_order_invoice')-
 Route::get('/drug/repo/order', 'DrugController@get_drug_repo_by_id_for_order')->name('drug.get_repo_by_id_for_order');
 // Receive Form
 Route::get('/orders/receive/{order_id}', 'InvoiceController@create_order_receive_invoice')->name('order.receive');
+// Show Order
+Route::get('/orders/show/{order_id}', 'InvoiceController@show_order')->name('order.show');
 
 // Drugs and Drugs Repo Routes
 // Drugs list
