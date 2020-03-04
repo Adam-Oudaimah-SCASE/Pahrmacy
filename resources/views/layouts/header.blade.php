@@ -111,8 +111,19 @@
                         <span>الفواتير</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{ route('invoice.create') }}">فاتورة مبيعات</a></li>
-                        <li><a href="{{ route('order.index') }}">عرض فواتير الشراء</a></li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                              
+                                <span>فاتورة مبيعات</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ route('invoice.create') }}">بدون شركة تأمين</a></li>
+                                <li><a href="{{ route('invoice.createWithInsurance') }}">مع شركة تأمين</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="{{ route('order.index') }}">طلبيات</a></li>
                         <li><a href="">  فاتورة بيع مع تأمين</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
                         <li><a href="#">فاتورة تالف</a></li>
