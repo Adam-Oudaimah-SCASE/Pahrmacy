@@ -93,7 +93,7 @@
                                                 <input type="text" class="form-control" id="sell_price" disabled>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                    <!--    <div class="form-group">
                                             <label class="col-lg-2 control-label">اخنر شركة تأمين للخصم</label>
                                             <div class="col-lg-10">
                                                 <select class="form-control" id="discount_insurance_company">
@@ -103,7 +103,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label">خصم بدون شركة تأمين</label>
                                             <div class="col-lg-10">

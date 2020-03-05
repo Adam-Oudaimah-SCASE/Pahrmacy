@@ -23,17 +23,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    @foreach($inscompanies  as $inscompany)
-                                    <td>{{ $inscompany->name }}</td>
-                                    <td>{{ $inscompany->address }}</td>
-                                    <td>{{ $inscompany->phone }}</td>
-                                     <td>{{ $inscompany->email }}</td>
-                                    <td>{{ $inscompany->discount }}</td>
+                                    @foreach($insurance_companies  as $insurance_company)
+                                    <td>{{ $insurance_company->name }}</td>
+                                    <td>{{ $insurance_company->address }}</td>
+                                    <td>{{ $insurance_company->phone }}</td>
+                                     <td>{{ $insurance_company->email }}</td>
+                                    <td>{{ $insurance_company->discount }}</td>
                                     <td>
                                         <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                        <a href="{{ route('insurnce-company.edit', $inscompany->id) }}"><button
+                                        <a href="{{ route('insurnce-company.edit', $insurance_company->id) }}"><button
                                                 class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
-                                        <form class="delete-form" action="{{ route('insurnce-company.destroy', $inscompany->id) }}"
+                                        <form class="delete-form" action="{{ route('insurnce-company.destroy', $insurance_company->id) }}"
                                             method="post">
                                             @csrf
                                             @method('DELETE')

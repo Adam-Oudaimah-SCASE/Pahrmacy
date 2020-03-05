@@ -28,12 +28,15 @@ Route::resource('category', 'DrugCategoryController')->except(['show']);
 Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Insurnce Company Routes
-Route::resource('insurnce-company', 'insurnceCompanyController')->except(['show']);
+Route::resource('insurnce-company', 'InsuranceCompanyController')->except(['show']);
+
 // Invoice Routes
 // Invoices list
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');
 // Create a new sell invoice view
 Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
+Route::get('/invoices/createInsuranceInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.insurance_create');
+
 // Store the new invoice
 Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
 // Bayment for an invoice
