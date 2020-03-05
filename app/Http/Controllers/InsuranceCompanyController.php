@@ -16,7 +16,7 @@ class InsuranceCompanyController extends Controller
     {
         $insurance_companies = InsuranceCompany::all();
 
-        return view('')->with(['insurance_companies' => $insurance_companies]);
+        return view('insurnce-company.index')->with(['insurance_companies' => $insurance_companies]);
     }
 
     /**
@@ -26,7 +26,7 @@ class InsuranceCompanyController extends Controller
      */
     public function create()
     {
-        return view('');
+        return view('insurnce-company.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class InsuranceCompanyController extends Controller
 
         $insurance_company->save();
 
-        return redirect()->route('company.index');
+        return redirect()->route('insurnce-company.index');
     }
 
     /**
@@ -60,7 +60,7 @@ class InsuranceCompanyController extends Controller
     {
         $insurance_company = InsuranceCompany::find($id);
 
-        return view('')->with('insurance_company' => $insurance_company);
+        return view('insurnce-company.edit')->with(['insurance_companies' => $insurance_company]);
     }
 
     /**
@@ -82,7 +82,7 @@ class InsuranceCompanyController extends Controller
 
         $insurance_company->save();
 
-        return redirect()->route('company.index');
+        return redirect()->route('insurnce-company.index');
     }
 
     /**
@@ -95,6 +95,6 @@ class InsuranceCompanyController extends Controller
     {
         $insurance_company = InsuranceCompany::find($id);
         $insurance_company->delete();
-        return redirect()->route('company.index');
+        return redirect()->route('insurnce-company.index');
     }
 }

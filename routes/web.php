@@ -26,7 +26,7 @@ Route::resource('category', 'DrugCategoryController')->except(['show']);
 Route::resource('warehouse', 'WareHouseController')->except(['show']);
 
 // Insurnce Company Routes
-Route::resource('insurnce-company', 'insurnceCompanyController')->except(['show']);
+Route::resource('insurnce-company', 'InsuranceCompanyController')->except(['show']);
 // Invoice Routes
 // Invoices list
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');

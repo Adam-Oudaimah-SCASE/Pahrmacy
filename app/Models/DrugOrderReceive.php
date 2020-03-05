@@ -18,6 +18,18 @@ class DrugOrderReceive extends Model
     * Get the order.
     *
     */
+
+  /**
+    * Get the send order related to this recieve order.
+    *
+   */
+   
+  /*public function drug_send()
+    {
+        return $this->belongsTo(DrugOrderSend::class, 'send_id');
+    }
+    */ 
+
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
