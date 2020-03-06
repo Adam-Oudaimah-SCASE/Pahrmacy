@@ -93,7 +93,6 @@
                                                 <input type="text" class="form-control" id="sell_price" disabled>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label">خصم بدون شركة تأمين</label>
                                             <div class="col-lg-10">
@@ -160,7 +159,7 @@
             }
         });
     </script>
-    
+
     <script>
         document.getElementById("submit_invoice").onclick = submit_invoice;
         function submit_invoice() {
