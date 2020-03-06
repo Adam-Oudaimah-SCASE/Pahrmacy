@@ -2,7 +2,7 @@
 @section('content')
 <section id="main-content">
     <section class="wrapper" dir="rtl">
-        <h3><i class="fa fa-angle-right"></i> تعديل معلومات شركة تأمين</h3>
+        <h3><i class="fa fa-angle-right"></i>تعديل معلومات شركة تأمين</h3>
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
@@ -16,7 +16,7 @@
                                 <input type="text" class="form-control" name="name" value="{{ $insurance_companies->name }}">
                             </div>
                         </div>
-                       
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">رقم الهاتف</label>
                             <div class="col-sm-10">
@@ -29,7 +29,7 @@
                                 <input type="text" class="form-control" name="address" value="{{ $insurance_companies->address }}">
                             </div>
                         </div>
-                      
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">البريد الالكتروني</label>
                             <div class="col-sm-10">

@@ -91,7 +91,7 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ route('company.index') }}">الشركات المنتجة</a></li>
-                        <li><a href="{{ route('insurnce-company.index') }}"> شركات التأمين</a></li>
+                        <li><a href="{{ route('insurnce-company.index') }}">شركات التأمين</a></li>
                         <li><a href="#">تقرير أدوية الشركة</a></li>
                     </ul>
                 </li>
@@ -113,7 +113,7 @@
                     <ul class="sub">
                         <li><a href="{{ route('invoice.create') }}">فاتورة مبيعات</a></li>
                         <li><a href="{{ route('order.index') }}">عرض فواتير الشراء</a></li>
-                        <li><a href="">  فاتورة بيع مع تأمين</a></li>
+                        <li><a href="#">فاتورة بيع مع تأمين</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
                         <li><a href="#">فاتورة تالف</a></li>
                         <li><a href="#">تقرير يومية المبيعات</a></li>

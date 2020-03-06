@@ -8,9 +8,9 @@
                    <div class="adv-table">
                         <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
                             id="hidden-table-info">
-                            <h4><i class="fa fa-angle-left"></i> شركات التأمين</h4>
+                            <h4><i class="fa fa-angle-left"></i>شركات التأمين</h4>
                             <a type="submit" class="btn btn-theme" href="{{ route('insurnce-company.create') }}"
-                                style="margin-right:10px;"> إضافة شركة تأمين</a>
+                                style="margin-right:10px;">إضافة شركة تأمين</a>
                             <hr>
                             <thead>
                                 <tr>
@@ -19,6 +19,7 @@
                                     <th class="hidden-phone"><i class="fa fa-question-circle"></i>رقم الهاتف</th>
                                     <th>البريد الالكتروني</th>
                                     <th>الحسم</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

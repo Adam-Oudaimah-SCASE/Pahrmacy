@@ -18,6 +18,7 @@
                                     <th><i class="fa fa-calendar ml"></i>تاريخ الطلبية</th>
                                     <th><i class="fa fa-info ml"></i>معلومات الاستلام</th>
                                     <th><i class="fa fa-map ml"></i>مصدر الطلبية</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

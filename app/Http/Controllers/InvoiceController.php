@@ -21,8 +21,8 @@ use App\Http\Controllers\DrugController;
 class InvoiceController extends Controller
 {
     /**
-    * Display all sell invoices.
-    */
+     * Display all sell invoices.
+     */
     function get_sell_invoices()
     {
         $invoices = Invoice::all();
@@ -31,8 +31,8 @@ class InvoiceController extends Controller
     }
 
     /**
-    * View all orders.
-    */
+     * Display all orders.
+     */
     function get_all_orders()
     {
         $orders = Order::all();
@@ -40,10 +40,10 @@ class InvoiceController extends Controller
         return view('order.index')->with(['orders' => $orders]);
     }
     /**
-    * Return the appropriate view to create a buy order invoice.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Return the appropriate view to create a buy order invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
     function create_buy_order_invoice()
     {
         // Get all companies
@@ -57,10 +57,10 @@ class InvoiceController extends Controller
     }
 
     /**
-    * Return the appropriate view to create a sell invoice.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Return the appropriate view to create a sell invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
     function create_sell_invoice()
     {
         // Return the appropriate view
@@ -69,27 +69,31 @@ class InvoiceController extends Controller
     }
 
     /**
-    * Return the appropriate view to receive an order.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Return the appropriate view to receive an order.
+     *
+     * @return \Illuminate\Http\Response
+     */
     function create_order_receive_invoice($order_id)
     {
         $order = Order::find($order_id);
         return view('order.receive')->with(['order' => $order]);
     }
-    
+
+    /**
+     * Show a detaild view of an order
+     */
     function show_order($order_id)
     {
         $order = Order::find($order_id);
         return view('order.show')->with(['order' => $order]);
     }
+    
     /**
-    * This is the route method that is responsible for handling every types of invoices.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
+     * This is the route method that is responsible for handling every types of invoices.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     function store_invoice(Request $request)
     {
         // Initiate the drugs reposotray controller
@@ -123,8 +127,8 @@ class InvoiceController extends Controller
     }
 
     /**
-    * An internal method responsible for handling the sell invoice.
-    */
+     * An internal method responsible for handling the sell invoice.
+     */
     function handle_sell_invoice($invoice_type, $repo_controller, $request)
     {
         // Create the new sell invoice instance
@@ -172,8 +176,8 @@ class InvoiceController extends Controller
     }
 
     /**
-    * Handle the accounting operation.
-    */
+     * Handle the accounting operation.
+     */
     function handle_accounting(Request $request)
     {
         // Get the appropriate invoice
@@ -227,8 +231,8 @@ class InvoiceController extends Controller
     }
 
     /**
-    * An internal method responsible for handling the but order invoice.
-    */
+     * An internal method responsible for handling the but order invoice.
+     */
     function handle_buy_order_invoice($request)
     {
         // Create a new Order instance.
@@ -265,8 +269,8 @@ class InvoiceController extends Controller
     }
 
     /**
-    * An internal method responsible for handling the buy receive invoice.
-    */
+     * An internal method responsible for handling the buy receive invoice.
+     */
     function handle_buy_receive_invoice($repo_controller, $request)
     {
         // Get the drugs isds and information

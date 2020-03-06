@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DrugOrderSend extends Model
 {
-
     /**
      * The corresponding table name.
      *
@@ -15,22 +14,18 @@ class DrugOrderSend extends Model
     protected $table = 'drug_order_send';
 
     /**
-    * Get the drug related to this order.
-    *
-    */
+     * Get the drug related to this order.
+     */
     public function drug()
     {
         return $this->belongsTo(Drug::class, 'drug_id');
     }
 
-
     /**
-    * Get the order.
-    *
-    */
+     * Get the order.
+     */
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
-  
 }
