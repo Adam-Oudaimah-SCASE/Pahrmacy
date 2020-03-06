@@ -208,13 +208,6 @@
             let amount = document.getElementById("amount").value;
             let discount_amount = document.getElementById("discount_amount").value;
             let discount_reason = document.getElementById("discount_reason").value;
-            let insurance_company_id = null;
-            let option = document.getElementById("discount_insurance_company");
-            var insurance_company = option.options[option.selectedIndex].value;
-            if (insurance_company != "") {
-                let dict = JSON.parse(insurance_company);
-                insurance_company_id = dict['id'];
-            }
             $.ajax({
                 method: 'POST', // Type of response
                 url: '{{ route("invoice.pay") }}', // This is the url we gave in the route
@@ -223,8 +216,7 @@
                     'invoice_id' : invoice_id,
                     'amount' : amount,
                     'discount_amount' : discount_amount,
-                    'discount_reason' : discount_reason,
-                    'insurance_company_id' : insurance_company_id }, // a JSON object to send back
+                    'discount_reason' : discount_reason }, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
                     window.location.href = "/invoices"
                 },

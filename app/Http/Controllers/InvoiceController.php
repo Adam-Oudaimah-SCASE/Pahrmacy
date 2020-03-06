@@ -63,9 +63,19 @@ class InvoiceController extends Controller
      */
     function create_sell_invoice()
     {
+        return view('invoice.create');
+    }
+
+    /**
+     * Return the appropriate view to create a sell invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function create_sell_invoice_insurance()
+    {
         // Return the appropriate view
         $insurance_companies = InsuranceCompany::all();
-        return view('invoice.create')->with(['insurance_companies' => $insurance_companies]);
+        return view('invoice.create_with_insurance')->with(['insurance_companies' => $insurance_companies]);
     }
 
     /**

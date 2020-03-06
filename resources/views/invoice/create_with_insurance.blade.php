@@ -105,12 +105,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">خصم بدون شركة تأمين</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="discount_amount">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="col-lg-2 control-label">سعر المبيع بعد الحسم</label>
                                             <div class="col-lg-10">
                                                 <input type="text" class="form-control" id="sell_price_after_discount" disabled>
@@ -224,7 +218,6 @@
         function apply_payment() {
             let invoice_id = document.getElementById("invoice_id").innerHTML;
             let amount = document.getElementById("amount").value;
-            let discount_amount = document.getElementById("discount_amount").value;
             let discount_reason = document.getElementById("discount_reason").value;
             let insurance_company_id = null;
             let option = document.getElementById("discount_insurance_company");
@@ -240,7 +233,6 @@
                     "_token": "{{ csrf_token() }}",
                     'invoice_id' : invoice_id,
                     'amount' : amount,
-                    'discount_amount' : discount_amount,
                     'discount_reason' : discount_reason,
                     'insurance_company_id' : insurance_company_id }, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
