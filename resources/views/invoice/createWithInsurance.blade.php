@@ -93,7 +93,17 @@
                                                 <input type="text" class="form-control" id="sell_price" disabled>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">اخنر شركة تأمين للخصم</label>
+                                            <div class="col-lg-10">
+                                                <select class="form-control" id="discount_insurance_company">
+                                                    <option value="" selected></option>
+                                                    @foreach ($insurance_companies as $insurance_company)
+                                                        <option value="{{ json_encode($insurance_company) }}">{{ $insurance_company->name }}, {{ $insurance_company->discount }}%</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label">خصم بدون شركة تأمين</label>
                                             <div class="col-lg-10">
@@ -160,7 +170,14 @@
             }
         });
     </script>
-    
+    <script>
+        $('#discount_insurance_company').on('change', function() {
+            let dict = JSON.parse(this.value);
+            let discount_amount = document.getElementById("sell_price").value * (dict['discount'] / 100);
+            document.getElementById("sell_price_after_discount").value = document.getElementById("sell_price").value - discount_amount;
+            document.getElementById("discount_reason").value = "تأمين من شركة" + " " + dict['name'];
+        });
+    </script>
     <script>
         document.getElementById("submit_invoice").onclick = submit_invoice;
         function submit_invoice() {

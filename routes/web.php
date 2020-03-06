@@ -32,6 +32,8 @@ Route::resource('insurnce-company', 'InsuranceCompanyController')->except(['show
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');
 // Create a new sell invoice view
 Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
+// Create a new sell invoice view with insurance
+Route::get('/invoices/createInvoiceWithInsurance', 'InvoiceController@create_sell_invoice')->name('invoice.createWithInsurance');
 // Store the new invoice
 Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
 // Bayment for an invoice
