@@ -87,7 +87,7 @@ class InvoiceController extends Controller
         $order = Order::find($order_id);
         return view('order.show')->with(['order' => $order]);
     }
-    
+
     /**
      * This is the route method that is responsible for handling every types of invoices.
      *
@@ -301,6 +301,7 @@ class InvoiceController extends Controller
             array_push($drugs_info, $drug_info);
             $drug_order_receive = new DrugOrderReceive;
             $drug_order_receive->order()->associate($order);
+            $drug_order_receive->drug()->associate(Drug::find($drugs_ids[$i]));
             $drug_order_receive->unit_number = $drugs_unit_number[$i];
             $drug_order_receive->package_net_price = $drugs_package_net_price[$i];
             $drug_order_receive->unit_net_price = $drugs_unit_net_price[$i];
@@ -316,11 +317,12 @@ class InvoiceController extends Controller
         $order->save();
 
         // Add the appropriate accounting operation
-        $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية')->get();
+        $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية')->first();
         $accounting_operation = new AccountingOperation;
         $accounting_operation->date = $request->input('date') == null ? date('Y-m-d') : $request->input('date');
         $accounting_operation->amount = $order->net_price;
-        $accounting_operation->type()->associate($accounting_type[0]);
+        $accounting_operation->type()->associate($accounting_type);
+        $accounting_operation->operationable()->associate($order);
         $accounting_operation->save();
 
         // Add it to the balance table

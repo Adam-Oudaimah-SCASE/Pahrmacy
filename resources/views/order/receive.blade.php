@@ -25,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody id="drugs">
-                            @foreach($order->drugs()->get() as $drug)
+                            @foreach($order->drugs_send as $drug)
                             <tr>
                                 <td hidden>{{ $drug->drug()->first()->id }}</td>
                                 <td >{{ $drug->drug()->first()->name_arabic }}</td>

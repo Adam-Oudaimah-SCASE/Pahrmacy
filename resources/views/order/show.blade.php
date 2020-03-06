@@ -31,9 +31,9 @@
                                 <td>{{ $drug->ordered_units_number }}</td>
                                 <td>{{ $drug->order->drugs_receive()->where('order_id', $drug->order_id)->where('drug_id', $drug->drug_id)->first()->recieved_units_number }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                    @endforeach
                 </div>
             </div>
         </div>
