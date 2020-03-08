@@ -1,115 +1,54 @@
-@extends('/layouts.master')
+@extends('layouts.master')
 @section('content')
-<!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <div class="col-lg-12 mt">
-            <div class="row content-panel">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <div class="invoice-body">
-                        <div class="pull-left">
-                            <h1>صيدلية عضيمه</h1>
-                            <address>
-                                شارع الزراعة الرئيسي<br>
-                                اللاذقية<br>
-                                <abbr title="Phone">P:</abbr>0994337308
-                            </address>
-                        </div>
-                        @foreach($invoices as $invoice)
-                        <!-- /pull-left -->
-                        <div class="pull-right">
-                            <h2>فاتورة زبون</h2>
-                        </div>
-                        <!-- /pull-right -->
-                        <div class="clearfix"></div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-9">
-                            </div>
-                            <!-- /col-md-9 -->
-                            <div class="col-md-3">
-                                <br>
-                                <div>
-                                    <div class="pull-left">رقم الفاتورة :</div>
-                                    <div class="pull-right">{{ $invoice->id }}</div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div>
-                                    <!-- /col-md-3 -->
-                                    <div class="pull-left">تاريخ الفاتورة :</div>
-                                    <div class="pull-right">{{ $invoice->date }}</div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <!-- /invoice-body -->
-                        </div>
-                        <!-- /col-lg-10 -->
-                        <table class="table">
+        <div class="row mt">
+            <div class="col-md-12">
+                <div class="content-panel">
+                   <div class="adv-table">
+                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
+                            id="hidden-table-info">
+                            <h3><i class="fa fa-angle-left mr"></i> الفواتير</h3>
+                            <a type="submit" class="btn btn-theme mr" href="{{ route('invoice.create') }}"
+                                > إضافة فاتورة</a>
+                            <hr>
                             <thead>
                                 <tr>
-                                    <th class="text-left">الدواء</th>
-                                    <th style="width:100px" class="text-center">عدد العلب</th>
-                                    <th style="width:100px" class="text-center">عدد الظروف</th>
-                                    <th class="text-left">حالة الفاتوة</th>
-                                    <th style="width:140px" class="text-left">سعر المبيع للظرف</th>
-                                    <th style="width:140px" class="text-left">سعر المبيع للعلبة</th>
-                                    <th style="width:90px" class="text-left">السعر الكلي</th>
+                                    <th><i class="fa fa-barcode ml"></i>رقم الفاتورة</th>
+                                    <th><i class="fa fa-calendar ml"></i>تاريخ الفاتورة</th>
+                                    <th><i class="fa fa-info ml"></i>معلومات الدفع</th>
+                                    <th><i class="fa fa-money ml"></i>سعر المبيع</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($invoice->drugs as $drug)
                                 <tr>
-                                    <td>{{ $drug->name_arabic }}</td>
-                                    <td class="text-center">{{ $drug->pivot->drug_package_number }}</td>
-                                    <td class="text-center">{{ $drug->pivot->drug_unit_number }}</td>
+                                    @foreach($invoices as $invoice)
+                                    <td>{{ $invoice->id }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($invoice->date)) }}</td>
                                     @if($invoice->is_paid == 0)
                                         <td>لم يتم دفع كامل الفاتورة بعد</td>
                                     @else
                                         <td>تم دفع كامل الفاتورة</td>
                                     @endif
-                                    @if($drug->modified_drugs_unit_sell_price == 0)
-                                        <td class="text-left">{{ $drug->repo()->where([['drug_id', '=', $drug->id], ['isDisposed', '=', false]])->orderBy('exp_date', 'ASC')->get()->first()->unit_sell_price }}</td>
-                                    @else
-                                        <td class="text-left">{{ $drug->modified_drugs_unit_sell_price }}</td>
-                                    @endif
-                                    @if($drug->modified_drugs_package_sell_price == 0)
-                                        <td class="text-left">{{ $drug->repo()->where([['drug_id', '=', $drug->id], ['isDisposed', '=', false]])->orderBy('exp_date', 'ASC')->first()->package_sell_price }}</td>
-                                    @else
-                                        <td class="text-left">{{ $drug->modified_drugs_package_sell_price }}</td>
-                                    @endif
-                                    <td class="text-left">{{ $invoice->sell_price }}</td>
+                                  <td>{{ $invoice->sell_price }}</td>
+
+                                    <td>
+                                        <button class="btn btn-success btn-xs" onclick="window.location.href = '';"><i class="fa fa-money"></i></button>
+                                        <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('invoice.show', $invoice->id) }}';"><i class="fa fa-eye"></i></button>
+                                        <a href=""><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
+                                        <form class="delete-form" action="" method="">
+                                            <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i class="fa fa-trash-o "></i></button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
-                                <tr>
-                                    <td colspan="5" rowspan="4">
-                                        <h5 class="text-left "><strong>سبب الخصم</strong></h5>
-                                        <p class="text-left">{{ $invoice->discount_reason }}</p>
-                                        <td class="text-left"><strong></strong>السعر قبل الخصم</td>
-                                        <td class="text-left">{{ $invoice->sell_price }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-left no-border"><strong>الخصم</strong></td>
-                                        <td class="text-left">{{ $invoice->discount_amount }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-left no-border">
-                                            <div class="well well-small green"><strong>السعر بعد الخصم</strong></div>
-                                        </td>
-                                        <td class="text-left"><strong>{{ $invoice->sell_price_after_discount }}</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <br>
-                            @endforeach
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!--/col-lg-12 mt -->
+        </div>
     </section>
-    <!-- /wrapper -->
 </section>
-<!-- /MAIN CONTENT -->
-<!--main content end-->
 @endsection

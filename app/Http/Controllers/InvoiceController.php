@@ -30,6 +30,11 @@ class InvoiceController extends Controller
         return view('invoice.index')->with(['invoices' => $invoices]);
     }
 
+    public function show_sell_invoice($id) {
+      $invoice = Invoice::find($id);
+      return view('invoice.show')->with('invoice', $invoice );
+    }
+
     /**
      * Display all orders.
      */

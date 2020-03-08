@@ -37,6 +37,8 @@ Route::get('/invoices/createInsuranceInvoice', 'InvoiceController@create_sell_in
 Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
 // Bayment for an invoice
 Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
+// Show invoice
+Route::get('/invoices/show/{invoice_id}', 'InvoiceController@show_sell_invoice')->name('invoice.show');
 // Search for drugs (AJAX request for Select2)
 Route::get('/drugs/search', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
