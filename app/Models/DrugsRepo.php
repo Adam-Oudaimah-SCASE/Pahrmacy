@@ -21,4 +21,5 @@ class DrugsRepo extends Model
     {
         return $this->belongsTo(Drug::class);
     }
+    
 }

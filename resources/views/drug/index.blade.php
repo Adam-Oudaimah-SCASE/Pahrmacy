@@ -32,7 +32,7 @@
                     <td>{{ $drug->net_price }}</td>
                     <td>{{ $drug->sell_price }}</td>
                     <td>
-                      <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+                      <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('drug.show', $drug->id) }}'"><i class="fa fa-check"></i></button>
                       <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                       <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                     </td>
