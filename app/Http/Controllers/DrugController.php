@@ -226,8 +226,8 @@ class DrugController extends Controller
     public function edit($id)
     {
         // Get all the required data
-         $drugs = Drug::find($id);
-         return view('drug.edit')->with('drugs',  $drugs );
+         $drug_repo = Drug::find($id);
+         return view('drug.edit')->with('drug_repo',  $drug_repo );
     }
   
     /**
@@ -298,68 +298,50 @@ class DrugController extends Controller
         return view('drug.index')->withDrugs($drugs);
     }
 
-   // public function update(Request $request, $id) {
+  public function update(Request $request, $id) {
 
-    // Get the targeted Drug
-    //  $drug = Drug::find($id);
-    //  $drug_repo = new DrugsRepo;
+   // Get the targeted Drug
+    
+    $drug_repo = DrugsRepo::find($id);
 
-    // Grap the drug data
-    // $drug->name_english = $request->input('name_english');
-    // $drug->name_arabic = $request->input('name_arabic');
-    //  $drug->chemical_composition = $request->input('chemical_composition');
-    // $drug->volume_unit = $request->input('volume_unit');
-    // $drug->lic_palte = $request->input('lic_palte');
-    // $drug->local_barcode = $request->input('local_barcode');
-    // $drug->global_barcode = $request->input('global_barcode');
+  //Assign the default unit number for this drug
+    $drug_repo->unit_number = $request->input('unit_number') == null ? 1 : $request->input('unit_number');
+  //Add the appropriate drugs repo record
+    $drug_repo->pro_date = $request->input('pro_date');
+    $drug_repo->exp_date = $request->input('exp_date');
 
-    // Associate the foreign keys
-    // $drug->company()->associate(Company::find($request->input('company_id')));
-    // $drug->category()->associate(DrugCategory::find($request->input('category_id')));
-    // $drug->shape()->associate(DrugShape::find($request->input('shape_id')));
+ // Check if units are inserted
+     if ($request->input('units_number') != null || $request->input('units_number') != "0") {
+             $drug_repo->packages_number = (int) ($request->input('units_number') / $drug_repo->unit_number);
+             $drug_repo->units_number = $request->input('units_number');
+         }
+        else {
+            $drug_repo->packages_number = $request->input('packages_number');
+             $drug_repo->units_number = $request->input('packages_number') * $drug_repo->unit_number;
+         }
 
-    // Save the new drug
-    //     $drug->save();
+         // Set the prices
+        $drug_repo->package_sell_price = $request->input('package_sell_price');
+         if ($request->input('unit_sell_price') == null || strval($request->input('unit_sell_price')) == "0") {
+             $drug_repo->unit_sell_price = (int)$drug_repo->package_sell_price / $drug_repo->unit_number;
+         } else {
+             $drug_repo->unit_sell_price = $request->input('unit_sell_price');
+         }
+         $drug_repo->package_net_price = $request->input('package_net_price');
+         if ($request->input('unit_net_price') == null || strval($request->input('unit_net_price')) == "0") {
+          $drug_repo->unit_net_price = (int)$drug_repo->package_net_price / $drug_repo->unit_number;
+         } else {
+             $drug_repo->unit_net_price = $request->input('unit_net_price');
+         }
 
-    //     // Assign the default unit number for this drug
-    //     $drug_repo->unit_number = $request->input('unit_number') == null ? 1 : $request->input('unit_number');
-    //     // Add the appropriate drugs repo record
-    //     $drug_repo->pro_date = $request->input('pro_date');
-    //     $drug_repo->exp_date = $request->input('exp_date');
+         // Puclish the new attributes to the repo and bind it with the appropriate drug
+         $drug_repo->update();
 
-    //     // Check if units are inserted
-    //     if ($request->input('units_number') != null || $request->input('units_number') != "0") {
-    //         $drug_repo->packages_number = (int) ($request->input('units_number') / $drug_repo->unit_number);
-    //         $drug_repo->units_number = $request->input('units_number');
-    //     }
-    //     else {
-    //         $drug_repo->packages_number = $request->input('packages_number');
-    //         $drug_repo->units_number = $request->input('packages_number') * $drug_repo->unit_number;
-    //     }
-
-    //     // Set the prices
-    //     $drug_repo->package_sell_price = $request->input('package_sell_price');
-    //     if ($request->input('unit_sell_price') == null || strval($request->input('unit_sell_price')) == "0") {
-    //         $drug_repo->unit_sell_price = (int)$drug_repo->package_sell_price / $drug_repo->unit_number;
-    //     } else {
-    //         $drug_repo->unit_sell_price = $request->input('unit_sell_price');
-    //     }
-    //     $drug_repo->package_net_price = $request->input('package_net_price');
-    //     if ($request->input('unit_net_price') == null || strval($request->input('unit_net_price')) == "0") {
-    //         $drug_repo->unit_net_price = (int)$drug_repo->package_net_price / $drug_repo->unit_number;
-    //     } else {
-    //         $drug_repo->unit_net_price = $request->input('unit_net_price');
-    //     }
-
-    //     // Puclish the new attributes to the repo and bind it with the appropriate drug
-    //     $drug_repo->drug()->associate($drug);
-    //     $drug_repo->save();
-
-    //     // Get all the drugs
-    //     $drugs = Drug::all();
-    //     // Return the appropriate view
-    //     return redirect()->route('drugs.index');
-    // }
+         // Get all the drugs
+         $drugs = Drug::all();
+         // Return the appropriate view
+         return view('drug.index')->withDrugs($drugs);
+     }
 
 
 
