@@ -36,4 +36,12 @@ class Order extends Model
     {
         return $this->hasMany(DrugOrderReceive::class, 'order_id');
     }
+
+    /**
+     * Get the payments for this order.
+     */
+    public function operations()
+    {
+        return $this->morphMany(AccountingOperation::class, 'operationable');
+    }
 }

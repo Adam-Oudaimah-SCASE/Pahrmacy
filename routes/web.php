@@ -74,12 +74,6 @@ Route::get('/prescriptions/{id}', 'PrescriptionController@show')->name('prescrip
 Route::post('/prescriptions/calculate', 'PrescriptionController@calculate_request')->name('prescription.calculate');
 Route::get('/prescriptions/sell/{id}/{amount}', 'PrescriptionController@sell_prescription')->name('prescription.sell');
 
-
-// Report routes
-Route::get('report', function () {
-    return view('reports/categoryReport');
-});
-
 // Techsupport routes
 Route::get('techsupport', function () {
     return view('techsupport');
@@ -92,5 +86,18 @@ Route::get('aboutus', function () {
 
 Auth::routes();
 
-// To test reports (Please do not delete these routes)
-Route::get('reports/category/{category_id}', 'ReportController@drugs_categories_report')->name('report.category');
+// Repoerts Routes
+// Categories report
+Route::get('reports/category/{category_id}', 'ReportController@category_report')->name('report.category');
+// Categories sales report
+Route::get('reports/category/sales/{category_id}', 'ReportController@category_sales_report')->name('report.category.sales');
+// Companies report
+Route::get('reports/companies', 'ReportController@companies_report')->name('report.companies');
+// Companies sales report
+Route::get('reports/companies/sales', 'ReportController@companies_sales_report')->name('report.companies.sales');
+// Daily sales report
+Route::get('reports/daily/sales', 'ReportController@daily_sales_report')->name('report.daily.sales');
+// Eraning and budget report
+Route::get('reports/earnings', 'ReportController@earnings_report')->name('report.earnings');
+// Orders report
+Route::get('reports/orders', 'ReportController@orders_report')->name('report.orders');

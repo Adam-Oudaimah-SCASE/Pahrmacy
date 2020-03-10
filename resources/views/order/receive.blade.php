@@ -46,6 +46,8 @@
                     </table>
                     <label>قيمة فاتورة الشراء كاملة</label>
                     <input type="text" class="form-control" id="net_price">
+                    <label>المبلغ المراد دفعه حالياً</label>
+                    <input type="text" class="form-control" id="amount">
                     <button type="submit" class="btn btn-theme" id="submit_receive">إضافة</button>
                 </div>
             </div>
@@ -83,6 +85,7 @@
                 drugs['expiration_date'].push(table_rows[i].children[12].firstElementChild.value);
             }
             let net_price = document.getElementById('net_price').value;
+            let amount = document.getElementById('amount').value;
             $.ajax({
                 method: 'POST', // Type of response
                 url: '{{ route("invoice.store") }}', // This is the url we gave in the route
@@ -90,6 +93,7 @@
                     "_token": "{{ csrf_token() }}",
                     'drugs' : drugs,
                     'net_price' : net_price,
+                    'amount' : amount,
                     'order_id' : {{ $order->id }},
                     'invoice_type_id' : 3}, // a JSON object to send back
                 success: function(response){ // What to do if we succeed

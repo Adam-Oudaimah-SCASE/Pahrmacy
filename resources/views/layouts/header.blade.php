@@ -92,7 +92,8 @@
                     <ul class="sub">
                         <li><a href="{{ route('company.index') }}">الشركات المنتجة</a></li>
                         <li><a href="{{ route('insurnce-company.index') }}">شركات التأمين</a></li>
-                        <li><a href="#">تقرير أدوية الشركة</a></li>
+                        <li><a href="{{ route('report.companies') }}">تقرير أدوية الشركة</a></li>
+                        <li><a href="{{ route('report.companies.sales') }}">تقرير مبيعات الشركات</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -117,9 +118,9 @@
                         <li><a href="{{ route('invoice.create_with_insurance') }}">فاتورة بيع مع تأمين</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
                         <li><a href="#">فاتورة تالف</a></li>
-                        <li><a href="#">تقرير يومية المبيعات</a></li>
+                        <li><a href="{{ route('report.daily.sales') }}">تقرير يومية المبيعات</a></li>
                         <li><a href="#">تقرير أجمالي مبيعات خلال فترة</a></li>
-                        <li><a href="#">تقرير اجمالي مشتريات خلال فترة</a></li>
+                        <li><a href="{{ route('report.orders') }}">تقرير اجمالي مشتريات خلال فترة</a></li>
                         <li><a href="#">تقرير الأرباح خلال فترة</a></li>
                     </ul>
                 </li>

@@ -22,28 +22,36 @@ class InvoiceController extends Controller
 {
     /**
      * Display all sell invoices.
+     *
+     * @return \Illuminate\Http\Response
      */
     function get_sell_invoices()
     {
         $invoices = Invoice::all();
-
         return view('invoice.index')->with(['invoices' => $invoices]);
     }
 
+    /**
+     * Display detailed sell invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show_sell_invoice($id) {
-      $invoice = Invoice::find($id);
-      return view('invoice.show')->with('invoice', $invoice );
+        $invoice = Invoice::find($id);
+        return view('invoice.show')->with('invoice', $invoice );
     }
 
     /**
      * Display all orders.
+     *
+     * @return \Illuminate\Http\Response
      */
     function get_all_orders()
     {
         $orders = Order::all();
-
         return view('order.index')->with(['orders' => $orders]);
     }
+
     /**
      * Return the appropriate view to create a buy order invoice.
      *
@@ -53,10 +61,8 @@ class InvoiceController extends Controller
     {
         // Get all companies
         $companies = Company::all();
-
         // Get all warehouses
         $warehouses = WareHouse::all();
-
         // Return the appropriate view
         return view('order.create')->with(['companies' => $companies, 'warehouses' => $warehouses]);
     }
@@ -95,7 +101,9 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Show a detaild view of an order
+     * Show a detaild view of an order.
+     *
+     * @return \Illuminate\Http\Response
      */
     function show_order($order_id)
     {
@@ -335,7 +343,7 @@ class InvoiceController extends Controller
         $accounting_type = AccountingType::where('name', 'فاتورة مشتريات أدوية')->first();
         $accounting_operation = new AccountingOperation;
         $accounting_operation->date = $request->input('date') == null ? date('Y-m-d') : $request->input('date');
-        $accounting_operation->amount = $order->net_price;
+        $accounting_operation->amount = $request->input('amount') == null ? $order->net_price : $request->input('amount');
         $accounting_operation->type()->associate($accounting_type);
         $accounting_operation->operationable()->associate($order);
         $accounting_operation->save();
