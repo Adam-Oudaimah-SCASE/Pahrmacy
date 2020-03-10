@@ -40,6 +40,17 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         return view('invoice.show')->with('invoice', $invoice );
     }
+    /**
+     * Return the appropriate view to pay for an  invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function pay_for_invoice($invoice_id)
+    {
+        $invoice = Invoice::find($invoice_id);
+        return view('invoice.payment')->with(['invoice' => $invoice]);
+    }
+
 
     /**
      * Display all orders.
