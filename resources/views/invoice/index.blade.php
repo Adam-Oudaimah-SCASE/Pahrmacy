@@ -33,7 +33,7 @@
                                   <td>{{ $invoice->sell_price }}</td>
 
                                     <td>
-                                        <button class="btn btn-success btn-xs" onclick="window.location.href = '';"><i class="fa fa-money"></i></button>
+                                        <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('invoice.payment', $invoice->id) }}';"><i class="fa fa-money"></i></button>
                                         <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('invoice.show', $invoice->id) }}';"><i class="fa fa-eye"></i></button>
                                         <a href=""><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
                                         <form class="delete-form" action="" method="">

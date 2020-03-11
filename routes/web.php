@@ -44,6 +44,8 @@ Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name(
 Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
 // Show invoice
 Route::get('/invoices/show/{invoice_id}', 'InvoiceController@show_sell_invoice')->name('invoice.show');
+// complete payment for an invoice
+Route::get('/invoices/payment/{invoice_id}', 'InvoiceController@pay_for_invoice')->name('invoice.payment');
 // Search for drugs (AJAX request for Select2)
 Route::get('/drugs/search', 'DrugController@search_drugs')->name('drug.search');
 // Get drug repo by drug ID (after selecting fom a Select2 event)
