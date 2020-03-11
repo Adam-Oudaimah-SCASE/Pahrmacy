@@ -40,8 +40,9 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         return view('invoice.show')->with('invoice', $invoice );
     }
+
     /**
-     * Return the appropriate view to pay for an  invoice.
+     * Return the appropriate view to pay for an invoice.
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,6 +52,47 @@ class InvoiceController extends Controller
         return view('invoice.payment')->with(['invoice' => $invoice]);
     }
 
+    /**
+     * Pay for an invoice.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $invoice_id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function do_pay_for_invoice(Request $request, $invoice_id)
+    {
+        // Get the invoice
+        $invoice = Invoice::find($invoice_id);
+
+        // Get the amount to be paid
+        $amount = $request->input('amount');
+
+        // Claculate the paid amount for this invoice
+        $paid = $invoice->operations->sum('amount');
+
+        // Create the appropriate accounting operation
+        $accounting_type = AccountingType::where('name', 'فاتورة مبيعات')->first();
+        $accounting_operation = new AccountingOperation;
+        $accounting_operation->date = $request->input('date') == null ? date('Y-m-d H:i:s') : $request->input('date');
+        $accounting_operation->amount = $amount;
+        $accounting_operation->type()->associate($accounting_type);
+        $accounting_operation->operationable()->associate($invoice);
+        $accounting_operation->save();
+
+        // Add it to the balance table
+        $balance = Balance::first();
+        $balance->balance += $amount;
+        $balance->save();
+
+        // Check if the invoice is paid
+        if($paid + $amount >= $invoice->sell_price_after_discount) {
+            $invoice->is_paid = true;
+            $invoice->save();
+        }
+
+        return redirect()->route('invoice.index');
+    }
 
     /**
      * Display all orders.

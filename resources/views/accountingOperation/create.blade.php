@@ -11,11 +11,10 @@
                     @csrf
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">النوع</label>
-
                             <div class="col-sm-10">
                                 <select class="form-control" name="accounting_type_id">
                                     @foreach($types as $types)
-                                    <option value="{{$types->id }}">{{ $types->name }}</option>
+                                    <option value="{{ $types->id }}">{{ $types->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

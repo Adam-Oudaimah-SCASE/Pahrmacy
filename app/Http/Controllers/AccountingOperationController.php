@@ -49,20 +49,11 @@ class AccountingOperationController extends Controller
         $accounting_operation->date = $request->input('date');
         $accounting_operation->amount = $request->input('amount');
         $accounting_operation->type()->associate($accounting_type);
-
         $accounting_operation->save();
 
         // Add it to the balance table
         $balance = Balance::first();
-        switch ($request->input('type')) {
-            case 'سحب':
-                $balance->balance -= $accounting_operation->amount;
-                break;
-
-            case 'إيداع':
-                $balance->balance += $accounting_operation->amount;
-                break;
-        }
+        $balance->balance -= $accounting_operation->amount;
         $balance->save();
 
         // Return the appropriate view
@@ -80,7 +71,7 @@ class AccountingOperationController extends Controller
         // Get the targeted accountingtype
         $accounting_operation = AccountingOperation::find($id);
         // Return the appropriate view
-        return view('.edit')->withOperation($accounting_operation);
+        return view('accountingOperation.edit')->withOperation($accounting_operation);
     }
 
     /**
@@ -98,26 +89,19 @@ class AccountingOperationController extends Controller
         // Assign the request values to the new accounting operation
         $accounting_type = AccountingType::find($request->input('accounting_type_id'));
         $accounting_operation->date = $request->input('date');
+        $old_amount = $accounting_operation->amount;
         $accounting_operation->amount = $request->input('amount');
         $accounting_operation->type()->associate($accounting_type);
-
         $accounting_operation->save();
 
         // Add it to the balance table
-        $balance = Balance::all();
-        switch ($request->inupt('type')) {
-            case 'سحب':
-                $balance->balance -= $accounting_operation->amount;
-                break;
-
-            case 'إيداع':
-                $balance->balance += $accounting_operation->amount;
-                break;
-        }
+        $balance = Balance::first();
+        $balance->balance += $old_amount;
+        $balance->balance -= $accounting_operation->amount;
         $balance->save();
 
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountingOperation.index');
     }
 
     /**
@@ -134,7 +118,12 @@ class AccountingOperationController extends Controller
         // Delete the record
         $accounting_operation->delete();
 
+        // Add it to the balance table
+        $balance = Balance::first();
+        $balance->balance += $accounting_operation->amount;
+        $balance->save();
+
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountingOperation.index');
     }
 }
