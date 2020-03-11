@@ -26,6 +26,11 @@ Route::resource('warehouse', 'WareHouseController')->except(['show']);
 // Insurnce Company Routes
 Route::resource('insurnce-company', 'InsuranceCompanyController')->except(['show']);
 
+//accountingType Route
+Route::resource('accountingType', 'AccountingTypeController')->except(['show']);
+//accountingOperation Route
+Route::resource('accountingOperation', 'AccountingOperationController')->except(['show']);
+
 // Invoice Routes
 // Invoices list
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');

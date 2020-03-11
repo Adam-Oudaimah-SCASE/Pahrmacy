@@ -19,7 +19,7 @@ class AccountingOperationController extends Controller
         // Get all the operations
         $operations = AccountingOperation::all();
         // Return the appropriate view
-        return view('.index')->withOperations($operations);
+        return view('accountingOperation.index')->withOperations($operations);
     }
 
     /**
@@ -28,9 +28,9 @@ class AccountingOperationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {       $types= AccountingType::all();
         // Return the appropriate view
-        return view('.create');
+        return view('accountingOperation.create')->withTypes($types);
     }
 
     /**
@@ -53,8 +53,8 @@ class AccountingOperationController extends Controller
         $accounting_operation->save();
 
         // Add it to the balance table
-        $balance = Balance::all();
-        switch ($request->inupt('type')) {
+        $balance = Balance::first();
+        switch ($request->input('type')) {
             case 'سحب':
                 $balance->balance -= $accounting_operation->amount;
                 break;
@@ -66,7 +66,7 @@ class AccountingOperationController extends Controller
         $balance->save();
 
         // Return the appropriate view
-        return redirect()->route('.index');
+        return redirect()->route('accountingOperation.index');
     }
 
     /**
