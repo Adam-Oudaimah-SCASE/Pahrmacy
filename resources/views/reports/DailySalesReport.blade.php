@@ -23,9 +23,9 @@
                                 <tbody>
                                     @foreach ($invoices as $invoice)
                                         <tr>
-                                            <td class="numeric"><a href="{{ route('invoice.show', $invoice[0]) }}" target="_blank">{{ $invoice[0] }}</a></td>
-                                            <td class="numeric">{{ $invoice[1] }}</td>
-                                            <td class="numeric">{{ $invoice[2] }}</td>
+                                            <td class="numeric"><a href="{{ route('invoice.show', $invoice->id) }}" target="_blank">{{ $invoice->id }}</a></td>
+                                            <td class="numeric">{{ $invoice->operations->sum('amount') }}</td>
+                                            <td class="numeric">{{ $invoice->sell_price_after_discount - $invoice->operations->sum('amount') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -16,20 +16,16 @@
                                 <thead>
                                     <tr>
                                         <th>اسم المصروف</th>
-                                        <th class="numeric">سبب المصروف</th>
                                         <th class="numeric">القيمة</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>AUSTRALIAN AGRICULTURAL COMPANY LIMITED.</td>
-                                        <td class="numeric">AUSTRALIAN AGRICULTURAL COMPANY LIMITED.AUSTRALIAN AGRICULTURAL COMPANY LIMITED.</td>
-                                        <td class="numeric">9</td>
-                                    </tr>
-                                    <tr colspan="1" rowspan="4">
-                                        <td class="text-left"><strong>مجموع المصاريف</strong></td>
-                                        <td class="text-left">$1029.00</td>
-                                    </tr>
+                                    @foreach ($operations as $operation)
+                                        <tr>
+                                            <td>{{ $operation->type->name }}</td>
+                                            <td class="numeric">{{ $operation->amount }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -18,18 +18,22 @@
                                         <th>اسم الدواء</th>
                                         <th>الشركةالمصنعة</th>
                                         <th class="numeric" >تاريخ الإنتاج</th>
-                                        <th class="numeric"> تريخ انتهاء الصلاحية</th>
-                                        <th class="numeric">رقم فاتورة البيع</th>
+                                        <th class="numeric">تاريخ انتهاء الصلاحية</th>
+                                        <th class="numeric">عدد العلب</th>
+                                        <th class="numeric">عدد الظروف</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>AAC AUSTRALIAN AGRICULTURAL</td>
-                                        <td>AUSTRALIAN AGRICULTURAL COMPANY LIMITED.</td>
-                                        <td class="numeric">22-3-2019</td>
-                                        <td class="numeric">11-12-2020</td>
-                                        <td class="numeric">9</td>
-                                    </tr>
+                                    @foreach ($drugs as $drug)
+                                        <tr>
+                                            <td>{{ $drug->drug->name_arabic }}</td>
+                                            <td>{{ $drug->drug->company->name }}</td>
+                                            <td class="numeric">{{ $drug->pro_date }}</td>
+                                            <td class="numeric">{{ $drug->exp_date }}</td>
+                                            <td class="numeric">{{ $drug->packages_number }}</td>
+                                            <td class="numeric">{{ $drug->units_number }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

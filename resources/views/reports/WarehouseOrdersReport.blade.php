@@ -21,11 +21,15 @@
                                       </tr>
                                   </thead>
                                   <tbody>
-                                      <tr>
-                                          <td>AAC AUSTRALIAN AGRICULTURAL</td>
-                                          <td class="numeric">11-12-2020</td>
-                                          <td class="numeric">9</td>
-                                      </tr>
+                                      @foreach ($warehouses as $warehouse)
+                                          @foreach ($warehouse->orders as $order)
+                                              <tr>
+                                                  <td>{{ $order->orderable->name }}</td>
+                                                  <td class="numeric">{{ $order->date }}</td>
+                                                  <td class="numeric">{{ $order->net_price }}</td>
+                                              </tr>
+                                          @endforeach
+                                      @endforeach
                                   </tbody>
                               </table>
                           </div>

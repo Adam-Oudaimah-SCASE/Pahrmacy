@@ -23,14 +23,14 @@
                                 <tbody>
                                     @foreach ($orders as $order)
                                         <tr>
-                                            <td>{{ $order[0] }}</td>
-                                            <td class="numeric">{{ $order[1] }}</td>
-                                            <td class="numeric">{{ $order[2] }}</td>
+                                            <td>{{ $order->id }}</td>
+                                            <td class="numeric">{{ $order->operations->sum('amount') }}</td>
+                                            <td class="numeric">{{  $order->net_price - $order->operations->sum('amount') }}</td>
                                         </tr>
                                     @endforeach
                                     <tr colspan="2" rowspan="4">
                                         <td class="text-left"><strong>المجموع النهائي</strong></td>
-                                        <td class="text-left">{{ $sum }}</td>
+                                        <td class="text-left">{{ $orders->sum('net_price') }}</td>
                                     </tr>
                                 </tbody>
                             </table>

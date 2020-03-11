@@ -107,17 +107,8 @@ class ReportController extends Controller
         $result = array();
         // Get all invoices for the current day
         $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime('2020-03-01')), date('Y-m-d', strtotime('2020-04-01'))])->get();
-        // Loop over the invoices
-        foreach ($invoices as $invoice) {
-            $info = array();
-            array_push($info, $invoice->id);
-            array_push($info, $invoice->sell_price_after_discount);
-            $paid = $invoice->operations->sum('amount');
-            array_push($info, $invoice->sell_price_after_discount - $paid);
-            array_push($result, $info);
-        }
         // Return the approriate view
-        return view('reports.DailySalesReport')->with(['invoices' => $result]);
+        return view('reports.DailySalesReport')->with(['invoices' => $invoices]);
     }
 
     /**
@@ -148,10 +139,30 @@ class ReportController extends Controller
             $sells_orders += $order->net_price;
             $un_paid_orders += $order->net_price - $order->operations->sum('amount');
         }
-        // TODO: We have to add the payament for this day, (The view is not emplemented yet)
-        array_push($result, $sells, $un_paid_sells, $sells_orders, $un_paid_orders);
+        // Get all the accounting operations (which now made by an invoice or an order)
+        $expenses = 0;
+        $operations = AccountingOperation::where('operationable_id', null)->whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])->get();
+        foreach ($operations as $operation) {
+            $expenses += $operation->amount;
+        }
+        array_push($result, $sells, $un_paid_sells, $sells_orders, $un_paid_orders, $expenses);
         // Return the approriate view
         return view('reports.EarningsAndBudgetReport')->with(['prices' => $result]);
+    }
+
+    /**
+     * The result of expenses spended in a period.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function expenses_report()
+    {
+        // Get all the accounting operations (which now made by an invoice or an order)
+        $operations = AccountingOperation::where('operationable_id', null)
+                        ->whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])
+                        ->get();
+        // Return the approriate view
+        return view('reports.ExpenseReport')->with(['operations' => $operations]);
     }
 
     /**
@@ -163,22 +174,43 @@ class ReportController extends Controller
      */
     function orders_report()
     {
-        // Containes the final result
-        $result = array();
-        $sum = 0;
         // Get all orders for the current day
         $orders = Order::whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])->get();
-        // Loop over the invoices
-        foreach ($orders as $order) {
-            $info = array();
-            array_push($info, $order->id);
-            $sum += $order->net_price;
-            $paid = $order->operations->sum('amount');
-            array_push($info, $paid);
-            array_push($info, $order->net_price - $paid);
-            array_push($result, $info);
+        // Return the approriate view
+        return view('reports.PurchasesReport')->with(['orders' => $orders]);
+    }
+
+    /**
+     * Report expired drugs.
+     * The result is an array of the expired drug repo.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function expired_drug_report()
+    {
+        $result = array();
+        // Get all drugs
+        $drugs = Drug::all();
+        // Add the expired drugs only
+        foreach ($drugs as $drug) {
+            foreach ($drug->repo()->whereDate('exp_date', '<', date('Y-m-d'))->get() as $drug_repo) {
+                array_push($result, $drug_repo);
+            }
         }
         // Return the approriate view
-        return view('reports.PurchasesReport')->with(['orders' => $result, 'sum' => $sum]);
+        return view('reports.QuantitiesOfExpiredDrugs')->with(['drugs' => $result]);
+    }
+
+    /**
+     * Report of warehouses.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function warehouses_report()
+    {
+        // Get all orders for the current day
+        $warehouses = WareHouse::all();
+        // Return the approriate view
+        return view('reports.WarehouseOrdersReport')->with(['warehouses' => $warehouses]);
     }
 }

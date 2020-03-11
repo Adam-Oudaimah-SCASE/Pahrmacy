@@ -111,3 +111,9 @@ Route::get('reports/daily/sales', 'ReportController@daily_sales_report')->name('
 Route::get('reports/earnings', 'ReportController@earnings_report')->name('report.earnings');
 // Orders report
 Route::get('reports/orders', 'ReportController@orders_report')->name('report.orders');
+// Expenses report
+Route::get('reports/expenses', 'ReportController@expenses_report')->name('report.expenses');
+// Expired drugs report
+Route::get('reports/expired', 'ReportController@expired_drug_report')->name('report.expired');
+// WareHouses report
+Route::get('reports/warehouses', 'ReportController@warehouses_report')->name('report.warehouses');
