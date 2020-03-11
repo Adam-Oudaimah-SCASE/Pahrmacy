@@ -8,8 +8,9 @@
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-             
+
                     <h4 class="mb"><i class="fa fa-angle-right"></i>معلومات الدواء</h4>
+
                     <form action="{{ route('drug.update', $drug_repo->id) }}" method="POST">
                         @csrf
                         <div class="form-group" dir="rtl">
@@ -20,6 +21,16 @@
                             <label class="col-sm-2 col-sm-2 control-label">السعر الصافي للظرف</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="unit_net_price" value="{{$drug_repo->unit_net_price}}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')" required>
+                            </div>
+                        </div>
+                        <div class="form-group" dir="rtl">
+                            <label class="col-sm-2 col-sm-2 control-label">سعر المبيع للعلبة</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="package_sell_price" value="{{$drug_repo->package_sell_price}}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')" required>
+                            </div>
+                            <label class="col-sm-2 col-sm-2 control-label">السعر الصافي للعلبة</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="package_net_price" value="{{$drug_repo->package_net_price}}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')" required>
                             </div>
                         </div>
 
@@ -41,12 +52,12 @@
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">تاريخ انتهاء الصلاحية</label>
                             <div class="col-sm-4">
-                                <input type="date" class="form-control" name="exp_date" value="{{$drug->exp_date}}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')" required>
+                                <input type="date" class="form-control" name="exp_date" value="{{$drug_repo->exp_date}}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-theme">تعديل</button>
                     </form>
-                  
+
                 </div>
             </div>
             <!-- col-lg-12-->

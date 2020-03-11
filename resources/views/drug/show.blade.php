@@ -30,7 +30,7 @@
                                     <td>{{ $drug->units_number }}</td>
                                     <td>{{ $drug->packages_number }}</td>
                                     <td>
-                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.edit', $drug->id) }}">تعديل دواء</a>
+                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.edit', $drug->id) }}">تعديل الدفعة</a>
                                     </td>
                                     @endforeach
                                 </tr>
@@ -38,7 +38,7 @@
                             </tbody>
 
                         </table>
-                        <!-- Modal -->
+                        
                     </div>
                 </div>
             </div>
