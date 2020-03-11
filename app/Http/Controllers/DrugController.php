@@ -326,9 +326,9 @@ class DrugController extends Controller
         $drug_repo->update();
 
         // Get all the drugs
-        $drugs = Drug::all();
+        $drugs = Drug::find($drug_repo->drug_id);
         // Return the appropriate view
-        return view('drug.index')->withDrugs($drugs);
+        return view('drug.show')->with('drugs',  $drugs);
     }
 
     /**
