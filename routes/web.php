@@ -65,10 +65,14 @@ Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 //Show Drug details
 Route::get('/drugs/show/{id}', 'DrugController@show')->name('drug.show');
-//Edit Drug details
+//Edit Drug Repo details
 Route::get('/drugs/edit/{id}', 'DrugController@edit')->name('drug.edit');
-//Update Drug Details
+//Edit Drug details
+Route::get('/drugs/editDrug/{id}', 'DrugController@editDrug')->name('drug.editDrug');
+//Update Drug Repo Details
 Route::post('/drugs/update/{id}', 'DrugController@update')->name('drug.update');
+//Update Drug Details
+Route::post('/drugs/updateDrug/{id}', 'DrugController@update_drug')->name('drug.updateDrug');
 // Perscription  routes
 Route::get('/prescriptions', 'PrescriptionController@index')->name('prescription.index');
 Route::get('/prescriptions/create', 'PrescriptionController@create')->name('prescription.create');

@@ -14,13 +14,10 @@
                                     <th class="text-left">تاريخ انتهاء الصلاحية </th>
                                     <th class="text-left"> عدد الوحدات </th>
                                     <th class="text-left"> عدد العلب </th>
-
-
-
                                 </tr>
                             </thead>
+                            
                             <tbody>
-
                                 <tr>
                                     <td> {{ $drugs->name_arabic }} </td>
                                     @foreach($drugs->repo as $drug)
@@ -38,7 +35,7 @@
                             </tbody>
 
                         </table>
-                        
+                        <a class="btn btn-theme mr " href="{{ route('drug.index') }}"> رجوع</a>
                     </div>
                 </div>
             </div>

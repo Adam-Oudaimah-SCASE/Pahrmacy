@@ -211,11 +211,21 @@ class DrugController extends Controller
         $drugs = Drug::find($id);
         return view('drug.show')->with('drugs',  $drugs);
     }
+
+    // Edit Drug Repo Details 
     public function edit($id)
     {
         // Get all the required data
         $drug_repo = DrugsRepo::find($id);
         return view('drug.edit')->with('drug_repo',  $drug_repo);
+    }
+
+    // Edit Drug Main Details 
+    public function editDrug($id)
+    {
+        // Get all the required data
+        $drugs = Drug::find($id);
+        return view('drug.editDrug')->with('drugs',  $drugs);
     }
 
     /**
@@ -286,11 +296,11 @@ class DrugController extends Controller
         return view('drug.index')->withDrugs($drugs);
     }
 
+    //Update Drug Repo 
     public function update(Request $request, $id)
     {
 
         // Get the targeted Drug
-
         $drug_repo = DrugsRepo::find($id);
 
         //Assign the default unit number for this drug
@@ -330,6 +340,35 @@ class DrugController extends Controller
         // Return the appropriate view
         return view('drug.show')->with('drugs',  $drugs);
     }
+
+
+
+    //Update Drug Main Details
+    public function update_drug(Request $request, $id)
+    {
+        // Get the targeted drug
+        $drug =  Drug::find($id);
+
+        // Grap the drug data
+        $drug->name_english = $request->input('name_english');
+        $drug->name_arabic = $request->input('name_arabic');
+        $drug->chemical_composition = $request->input('chemical_composition');
+        $drug->volume_unit = $request->input('volume_unit');
+        $drug->lic_palte = $request->input('lic_palte');
+        $drug->local_barcode = $request->input('local_barcode');
+        $drug->global_barcode = $request->input('global_barcode');
+
+        // Associate the foreign keys
+        $drug->company()->associate(Company::find($request->input('company_id')));
+        $drug->category()->associate(DrugCategory::find($request->input('category_id')));
+        $drug->shape()->associate(DrugShape::find($request->input('shape_id')));
+
+        // update the  drug
+        $drug->update();
+        // Return the appropriate view
+        return redirect()->route('drug.index');
+    }
+
 
     /**
      * Calculate the net price of the entered drugs info.
