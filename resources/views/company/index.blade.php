@@ -14,12 +14,13 @@
                             <thead>
                                 <tr>
                                     <th><i class="fa fa-bullhorn ml"></i>اسم الشركة</th>
-                                    <th><i class="fa fa-bullhorn ml"></i>الاسم الأجنبي</th>
+                                    <th><i class="fa fa-bullhorn ml"></i>اسم المندوب</th>
                                     <th class="hidden-phone "><i class="fa fa-question-circle ml"></i>رقم الهاتف</th>
                                     <th><i class="fa fa-bookmark ml"></i>العنوان</th>
                                     <th><i class=" fa fa-edit ml"></i>الموقع الالكتروني</th>
                                     <th>البريد الالكتروني</th>
                                     <th>الفاكس</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

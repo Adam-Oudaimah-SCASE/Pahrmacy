@@ -205,14 +205,23 @@ class DrugController extends Controller
         ]);
     }
 
+    /**
+     * Show the drug repo info.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         // Get all the required data
-        $drugs = Drug::find($id);
-        return view('drug.show')->with('drugs',  $drugs);
+        $drug = Drug::find($id);
+        return view('drug.show')->with('drug',  $drug);
     }
 
-    // Edit Drug Repo Details 
+    /**
+     * Edit Drug Repo Details.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         // Get all the required data
@@ -220,7 +229,11 @@ class DrugController extends Controller
         return view('drug.edit')->with('drug_repo',  $drug_repo);
     }
 
-    // Edit Drug Main Details 
+    /**
+     * Edit Drug Main Details.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function editDrug($id)
     {
         // Get all the required data
@@ -296,10 +309,16 @@ class DrugController extends Controller
         return view('drug.index')->withDrugs($drugs);
     }
 
-    //Update Drug Repo 
+    /**
+     * Update Drug Repo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
-
         // Get the targeted Drug
         $drug_repo = DrugsRepo::find($id);
 
@@ -336,14 +355,19 @@ class DrugController extends Controller
         $drug_repo->update();
 
         // Get all the drugs
-        $drugs = Drug::find($drug_repo->drug_id);
+        $drug = Drug::find($drug_repo->drug_id);
         // Return the appropriate view
-        return view('drug.show')->with('drugs',  $drugs);
+        return view('drug.show')->with('drug',  $drug);
     }
 
-
-
-    //Update Drug Main Details
+    /**
+     * Update Drug Main Details.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update_drug(Request $request, $id)
     {
         // Get the targeted drug
@@ -363,7 +387,7 @@ class DrugController extends Controller
         $drug->category()->associate(DrugCategory::find($request->input('category_id')));
         $drug->shape()->associate(DrugShape::find($request->input('shape_id')));
 
-        // update the  drug
+        // Update the drug
         $drug->update();
         // Return the appropriate view
         return redirect()->route('drug.index');
@@ -377,43 +401,65 @@ class DrugController extends Controller
      *
      * TODO: Be attention when the first available repo is not enough to fullfil the required quantity.
      */
-    public function calculate_prices($drugs_info)
+    public function calculate_prices(Request $request)
     {
-        $full_net_price = 0;
-        $full_sell_price = 0;
-        // Loop over each drug
-        foreach ($drugs_info as $drug_info) {
-            // Grap the required drug information
-            $drug_id = $drug_info[0];
-            // Get the oldest drug repo
-            $drug_repo = DrugsRepo::where([['drug_id', $drug_id], ['isDisposed', false]])->orderBy('exp_date', 'ASC')->first();
-            $drug_packages_number = $drug_info[1];
-            $drug_units_number = $drug_info[2];
-            $drug_package_new_sell_price = $drug_info[3];
-            $drug_unit_new_sell_price = $drug_info[4];
+        if ($request->ajax()) {
+            // Get the drugs isds and information
+            $drugs_ids = $request->input('drugs.ids.*');
+            $drugs_packages_number = $request->input('drugs.packages_number.*');
+            $drugs_units_number = $request->input('drugs.units_number.*');
+            $modified_drugs_package_sell_price = $request->input('drugs.modified_drugs_package_sell_price.*');
+            $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
 
-            // Manipulate the quantity and the price
-            if ($drug_units_number != null || $drug_units_number != '') {
-                $full_net_price += $drug_repo->unit_net_price * $drug_units_number;
-                if ($drug_unit_new_sell_price != null || $drug_unit_new_sell_price != '') {
-                    $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
+            // Drugs info
+            // Each element will have the following struture
+            // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
+            $drugs_info = array();
+
+            for ($i=0; $i<count($drugs_ids); $i++) {
+                // Create each list entry of the drugs list
+                $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
+                array_push($drugs_info, $drug_info);
+            }
+
+            $full_net_price = 0;
+            $full_sell_price = 0;
+            // Loop over each drug
+            foreach ($drugs_info as $drug_info) {
+                // Grap the required drug information
+                $drug_id = $drug_info[0];
+                // Get the oldest drug repo
+                $drug_repo = DrugsRepo::where([['drug_id', $drug_id], ['isDisposed', false]])->orderBy('exp_date', 'ASC')->first();
+                $drug_packages_number = $drug_info[1];
+                $drug_units_number = $drug_info[2];
+                $drug_package_new_sell_price = $drug_info[3];
+                $drug_unit_new_sell_price = $drug_info[4];
+
+                // Manipulate the quantity and the price
+                if ($drug_units_number != null || $drug_units_number != '') {
+                    $full_net_price += $drug_repo->unit_net_price * $drug_units_number;
+                    if ($drug_unit_new_sell_price != null || $drug_unit_new_sell_price != '') {
+                        $full_sell_price += $drug_units_number * $drug_unit_new_sell_price;
+                    } else {
+                        $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
+                    }
                 } else {
-                    $full_sell_price += $drug_units_number * $drug_repo->unit_sell_price;
-                }
-            } else {
-                $full_net_price += $drug_repo->package_net_price * $drug_packages_number;
-                if ($drug_package_new_sell_price != null) {
-                    $full_sell_price += $drug_packages_number * $drug_package_new_sell_price;
-                } else {
-                    $full_sell_price += $drug_packages_number * $drug_repo->package_sell_price;
+                    $full_net_price += $drug_repo->package_net_price * $drug_packages_number;
+                    if ($drug_package_new_sell_price != null) {
+                        $full_sell_price += $drug_packages_number * $drug_package_new_sell_price;
+                    } else {
+                        $full_sell_price += $drug_packages_number * $drug_repo->package_sell_price;
+                    }
                 }
             }
-        }
 
-        // Return the final result
-        $result = [];
-        array_push($result, $full_net_price, $full_sell_price);
-        return $result;
+            // Return the final result
+            $result = [];
+            array_push($result, $full_net_price, $full_sell_price);
+            return $result;
+
+            return $result;
+        }
     }
 
     /**
@@ -565,8 +611,6 @@ class DrugController extends Controller
      * The needed information are passed as a list of lists ($drugs_info).
      * Each element of this list contains the following information:
      * [Drug ID, Packages number, Units number]
-     *
-     * @return boolean True if storing all the new quantites completed successuly, unhandled exception otherwise
      */
     public function update_drugs_repo_from_prescription_invoice($drugs_info)
     {

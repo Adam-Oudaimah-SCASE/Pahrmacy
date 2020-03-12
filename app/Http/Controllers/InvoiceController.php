@@ -21,6 +21,28 @@ use App\Http\Controllers\DrugController;
 class InvoiceController extends Controller
 {
     /**
+     * Return the appropriate view to create a sell invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function create_sell_invoice()
+    {
+        return view('invoice.create');
+    }
+
+    /**
+     * Return the appropriate view to create a sell invoice.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function create_sell_invoice_insurance()
+    {
+        // Return the appropriate view
+        $insurance_companies = InsuranceCompany::all();
+        return view('invoice.create_with_insurance')->with(['insurance_companies' => $insurance_companies]);
+    }
+
+    /**
      * Display all sell invoices.
      *
      * @return \Illuminate\Http\Response
@@ -121,28 +143,6 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Return the appropriate view to create a sell invoice.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function create_sell_invoice()
-    {
-        return view('invoice.create');
-    }
-
-    /**
-     * Return the appropriate view to create a sell invoice.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function create_sell_invoice_insurance()
-    {
-        // Return the appropriate view
-        $insurance_companies = InsuranceCompany::all();
-        return view('invoice.create_with_insurance')->with(['insurance_companies' => $insurance_companies]);
-    }
-
-    /**
      * Return the appropriate view to receive an order.
      *
      * @return \Illuminate\Http\Response
@@ -172,33 +172,35 @@ class InvoiceController extends Controller
      */
     function store_invoice(Request $request)
     {
-        // Initiate the drugs reposotray controller
-        $repo_controller = new DrugController;
-        // Get the invoice type
-        $invoice_type = InvoiceType::find($request->input('invoice_type_id'));
+        if($request->ajax()) {
+            // Initiate the drugs reposotray controller
+            $repo_controller = new DrugController;
+            // Get the invoice type
+            $invoice_type = InvoiceType::find($request->input('invoice_type_id'));
 
-        switch ($invoice_type->name) {
-            case 'sell':
-                // Handle the sell invoice
-                $prices = $this->handle_sell_invoice($invoice_type, $repo_controller, $request);
-                return $prices;
-                break;
+            switch ($invoice_type->name) {
+                case 'sell':
+                    // Handle the sell invoice
+                    $prices = $this->handle_sell_invoice($invoice_type, $repo_controller, $request);
+                    return $prices;
+                    break;
 
-            case 'buy_order':
-                // Handle the buy order send invoice
-                $this->handle_buy_order_invoice($request);
-                break;
+                case 'buy_order':
+                    // Handle the buy order send invoice
+                    $this->handle_buy_order_invoice($request);
+                    break;
 
-            case 'buy_receive':
-                // Handle buy receive order invoice
-                $this->handle_buy_receive_invoice($repo_controller, $request);
-                break;
+                case 'buy_receive':
+                    // Handle buy receive order invoice
+                    $this->handle_buy_receive_invoice($repo_controller, $request);
+                    break;
 
-            case 'dispose':
+                case 'dispose':
 
-            default:
-                // code...
-                break;
+                default:
+                    // code...
+                    break;
+            }
         }
     }
 
@@ -239,26 +241,13 @@ class InvoiceController extends Controller
         $invoice->is_paid = false;
         $invoice->sell_price_after_discount = 0;
         $invoice->save();
+
         // We need to save the new sell invoice in order to get its ID
         $prices = $repo_controller->update_drug_repo_from_sell_invoice($invoice->id, $drugs_info);
         $invoice->net_price = $prices[0];
         $invoice->sell_price = $prices[1];
 
         $invoice->save();
-        $result = [];
-        array_push($result, $prices[0], $prices[1], $invoice->id);
-        // Return net and sell prices
-        return $result;
-    }
-
-    /**
-     * Handle the accounting operation.
-     */
-    function handle_accounting(Request $request)
-    {
-        // Get the appropriate invoice
-        $invoice = Invoice::find($request->input('invoice_id'));
-
         // Handle discount
         if ($request->input('discount_amount') != null) {
             $invoice->discount_amount = $request->input('discount_amount');
@@ -289,6 +278,7 @@ class InvoiceController extends Controller
         }
         // Save
         $invoice->save();
+
         // Create the appropriate accounting operation
         $accounting_type = AccountingType::where('name', 'فاتورة مبيعات')->first();
         $accounting_operation = new AccountingOperation;
@@ -405,5 +395,7 @@ class InvoiceController extends Controller
         $balance = Balance::all()[0];
         $balance->balance -= $order->net_price;
         $balance->save();
+
+        exit;
     }
 }

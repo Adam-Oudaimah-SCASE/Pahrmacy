@@ -70,7 +70,7 @@
                         <hr style="border-color:#ddd;">
                         <br>
                         <div class="from-group">
-                            <button type="button" id="submit_invoice" class="btn btn-theme" data-toggle="modal" data-target="#myModal">حساب ودفع</button>
+                            <button type="button" id="calculate_price" class="btn btn-theme" data-toggle="modal" data-target="#myModal">حساب ودفع</button>
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" role="dialog">
@@ -82,49 +82,37 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">السعر الصافي</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="net_price" disabled>
-                                            </div>
+                                            <label class="control-label">السعر الصافي</label>
+                                            <input type="text" class="form-control" id="net_price" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">سعر المبيع</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="sell_price" disabled>
-                                            </div>
+                                            <label class="control-label">سعر المبيع</label>
+                                            <input type="text" class="form-control" id="sell_price" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">اخنر شركة تأمين للخصم</label>
-                                            <div class="col-lg-10">
-                                                <select class="form-control" id="discount_insurance_company">
-                                                    <option value="" selected></option>
-                                                    @foreach ($insurance_companies as $insurance_company)
-                                                        <option value="{{ json_encode($insurance_company) }}">{{ $insurance_company->name }}, {{ $insurance_company->discount }}%</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <label class="control-label">اخنر شركة تأمين للخصم</label>
+                                            <select class="form-control" id="discount_insurance_company">
+                                                <option value="" selected></option>
+                                                @foreach ($insurance_companies as $insurance_company)
+                                                    <option value="{{ json_encode($insurance_company) }}">{{ $insurance_company->name }}, {{ $insurance_company->discount }}%</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">سعر المبيع بعد الحسم</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="sell_price_after_discount" disabled>
-                                            </div>
+                                            <label class="control-label">سعر المبيع بعد الحسم</label>
+                                            <input type="text" class="form-control" id="sell_price_after_discount" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">سبب الخصم</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="discount_reason">
-                                            </div>
+                                            <label class="control-label">سبب الخصم</label>
+                                            <input type="text" class="form-control" id="discount_reason">
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-lg-2 control-label">المبلغ المراد دفعه حالياً</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="amount">
-                                            </div>
+                                            <label class="control-label">المبلغ المراد دفعه حالياً</label>
+                                            <input type="text" class="form-control" id="amount">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-default" id="payment" data-toggle="modal" data-target="#myModal2" data-dismiss="modal">حفظ</button>
+                                        <button type="submit" class="btn btn-default" id="submit_invoice" data-toggle="modal" data-target="#myModal2" data-dismiss="modal">حفظ</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>
                                     </div>
                                 </div>
@@ -173,6 +161,42 @@
         });
     </script>
     <script>
+        document.getElementById("calculate_price").onclick = calculate_price;
+        function calculate_price() {
+            let drugs = {
+                'ids' : [],
+                'packages_number' : [],
+                'units_number' : [],
+                'modified_drugs_package_sell_price' : [],
+                'modified_drugs_unit_sell_price' : []
+            };
+            let table_rows = document.getElementById('drugs').children;
+            for (let i = 0; i < table_rows.length; i++) {
+                drugs['ids'].push(table_rows[i].children[0].innerHTML);
+                drugs['packages_number'].push(table_rows[i].children[3].firstElementChild.value);
+                drugs['units_number'].push(table_rows[i].children[4].firstElementChild.value);
+                drugs['modified_drugs_package_sell_price'].push(table_rows[i].children[5].firstElementChild.value);
+                drugs['modified_drugs_unit_sell_price'].push(table_rows[i].children[6].firstElementChild.value);
+            }
+            $.ajax({
+                method: 'POST', // Type of response
+                url: '{{ route("drug.calculate") }}', // This is the url we gave in the route
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'drugs' : drugs }, // a JSON object to send back
+                success: function(response){ // What to do if we succeed
+                    document.getElementById("net_price").value = response[0];
+                    document.getElementById("sell_price").value = response[1];
+                    document.getElementById("sell_price_after_discount").value = response[1];
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            });
+        }
+    </script>
+    <script>
         document.getElementById("submit_invoice").onclick = submit_invoice;
         function submit_invoice() {
             let drugs = {
@@ -190,33 +214,6 @@
                 drugs['modified_drugs_unit_sell_price'].push(table_rows[i].children[5].firstElementChild.value);
                 drugs['modified_drugs_package_sell_price'].push(table_rows[i].children[6].firstElementChild.value);
             }
-            $.ajax({
-                method: 'POST', // Type of response
-                url: '{{ route("invoice.store") }}', // This is the url we gave in the route
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'drugs' : drugs,
-                    'invoice_type_id' : 1}, // a JSON object to send back
-                success: function(response){ // What to do if we succeed
-                    document.getElementById("net_price").value = response[0];
-                    document.getElementById("sell_price").value = response[1];
-                    var node = document.createElement("label");
-                    node.id = "invoice_id";
-                    node.disabled = true;
-                    node.innerHTML = response[2];
-                    document.getElementById("myModal").appendChild(node);
-                },
-                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                }
-            });
-        }
-    </script>
-    <script>
-        document.getElementById("payment").onclick = apply_payment;
-        function apply_payment() {
-            let invoice_id = document.getElementById("invoice_id").innerHTML;
             let amount = document.getElementById("amount").value;
             let discount_reason = document.getElementById("discount_reason").value;
             let insurance_company_id = null;
@@ -228,13 +225,14 @@
             }
             $.ajax({
                 method: 'POST', // Type of response
-                url: '{{ route("invoice.pay") }}', // This is the url we gave in the route
+                url: '{{ route("invoice.store") }}', // This is the url we gave in the route
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'invoice_id' : invoice_id,
+                    'drugs' : drugs,
                     'amount' : amount,
                     'discount_reason' : discount_reason,
-                    'insurance_company_id' : insurance_company_id }, // a JSON object to send back
+                    'insurance_company_id' : insurance_company_id,
+                    'invoice_type_id' : 1}, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
                     window.location.href = "/invoices"
                 },

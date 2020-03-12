@@ -5,7 +5,7 @@
         <h3><i class="fa fa-angle-right"></i>استكمال دفع الفاتورة</h3>
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
-                <form method="POST" action="{{ route('invoice.pay', $invoice->id) }}">
+                <form method="POST" action="{{ route('invoice.dopay', $invoice->id) }}">
                 @csrf
                 @method('POST')
                     <div class="form-panel">

@@ -57,25 +57,25 @@
                             <label class="col-sm-2 col-sm-2 control-label">الشركة</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="company_id">
-                                  
+
                                     <option value="{{ $drugs->company->id }}">{{ $drugs->company->name }}</option>
-                                  
+
                                 </select>
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">الصنف</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="category_id">
-                                  
+
                                     <option value="{{ $drugs->category->id }}}">{{ $drugs->category->name }}</option>
-                                 
+
                                 </select>
                             </div>
                             <label class="col-sm-2 col-sm-2 control-label">الشكل</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="shape_id">
-                                   
+
                                     <option value="{{ $drugs->shape->id }}">{{ $drugs->shape->name }}</option>
-                                   
+
                                 </select>
                             </div>
                         </div>

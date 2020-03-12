@@ -49,38 +49,6 @@ class PrescriptionController extends Controller
     }
 
     /**
-     * Helper method to receive the request and calculate the prices.
-     */
-    public function calculate_request(Request $request)
-    {
-        if ($request->ajax()) {
-            // Get the drugs isds and information
-            $drugs_ids = $request->input('drugs.ids.*');
-            $drugs_packages_number = $request->input('drugs.packages_number.*');
-            $drugs_units_number = $request->input('drugs.units_number.*');
-            $modified_drugs_package_sell_price = $request->input('drugs.modified_drugs_package_sell_price.*');
-            $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
-
-            // Drugs info
-            // Each element will have the following struture
-            // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
-            $drugs_info = array();
-
-            for ($i=0; $i<count($drugs_ids); $i++) {
-                // Create each list entry of the drugs list
-                $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
-                array_push($drugs_info, $drug_info);
-            }
-
-            // Initiate a new DrugController instance
-            $drug_controller = new DrugController;
-            $prices = $drug_controller->calculate_prices($drugs_info);
-
-            return $prices;
-        }
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

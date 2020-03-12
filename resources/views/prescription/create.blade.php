@@ -142,7 +142,7 @@
             }
             $.ajax({
                 method: 'POST', // Type of response
-                url: '{{ route("prescription.calculate") }}', // This is the url we gave in the route
+                url: '{{ route("drug.calculate") }}', // This is the url we gave in the route
                 data: {
                     "_token": "{{ csrf_token() }}",
                     'drugs' : drugs }, // a JSON object to send back

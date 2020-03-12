@@ -51,7 +51,7 @@ class AccountingOperationController extends Controller
         $accounting_operation->type()->associate($accounting_type);
         $accounting_operation->save();
 
-        // Add it to the balance table
+        // Update balance table
         $balance = Balance::first();
         $balance->balance -= $accounting_operation->amount;
         $balance->save();

@@ -6,23 +6,21 @@
             <div class="col-md-12">
                 <div class="content-panel">
                     <div class="adv-table">
-
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th class="text-left">اسم الدواء</th>
-                                    <th class="text-left">تاريخ انتهاء الصلاحية </th>
-                                    <th class="text-left"> عدد الوحدات </th>
-                                    <th class="text-left"> عدد العلب </th>
+                                    <th class="text-left">تاريخ انتهاء الصلاحية</th>
+                                    <th class="text-left">عدد الوحدات</th>
+                                    <th class="text-left">عدد العلب</th>
                                 </tr>
                             </thead>
-                            
                             <tbody>
                                 <tr>
                                     <td> {{ $drugs->name_arabic }} </td>
                                     @foreach($drugs->repo as $drug)
                                 <tr>
-                                    <td> </td>
+                                    <td></td>
                                     <td>{{ $drug->exp_date }}</td>
                                     <td>{{ $drug->units_number }}</td>
                                     <td>{{ $drug->packages_number }}</td>
@@ -33,7 +31,6 @@
                                 </tr>
                                 </tr>
                             </tbody>
-
                         </table>
                         <a class="btn btn-theme mr " href="{{ route('drug.index') }}"> رجوع</a>
                     </div>
