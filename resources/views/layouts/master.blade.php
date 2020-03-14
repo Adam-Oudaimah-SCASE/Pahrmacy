@@ -34,8 +34,6 @@
         <script type="text/javascript" src="/lib/jquery.nicescroll.js"></script>
         <script type="text/javascript" language="javascript" src="/lib/advanced-datatable/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="/lib/advanced-datatable/js/DT_bootstrap.js"></script>
-        <!--common script for all pages-->
-        <script type="text/javascript" src="/lib/common-scripts.js"></script>
         <!--script for this page-->
         <script type="text/javascript" src="/lib/jquery-ui-1.9.2.custom.min.js"></script>
         <!--custom switch-->
@@ -61,6 +59,8 @@
         @include('layouts.footer')
         <!-- Custom Scripts -->
         @yield('scripts')
+        <!--common script for all pages-->
+        <script type="text/javascript" src="/lib/common-scripts.js"></script>
         <script type="text/javascript">
             /* Formating function for row details */
             function fnFormatDetails(oTable, nTr) {
