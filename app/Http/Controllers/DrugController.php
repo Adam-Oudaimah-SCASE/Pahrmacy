@@ -299,7 +299,7 @@ class DrugController extends Controller
             $drug_repo->unit_net_price = $request->input('unit_net_price');
         }
 
-        // Puclish the new attributes to the repo and bind it with the appropriate drug
+        // Publish the new attributes to the repo and bind it with the appropriate drug
         $drug_repo->drug()->associate($drug);
         $drug_repo->save();
 
@@ -351,7 +351,7 @@ class DrugController extends Controller
             $drug_repo->unit_net_price = $request->input('unit_net_price');
         }
 
-        // Puclish the new attributes to the repo and bind it with the appropriate drug
+        // Publish the new attributes to the repo and bind it with the appropriate drug
         $drug_repo->update();
 
         // Get all the drugs
@@ -373,7 +373,7 @@ class DrugController extends Controller
         // Get the targeted drug
         $drug =  Drug::find($id);
 
-        // Grap the drug data
+        // Grab the drug data
         $drug->name_english = $request->input('name_english');
         $drug->name_arabic = $request->input('name_arabic');
         $drug->chemical_composition = $request->input('chemical_composition');
@@ -463,7 +463,7 @@ class DrugController extends Controller
     }
 
     /**
-     * Update the repo when a sell invoice is generat .
+     * Update the repo when a sell invoice is generated.
      * The update will happen on the oldest drug repo (according to the expiration date).
      * The passed drugs info will be a list of lists.
      * Each element of this list contains the following information:
@@ -522,7 +522,7 @@ class DrugController extends Controller
                 $drugs_invoice->modified_drug_unit_sell_price = 0;
             }
 
-            // Puclish the new attributes to the repo
+            // Publish the new attributes to the repo
             $drug_repo->save();
             $drugs_invoice->save();
         }
@@ -535,12 +535,12 @@ class DrugController extends Controller
 
     /**
      * Update the repo.
-     * This method is used when recieving a buy inoice.
+     * This method is used when receiving a buy invoice.
      * The needed information are passed as a list of lists ($drugs_info).
      * Each element of this list contains the following information:
      * [Drug ID, Unit number, Packages number, Units number, Expiration date, Production date, Package Sell price, Package Net price, Unit Sell price, Unit Net price]
      *
-     * @return boolean True if storing all the new quantites completed successuly, unhandled exception otherwise
+     * @return boolean True if storing all the new quantities completed successfully, unhandled exception otherwise
      */
     public function update_drugs_repo_from_incoming_invoice($order_id, $drugs_info)
     {
@@ -598,7 +598,7 @@ class DrugController extends Controller
                 }
             }
 
-            // Puclish the new attributes to the repo
+            // Publish the new attributes to the repo
             $drug_repo->drug()->associate($drug);
             $drug_repo->save();
         }

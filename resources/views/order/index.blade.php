@@ -8,7 +8,7 @@
                    <div class="adv-table">
                         <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
                             id="hidden-table-info">
-                            <h3><i class="fa fa-angle-left mr"></i> الطلبيات</h3>
+                            <h3><i class="fa fa-angle-left mr"></i>الطلبيات</h3>
                             <a type="submit" class="btn btn-theme mr" href="{{ route('order.create') }}"
                                 >إضافة طلبية</a>
                             <hr>

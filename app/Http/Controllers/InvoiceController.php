@@ -90,7 +90,7 @@ class InvoiceController extends Controller
         // Get the amount to be paid
         $amount = $request->input('amount');
 
-        // Claculate the paid amount for this invoice
+        // Calculate the paid amount for this invoice
         $paid = $invoice->operations->sum('amount');
 
         // Create the appropriate accounting operation
@@ -154,7 +154,7 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Show a detaild view of an order.
+     * Show a detailed view of an order.
      *
      * @return \Illuminate\Http\Response
      */
@@ -173,7 +173,7 @@ class InvoiceController extends Controller
     function store_invoice(Request $request)
     {
         if($request->ajax()) {
-            // Initiate the drugs reposotray controller
+            // Initiate the drugs repository controller
             $repo_controller = new DrugController;
             // Get the invoice type
             $invoice_type = InvoiceType::find($request->input('invoice_type_id'));
@@ -220,7 +220,7 @@ class InvoiceController extends Controller
         // Set the discount reason if any
         $invoice->discount_reason = 'لا يوجد سبب';
 
-        // Get the drugs isds and information
+        // Get the drugs ids and information
         $drugs_ids = $request->input('drugs.ids.*');
         $drugs_packages_number = $request->input('drugs.packages_number.*');
         $drugs_units_number = $request->input('drugs.units_number.*');
@@ -228,7 +228,7 @@ class InvoiceController extends Controller
         $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
 
         // Drugs info
-        // Each element will have the following struture
+        // Each element will have the following structure
         // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
         $drugs_info = array();
 
@@ -237,7 +237,7 @@ class InvoiceController extends Controller
             $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
             array_push($drugs_info, $drug_info);
         }
-        // Calculate the prices and update the drugs reposotary
+        // Calculate the prices and update the drugs repository
         $invoice->is_paid = false;
         $invoice->sell_price_after_discount = 0;
         $invoice->save();
@@ -354,7 +354,7 @@ class InvoiceController extends Controller
         $drugs_production_dates = $request->input('drugs.production_date.*');
 
         // Drugs info
-        // Each element will have the following struture
+        // Each element will have the following structure
         // [Drug ID, Unit number, Packages number, Units number, Expiration date, Production date, Package Sell price, Package Net price, Unit Sell price, Unit Net price]
         $drugs_info = array();
 

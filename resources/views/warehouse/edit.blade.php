@@ -12,7 +12,7 @@
                     @csrf
                     @method('PUT')
                         <div class="form-group" dir="rtl">
-                            <label class="col-sm-2 col-sm-2 control-label">اسم المستودع:</label>
+                            <label class="col-sm-2 col-sm-2 control-label">اسم المستودع</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="name" value="{{ $warehouse->name }}" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>

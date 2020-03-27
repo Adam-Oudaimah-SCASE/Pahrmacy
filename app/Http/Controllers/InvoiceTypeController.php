@@ -40,7 +40,7 @@ class InvoiceTypeController extends Controller
   public function store(Request $request)
   {
       // Create a new object of InvoiceType
-      $type = new Type;
+      $type = new InvoiceType;
 
       // Assign the request values to the new type
       $type->name = $request->input('name');
@@ -60,7 +60,7 @@ class InvoiceTypeController extends Controller
   public function show($id)
   {
       // Get the targeted type
-      $type = Type::find($id);
+      $type = InvoiceType::find($id);
       // Return the appropriate view
       return view('')->withType($type);
   }
@@ -74,7 +74,7 @@ class InvoiceTypeController extends Controller
   public function edit($id)
   {
       // Get the targeted type
-      $type = Type::find($id);
+      $type = InvoiceType::find($id);
       // Return the appropriate view
       return view('')->withType($type);
   }
@@ -89,7 +89,7 @@ class InvoiceTypeController extends Controller
   public function update(Request $request, $id)
   {
       // Get the targeted type
-      $type = Type::find($id);
+      $type = InvoiceType::find($id);
 
       // Update the properties of the company
       $type->name = $request->input('name');
@@ -109,7 +109,7 @@ class InvoiceTypeController extends Controller
   public function destroy($id)
   {
       // Get the targeted type
-      $type = Type::find($id);
+      $type = InvoiceType::find($id);
 
       // Delete the record
       $type->delete();

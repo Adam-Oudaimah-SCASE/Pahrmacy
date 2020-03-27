@@ -17,15 +17,15 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td> {{ $drugs->name_arabic }} </td>
-                                    @foreach($drugs->repo as $drug)
+                                    <td> {{ $drug->name_arabic }} </td>
+                                    @foreach($drug->repo as $drug_repo)
                                 <tr>
                                     <td></td>
-                                    <td>{{ $drug->exp_date }}</td>
-                                    <td>{{ $drug->units_number }}</td>
-                                    <td>{{ $drug->packages_number }}</td>
+                                    <td>{{ $drug_repo->exp_date }}</td>
+                                    <td>{{ $drug_repo->units_number }}</td>
+                                    <td>{{ $drug_repo->packages_number }}</td>
                                     <td>
-                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.edit', $drug->id) }}">تعديل الدفعة</a>
+                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.edit', $drug_repo->id) }}">تعديل الدفعة</a>
                                     </td>
                                     @endforeach
                                 </tr>

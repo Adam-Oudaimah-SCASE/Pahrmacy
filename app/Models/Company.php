@@ -23,9 +23,9 @@ class Company extends Model
     }
 
     /**
-    * Get the orders from this company.
-    *
-    */
+     * Get the orders from this company.
+     *
+     */
     public function orders()
     {
         return $this->morphMany(Order::class, 'orderable');

@@ -22,8 +22,8 @@ class DrugPrescription extends Model
     }
 
     /**
-    * Get the drug.
-    */
+     * Get the drug.
+     */
     public function drug()
     {
         return $this->belongsTo(Drug::class);

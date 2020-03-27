@@ -12,7 +12,7 @@
                 <div class="col-lg-10 col-lg-offset-1">
                     <div class="invoice-body">
                         <div class="form-group">
-                            <h4 class="text-left col-lg-3">اسم المريض:</h4>
+                            <h4 class="text-left col-lg-3">اسم المريض</h4>
                             <select class="col-lg-6" id="customer">
                                 <option selected></option>
                                 @foreach($customers as $customer)
@@ -33,7 +33,7 @@
                             <!-- /invoice-body -->
                         </div>
                         <div class="form-group">
-                            <h4 class="text-left col-lg-3">أبحث عن الدواء:</h4>
+                            <h4 class="text-left col-lg-3">أبحث عن الدواء</h4>
                             <select class="col-lg-6" multiple="multiple" id="search_drugs"></select>
                         </div>
                         <!-- /col-lg-10 -->

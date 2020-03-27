@@ -44,7 +44,6 @@
 
                         <label class="col-sm-2 control-label" for="search_drugs">
                             أبحث عن الدواء
-
                         </label>
                       <div class="col-sm-4">
                         <select class="js-states form-control " multiple="multiple" id="search_drugs"></select>

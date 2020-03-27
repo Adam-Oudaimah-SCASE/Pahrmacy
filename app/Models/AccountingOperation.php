@@ -23,8 +23,8 @@ class AccountingOperation extends Model
     }
 
     /**
-    * Get the related invoice or order for this payment.
-    */
+     * Get the related invoice or order for this payment.
+     */
     public function operationable()
     {
         return $this->morphTo();

@@ -6,7 +6,7 @@
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <h4 class="mb"><i class="fa fa-angle-right"></i> معلومات</h4>
+                    <h4 class="mb"><i class="fa fa-angle-right"></i>معلومات</h4>
                     <form class="form-horizontal style-form" action="{{ route('category.store') }}" method="POST">
                     @csrf
                         <div class="form-group" dir="rtl">

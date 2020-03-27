@@ -68,7 +68,7 @@
                           <br>
                           <br>
                           <hr>
-                           <h4 class="text-left"><strong> إجمالي الفاتورة   : {{ $prescriptions->sell_price }} ل س </strong></h4>
+                           <h4 class="text-left"><strong>إجمالي الفاتورة: {{ $prescriptions->sell_price }} ل س </strong></h4>
                         </div>
                     </div>
                 </div>

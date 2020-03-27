@@ -35,7 +35,7 @@ class ReportController extends Controller
         $category = DrugCategory::find($category_id);
         // Get the related drugs for this category
         $drugs = $category->drugs()->get();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.categoryReport')->with(['drugs' => $drugs]);
     }
 
@@ -50,7 +50,7 @@ class ReportController extends Controller
         $category = DrugCategory::find($category_id);
         // Get the related drugs for this category
         $drugs = $category->drugs()->get();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.categorySalesReport')->with(['drugs' => $drugs]);
     }
 
@@ -63,7 +63,7 @@ class ReportController extends Controller
     {
         // Get the companies
         $companies = Company::all();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.companiesReport')->with(['companies' => $companies]);
     }
 
@@ -76,7 +76,7 @@ class ReportController extends Controller
      */
     function companies_sales_report()
     {
-        // Containes the final result
+        // Contains the final result
         $result = array();
         // Get the companies
         $companies = Company::all();
@@ -90,7 +90,7 @@ class ReportController extends Controller
             array_push($info, $sell_prices);
             array_push($result, $info);
         }
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.companiesSalesReport')->with(['companies' => $result]);
     }
 
@@ -103,11 +103,11 @@ class ReportController extends Controller
      */
     function daily_sales_report()
     {
-        // Containes the final result
+        // Contains the final result
         $result = array();
         // Get all invoices for the current day
         $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime('2020-03-01')), date('Y-m-d', strtotime('2020-04-01'))])->get();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.DailySalesReport')->with(['invoices' => $invoices]);
     }
 
@@ -119,7 +119,7 @@ class ReportController extends Controller
      */
     function earnings_report()
     {
-        // Containes the final result
+        // Contains the final result
         $result = array();
         // Get all invoices for the current day
         $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime('2020-03-01')), date('Y-m-d', strtotime('2020-04-01'))])->get();
@@ -146,7 +146,7 @@ class ReportController extends Controller
             $expenses += $operation->amount;
         }
         array_push($result, $sells, $un_paid_sells, $sells_orders, $un_paid_orders, $expenses);
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.EarningsAndBudgetReport')->with(['prices' => $result]);
     }
 
@@ -161,7 +161,7 @@ class ReportController extends Controller
         $operations = AccountingOperation::where('operationable_id', null)
                         ->whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])
                         ->get();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.ExpenseReport')->with(['operations' => $operations]);
     }
 
@@ -176,7 +176,7 @@ class ReportController extends Controller
     {
         // Get all orders for the current day
         $orders = Order::whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])->get();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.PurchasesReport')->with(['orders' => $orders]);
     }
 
@@ -197,7 +197,7 @@ class ReportController extends Controller
                 array_push($result, $drug_repo);
             }
         }
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.QuantitiesOfExpiredDrugs')->with(['drugs' => $result]);
     }
 
@@ -210,7 +210,7 @@ class ReportController extends Controller
     {
         // Get all orders for the current day
         $warehouses = WareHouse::all();
-        // Return the approriate view
+        // Return the appropriate view
         return view('reports.WarehouseOrdersReport')->with(['warehouses' => $warehouses]);
     }
 }

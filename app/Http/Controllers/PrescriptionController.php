@@ -64,7 +64,7 @@ class PrescriptionController extends Controller
         $customer = SpecialCustomer::find($customer_id);
         $prescription->customer()->associate($customer);
 
-        // Asscosiate with an insurance company if available
+        // Associate with an insurance company if available
         $discount_percentage = 0;
         if ($request->input('insurance_company_id') != null) {
             $insurance_company_id = $request->input('insurance_company_id');
@@ -89,7 +89,7 @@ class PrescriptionController extends Controller
         $modified_drugs_unit_sell_price = $request->input('drugs.modified_drugs_unit_sell_price.*');
 
         // Drugs info
-        // Each element will have the following struture
+        // Each element will have the following structure
         // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
         $drugs_info = array();
 
@@ -103,7 +103,7 @@ class PrescriptionController extends Controller
         $drug_controller = new DrugController;
         $prices = $drug_controller->calculate_prices($drugs_info);
 
-        // Calculate the prcies
+        // Calculate the prices
         for ($i=0; $i<count($drugs_ids); $i++) {
             $drug = Drug::find($drugs_ids[$i]);
             $drug_repo = $drug->repo()->where('isDisposed', false)->orderBy('exp_date', 'ASC')->get()->first();
@@ -119,7 +119,7 @@ class PrescriptionController extends Controller
             $drug_prescription->save();
         }
 
-        // Assign the calculated prcies to the prescription
+        // Assign the calculated prices to the prescription
         $prescription->net_price = $prices[0];
         $prescription->sell_price = $prices[1];
         $discount_amount = $prices[1] * $discount_percentage;
@@ -134,7 +134,7 @@ class PrescriptionController extends Controller
     public function sell_prescription($prescription_id, $amount)
     {
         // Drugs info
-        // Each element will have the following struture
+        // Each element will have the following structure
         // [Drug ID, Packages number, Units number]
         $drugs_info = array();
 
@@ -147,7 +147,7 @@ class PrescriptionController extends Controller
             array_push($drugs_info, $drug_info);
         }
 
-        // Initiate the drugs reposotray controller
+        // Initiate the drugs repository controller
         $repo_controller = new DrugController;
         $repo_controller->update_drugs_repo_from_prescription_invoice($drugs_info);
 
@@ -202,7 +202,7 @@ class PrescriptionController extends Controller
         }
 
         $discount_percentage = $prescription->insurance_company->discount_percentage;
-        // Asscosiate with an insurance company if available
+        // Associate with an insurance company if available
         if ($request->input('insurance_company_id') != $prescription->insurance_company->id) {
             $insurance_company_id = $request->input('insurance_company_id');
             $insurance_company = InsuranceCompany::find($insurance_company_id);
@@ -217,7 +217,7 @@ class PrescriptionController extends Controller
         $drugs_package_sell_price = $request->input('drugs.package_sell_price.*');
         $drugs_unit_sell_price = $request->input('drugs.unit_sell_price.*');
 
-        // TODO: Has to manipulate the edit process in diffirent way that creating
+        // TODO: Has to manipulate the edit process in diffident way that creating
 
         // Return the appropriate view
         return redirect()->route('prescription.index');

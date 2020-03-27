@@ -3,12 +3,12 @@
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <h3><i class="fa fa-angle-left mr"></i> تعديل دواء</h3>
+        <h3><i class="fa fa-angle-left mr"></i>تعديل دواء</h3>
         <!-- BASIC FORM ELELEMNTS -->
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <h4 class="mb"><i class="fa fa-angle-left mr"></i> معلومات الدواء</h4>
+                    <h4 class="mb"><i class="fa fa-angle-left mr"></i>معلومات الدواء</h4>
                     <form class="form-horizontal style-form" action="{{ route('drug.updateDrug', $drugs->id) }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group " dir="rtl">

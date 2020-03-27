@@ -39,8 +39,8 @@ class Prescription extends Model
     }
 
     /**
-    * Get the payments for this invoice.
-    */
+     * Get the payments for this invoice.
+     */
     public function operations()
     {
         return $this->morphMany(AccountingOperation::class, 'operationable');

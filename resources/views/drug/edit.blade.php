@@ -3,13 +3,13 @@
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <h3><i class="fa fa-angle-left"></i> تعديل دفعة دوائية </h3>
+        <h3><i class="fa fa-angle-left"></i>تعديل دفعة دوائية </h3>
         <!-- BASIC FORM ELELEMNTS -->
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
 
-                    <h4 class="mb"><i class="fa fa-angle-left"></i> معلومات الدفعة </h4>
+                    <h4 class="mb"><i class="fa fa-angle-left"></i>معلومات الدفعة</h4>
 
                     <form action="{{ route('drug.update', $drug_repo->id) }}" method="POST">
                         @csrf

@@ -6,7 +6,7 @@
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
                 <div class="form-panel">
-                    <h4 class="mb"><i class="fa fa-angle-right"></i>معرمات الطلب ذو الرقم {{ $order->id }}</h4>
+                    <h4 class="mb"><i class="fa fa-angle-right"></i>معلومات الطلب ذو الرقم {{ $order->id }}</h4>
                     <table class="table">
                         <thead>
                             <tr>

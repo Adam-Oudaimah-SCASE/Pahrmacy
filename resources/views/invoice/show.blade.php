@@ -30,13 +30,13 @@
                             <div class="col-md-4">
                                 <br>
                                 <div>
-                                    <div class="pull-left">رقم الفاتورة :</div>
+                                    <div class="pull-left">رقم الفاتورة:</div>
                                     <div class="pull-right">{{ $invoice->id }}</div>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div>
                                     <!-- /col-md-3 -->
-                                    <div class="pull-left">تاريخ الفاتورة :</div>
+                                    <div class="pull-left">تاريخ الفاتورة:</div>
                                     <div class="pull-right">{{ $invoice->date }}</div>
                                     <div class="clearfix"></div>
                                 </div>
