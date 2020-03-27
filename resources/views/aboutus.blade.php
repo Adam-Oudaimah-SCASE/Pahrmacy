@@ -5,7 +5,7 @@
   <section class="wrapper site-min-height">
     <div class="row mt mb">
       <div class="col-lg-12">
-        <h3><i class="fa fa-angle-right"></i> من نحن</h3>
+        <h3><i class="fa fa-angle-right"></i>من نحن</h3>
         <br>
         <div class="col-lg-4 col-md-4 col-sm-12">
           <div class="dmbox">
