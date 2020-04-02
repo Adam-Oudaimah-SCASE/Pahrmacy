@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use PHPUnit\Util\Filesystem;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +17,8 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             CreateAccountingTypesSeeder::class,
             BalanceTableSeeder::class,
-            InvoiceTypesTableSeeder::class
+            InvoiceTypesTableSeeder::class,
+            FilesSeeder::class
         ]);
     }
 }

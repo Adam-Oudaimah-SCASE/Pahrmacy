@@ -2,25 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\AccountingOperation;
-use App\Models\AccountingType;
-use App\Models\Balance;
 use App\Models\Company;
 use App\Models\Drug;
 use App\Models\DrugCategory;
-use App\Models\DrugInvoice;
-use App\Models\DrugOrderReceive;
-use App\Models\DrugOrderSend;
-use App\Models\DrugShape;
-use App\Models\DrugsRepo;
-use App\Models\InsuranceCompany;
 use App\Models\Invoice;
-use App\Models\InvoiceType;
 use App\Models\Order;
 use App\Models\WareHouse;
-use App\Http\Controllers\DrugController;
 
 class ReportController extends Controller
 {

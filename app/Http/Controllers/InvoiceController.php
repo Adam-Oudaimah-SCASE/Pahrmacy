@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Drug;
-use App\Models\DrugsRepo;
 use App\Models\InvoiceType;
 use App\Models\InsuranceCompany;
 use App\Models\Order;
