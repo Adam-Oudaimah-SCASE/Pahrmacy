@@ -25,6 +25,14 @@ use App\Http\Controllers\DrugController;
 class ReportController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:report-show');
+    }
+
+    /**
      * Report about the drugs for a certain category.
      *
      * @return \Illuminate\Http\Response

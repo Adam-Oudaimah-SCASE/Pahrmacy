@@ -8,6 +8,18 @@ use App\Models\DrugShape;
 class DrugShapeController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:drug-shape-list|drug-shape-create|drug-shape-update|drug-shape-delete', ['only' => ['index']]);
+        $this->middleware('permission:drug-shape-list', ['only' => ['index']]);
+        $this->middleware('permission:drug-shape-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:drug-shape-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:drug-shape-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

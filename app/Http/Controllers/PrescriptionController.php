@@ -16,6 +16,18 @@ use App\Http\Controllers\DrugController;
 class PrescriptionController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:prescription-list|prescription-create|prescription-update|prescription-delete', ['only' => ['index']]);
+        $this->middleware('permission:prescription-list', ['only' => ['index']]);
+        $this->middleware('permission:prescription-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:prescription-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:prescription-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

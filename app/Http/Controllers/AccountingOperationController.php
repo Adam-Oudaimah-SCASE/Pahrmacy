@@ -10,6 +10,18 @@ use App\Models\Balance;
 class AccountingOperationController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:ao-list|ao-create|ao-update|ao-delete', ['only' => ['index']]);
+        $this->middleware('permission:ao-list', ['only' => ['index']]);
+        $this->middleware('permission:ao-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:ao-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:ao-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -28,7 +40,8 @@ class AccountingOperationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {       $types= AccountingType::all();
+    {
+        $types = AccountingType::all();
         // Return the appropriate view
         return view('accountingOperation.create')->withTypes($types);
     }

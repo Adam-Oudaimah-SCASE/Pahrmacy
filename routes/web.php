@@ -37,7 +37,7 @@ Route::resource('accountingOperation', 'AccountingOperationController')->except(
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');
 // Create a new sell invoice view
 Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
-// Create a new sell invoice with insurnce view
+// Create a new sell invoice with insurance view
 Route::get('/invoices/createInsuranceInvoice', 'InvoiceController@create_sell_invoice_insurance')->name('invoice.create_with_insurance');
 // Store the new invoice
 Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
@@ -105,6 +105,10 @@ Route::get('aboutus', function () {
     return view('aboutus');
 });
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 Auth::routes();
 
 // Reports Routes
@@ -128,3 +132,7 @@ Route::get('reports/expenses', 'ReportController@expenses_report')->name('report
 Route::get('reports/expired', 'ReportController@expired_drug_report')->name('report.expired');
 // WareHouses report
 Route::get('reports/warehouses', 'ReportController@warehouses_report')->name('report.warehouses');
+
+// Roles Routes
+Route::resource('roles','RoleController');
+Route::resource('users','UserController');

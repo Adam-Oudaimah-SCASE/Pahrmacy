@@ -8,6 +8,18 @@ use App\Models\InsuranceCompany;
 class InsuranceCompanyController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:ins-com-list|ins-com-create|ins-com-update|ins-com-delete', ['only' => ['index']]);
+        $this->middleware('permission:ins-com-list', ['only' => ['index']]);
+        $this->middleware('permission:ins-com-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:ins-com-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:ins-com-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

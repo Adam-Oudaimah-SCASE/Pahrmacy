@@ -16,6 +16,30 @@ use App\Models\Company;
 class DrugController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     *
+     * The required permissions are:
+     * 'drug-list', 'drug-create', 'drug-update', 'drug-delete',
+     * 'drug-repo-show', 'drug-repo-update', 'drug-repo-update-sell', 'drug-repo-update-order', 'drug-repo-update-prescription','drug-repo-delete'
+     */
+    public function __construct()
+    {
+        $this->middleware(
+            'permission:drug-list|drug-repo-show',
+            ['only' => ['index', 'search_drugs', 'get_drug_repo_by_id_for_sell', 'get_drug_repo_by_id_for_order', 'get_drug_by_id_for_prescription', 'calculate_prices']]
+        );
+        $this->middleware('permission:drug-list', ['only' => ['index']]);
+        $this->middleware('permission:drug-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:drug-update', ['only' => ['editDrug', 'update_drug']]);
+        $this->middleware('permission:drug-delete', ['only' => ['destroy']]);
+
+        $this->middleware('permission:drug-repo-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:drug-repo-update-sell', ['only' => ['edit', 'update_drug_repo_from_sell_invoice']]);
+        $this->middleware('permission:drug-repo-update-order', ['only' => ['edit', 'update_drugs_repo_from_incoming_invoice']]);
+        $this->middleware('permission:drug-repo-update-prescription', ['only' => ['edit', 'update_drugs_repo_from_prescription_invoice']]);
+    }
+
+    /**
      * Helper method to get the drug using its bar code.
      *
      * @return Drug Object for the targeted drug
@@ -59,20 +83,21 @@ class DrugController extends Controller
             $search = $request->search;
             if ($search == ' ' || $search == '' || $search == null) {
                 $drugs = null;
+                return json_encode(null);
+            } else {
+                $drugs = Drug::where('name_english', 'like', '%' . $search . '%')
+                    ->orWhere('name_arabic', 'like', '%' . $search . '%')
+                    ->orWhere('chemical_composition', 'like', '%' . $search . '%')
+                    ->get();
+                $response = array();
+                foreach ($drugs as $drug) {
+                    $response[] = array(
+                        "id" => $drug->id,
+                        "text" => $drug->name_arabic
+                    );
+                }
+                return json_encode($response);
             }
-            $drugs = Drug::where('name_english', 'like', '%' . $search . '%')
-                ->orWhere('name_arabic', 'like', '%' . $search . '%')
-                ->orWhere('chemical_composition', 'like', '%' . $search . '%')
-                ->get();
-            $response = array();
-            foreach ($drugs as $drug) {
-                $response[] = array(
-                    "id" => $drug->id,
-                    "text" => $drug->name_arabic
-                );
-            }
-
-            return json_encode($response);
         }
     }
 
@@ -253,7 +278,7 @@ class DrugController extends Controller
         $drug = new Drug;
         $drug_repo = new DrugsRepo;
 
-        // Grap the drug data
+        // Grab the drug data
         $drug->name_english = $request->input('name_english');
         $drug->name_arabic = $request->input('name_arabic');
         $drug->chemical_composition = $request->input('chemical_composition');
@@ -416,7 +441,7 @@ class DrugController extends Controller
             // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
             $drugs_info = array();
 
-            for ($i=0; $i<count($drugs_ids); $i++) {
+            for ($i = 0; $i < count($drugs_ids); $i++) {
                 // Create each list entry of the drugs list
                 $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
                 array_push($drugs_info, $drug_info);

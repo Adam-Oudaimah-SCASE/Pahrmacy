@@ -21,6 +21,32 @@ use App\Http\Controllers\DrugController;
 class InvoiceController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     *
+     * The required permissions are:
+     * 'invoice-pay', 'invoice-sell-list', 'invoice-sell-show', 'invoice-sell-create', 'invoice-sell-insurance-create',
+     * 'invoice-order-create', invoice-order-list', 'invoice-order-show', 'invoice-order-receive'
+     */
+    public function __construct()
+    {
+        $this->middleware(
+            'permission:invoice-sell-list|invoice-sell-show|invoice-order-list|invoice-order-show',
+            ['only' => ['get_sell_invoices', 'show_sell_invoice', 'get_all_orders', 'show_order', 'get_drug_by_id_for_prescription', 'calculate_prices']]
+        );
+        $this->middleware(
+            'permission:invoice-sell-create|invoice-sell-insurance-create',
+            ['only' => ['create_sell_invoice', 'create_sell_invoice_insurance', 'store_invoice', 'handle_sell_invoice']]
+        );
+        $this->middleware('permission:invoice-pay', ['only' => ['pay_for_invoice', 'do_pay_for_invoice']]);
+
+        $this->middleware(
+            'permission:invoice-order-create',
+            ['only' => ['create_buy_order_invoice', 'store_invoice', 'store_invoice', 'handle_buy_order_invoice']]
+        );
+        $this->middleware('permission:invoice-order-receive', ['only' => ['create_order_receive_invoice', 'store_invoice', 'handle_buy_receive_invoice']]);
+    }
+
+    /**
      * Return the appropriate view to create a sell invoice.
      *
      * @return \Illuminate\Http\Response
@@ -58,9 +84,10 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show_sell_invoice($id) {
+    public function show_sell_invoice($id)
+    {
         $invoice = Invoice::find($id);
-        return view('invoice.show')->with('invoice', $invoice );
+        return view('invoice.show')->with('invoice', $invoice);
     }
 
     /**
@@ -108,7 +135,7 @@ class InvoiceController extends Controller
         $balance->save();
 
         // Check if the invoice is paid
-        if($paid + $amount >= $invoice->sell_price_after_discount) {
+        if ($paid + $amount >= $invoice->sell_price_after_discount) {
             $invoice->is_paid = true;
             $invoice->save();
         }
@@ -172,7 +199,7 @@ class InvoiceController extends Controller
      */
     function store_invoice(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             // Initiate the drugs repository controller
             $repo_controller = new DrugController;
             // Get the invoice type
@@ -232,7 +259,7 @@ class InvoiceController extends Controller
         // [Drug ID, Packages number, Units number, New package sell price, New unit sell price]
         $drugs_info = array();
 
-        for ($i=0; $i<count($drugs_ids); $i++) {
+        for ($i = 0; $i < count($drugs_ids); $i++) {
             // Create each list entry of the drugs list
             $drug_info = array($drugs_ids[$i], $drugs_packages_number[$i], $drugs_units_number[$i], $modified_drugs_package_sell_price[$i], $modified_drugs_unit_sell_price[$i]);
             array_push($drugs_info, $drug_info);
@@ -311,8 +338,7 @@ class InvoiceController extends Controller
         if (!$supplier) {
             $supplier = Company::find($request->input('supplier_id'));
             $order->orderable()->associate($supplier);
-        }
-        else {
+        } else {
             $order->orderable()->associate($supplier);
         }
         // To generate the order ID
@@ -323,7 +349,7 @@ class InvoiceController extends Controller
         $drugs_units_number = $request->input('drugs.units_number.*');
 
         // Loop over the drugs, and create an appropriate entry in the drug_order_send table
-        for ($i=0; $i<count($drugs_ids); $i++) {
+        for ($i = 0; $i < count($drugs_ids); $i++) {
             $drug_order_send = new DrugOrderSend;
             $drug_order_send->drug()->associate(Drug::find($drugs_ids[$i]));
             $drug_order_send->order()->associate($order);
@@ -358,12 +384,14 @@ class InvoiceController extends Controller
         // [Drug ID, Unit number, Packages number, Units number, Expiration date, Production date, Package Sell price, Package Net price, Unit Sell price, Unit Net price]
         $drugs_info = array();
 
-        for ($i=0; $i<count($drugs_ids); $i++) {
+        for ($i = 0; $i < count($drugs_ids); $i++) {
             // Create each list entry of the drugs list
-            $drug_info = array($drugs_ids[$i], $drugs_unit_number[$i], $drugs_packages_number[$i], $drugs_units_number[$i],
+            $drug_info = array(
+                $drugs_ids[$i], $drugs_unit_number[$i], $drugs_packages_number[$i], $drugs_units_number[$i],
                 $drugs_expiration_dates[$i], $drugs_production_dates[$i],
                 $drugs_package_sell_price[$i], $drugs_package_net_price[$i],
-                $drugs_unit_sell_price[$i], $drugs_unit_net_price[$i]);
+                $drugs_unit_sell_price[$i], $drugs_unit_net_price[$i]
+            );
             array_push($drugs_info, $drug_info);
             $drug_order_receive = new DrugOrderReceive;
             $drug_order_receive->order()->associate($order);

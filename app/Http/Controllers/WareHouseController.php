@@ -8,6 +8,18 @@ use App\Models\WareHouse;
 class WareHouseController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    function __construct()
+    {
+        $this->middleware('permission:ware-list|ware-create|ware-update|ware-delete', ['only' => ['index']]);
+        $this->middleware('permission:ware-list', ['only' => ['index']]);
+        $this->middleware('permission:ware-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:ware-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:ware-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

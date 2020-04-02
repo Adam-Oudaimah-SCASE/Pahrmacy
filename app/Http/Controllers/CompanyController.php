@@ -8,6 +8,18 @@ use App\Models\Company;
 class CompanyController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:company-list|company-create|company-update|company-delete', ['only' => ['index']]);
+        $this->middleware('permission:company-list', ['only' => ['index']]);
+        $this->middleware('permission:company-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:company-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:company-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

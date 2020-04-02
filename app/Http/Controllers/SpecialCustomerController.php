@@ -8,6 +8,18 @@ use App\Models\SpecialCustomer;
 class SpecialCustomerController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    function __construct()
+    {
+        $this->middleware('permission:sp-cust-list|sp-cust-create|sp-cust-update|sp-cust-delete', ['only' => ['index']]);
+        $this->middleware('permission:sp-cust-list', ['only' => ['index']]);
+        $this->middleware('permission:sp-cust-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:sp-cust-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:sp-cust-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

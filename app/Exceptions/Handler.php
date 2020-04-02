@@ -46,6 +46,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /**
+         * Todo: Create appropriate page for permission exception
+         */
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            $error_message = "The user does not have the required permission";
+            return response()->redirectToRoute('login');
+        }
+
         return parent::render($request, $exception);
     }
 }

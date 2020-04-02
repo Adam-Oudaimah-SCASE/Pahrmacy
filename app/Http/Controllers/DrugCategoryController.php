@@ -8,6 +8,18 @@ use App\Models\DrugCategory;
 class DrugCategoryController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:drugcat-list|drugcat-create|drugcat-update|drugcat-delete', ['only' => ['index']]);
+        $this->middleware('permission:drugcat-list', ['only' => ['index']]);
+        $this->middleware('permission:drugcat-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:drugcat-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:drugcat-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

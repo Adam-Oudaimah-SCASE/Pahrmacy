@@ -8,6 +8,18 @@ use App\Models\AccountingType;
 class AccountingTypeController extends Controller
 {
     /**
+     * Assign appropriate permissions.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:at-list|at-create|at-update|at-delete', ['only' => ['index']]);
+        $this->middleware('permission:at-list', ['only' => ['index']]);
+        $this->middleware('permission:at-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:at-update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:at-delete', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
