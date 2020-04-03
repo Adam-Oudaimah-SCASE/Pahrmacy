@@ -112,6 +112,7 @@ Route::get('/', function () {
 Auth::routes();
 
 // Reports Routes
+Route::get('reports',function () { return view('reports.index');})->name('report.index');
 // Categories report
 Route::get('reports/category/{category_id}', 'ReportController@category_report')->name('report.category');
 // Categories sales report
