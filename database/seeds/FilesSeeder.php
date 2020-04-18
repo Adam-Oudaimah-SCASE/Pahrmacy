@@ -12,7 +12,7 @@ class FilesSeeder extends SpreadsheetSeeder
     public function run()
     {
         // By default, the seeder will process all XLSX files in /database/seeds/*.xlsx (relative to Laravel project base path)
-        $this->worksheetTableMapping = ['companies' => 'companies', 'drug_categories' => 'drug_categories'];
+        $this->worksheetTableMapping = ['companies' => 'companies', 'drug_shapes' => 'drug_shapes'];
 
         $this->truncate = false;
 
