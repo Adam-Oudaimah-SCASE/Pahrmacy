@@ -23,8 +23,8 @@ class CreateDrugsTable extends Migration
             $table->integer('net_price');
             $table->integer('sell_price');
             $table->integer('lic_palte')->nullable();
-            $table->string('local_barcode');
-            $table->string('global_barcode');
+            $table->string('local_barcode')->nullable();
+            $table->string('global_barcode')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->foreign('category_id')->references('id')->on('drug_categories')->onUpdate('cascade')->onDelete('set null');
