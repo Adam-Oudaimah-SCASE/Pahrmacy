@@ -115,6 +115,6 @@ class DrugCategoryController extends Controller
         $category->delete();
 
         // Return the appropriate view
-        return redirect()->route('category');
+        return redirect()->route('category.index');
     }
 }

@@ -78,12 +78,8 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ route('drug.index') }}">عرض الادوية</a></li>
-                        <li><a href="{{ route('category.index') }}">الأقسام</a></li>
-                        <li><a href="{{ route('shape.index') }}">الأصناف الدوائية</a></li>
-                        <li><a href="#">تقرير مبيعات الأقسام</a></li>
-                        <li><a href="#">تقرير الأدوية الحالية</a></li>
-                        <li><a href="#">تقرير كميات الادوية المنتهية الصلاحية</a></li>
-                        <li><a href="#">تقرير الأدوية منتهية الصلاحية</a></li>
+                        <li><a href="{{ route('category.index') }}">الأصناف الدوائية</a></li>
+                        <li><a href="{{ route('shape.index') }}">الأشكال الدوائية</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -92,10 +88,8 @@
                         <span>الشركات</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{ route('company.index') }}">الشركات المنتجة</a></li>
+                        <li><a href="{{ route('company.index') }}">الشركات الدوائية</a></li>
                         <li><a href="{{ route('insurnce-company.index') }}">شركات التأمين</a></li>
-                        <li><a href="{{ route('report.companies') }}">تقرير أدوية الشركة</a></li>
-                        <li><a href="{{ route('report.companies.sales') }}">تقرير مبيعات الشركات</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -105,7 +99,6 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{ route('warehouse.index') }}">المستودعات الموجودة</a></li>
-                        <li><a href="#">تقرير مستودعات</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -120,24 +113,15 @@
                         <li><a href="{{ route('invoice.create_with_insurance') }}">فاتورة بيع مع تأمين</a></li>
                         <li><a href="#">فاتورة مرتجع</a></li>
                         <li><a href="#">فاتورة تالف</a></li>
-                        <li><a href="{{ route('report.daily.sales') }}">تقرير يومية المبيعات</a></li>
-                        <li><a href="#">تقرير أجمالي مبيعات خلال فترة</a></li>
-                        <li><a href="{{ route('report.orders') }}">تقرير اجمالي مشتريات خلال فترة</a></li>
-                        <li><a href="#">تقرير الأرباح خلال فترة</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-briefcase"></i>
-                        <span>الصندوق</span>
+                        <span>التقارير</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">المصروف</a></li>
-                        <li><a href="#">مبيعات خلال فترة معينة</a></li>
-                        <li><a href="#">مدفوعات خلال فترة معينة</a></li>
-                        <li><a href="#">تقرير شهري</a></li>
-                        <li><a href="#">تقرير يومي</a></li>
-                        <li><a href="#">تقرير سنوي</a></li>
+                        <li><a href="{{ route('report.index') }}">اختر تقرير</a></li>
                     </ul>
                     <li>
                         <a href="#">
