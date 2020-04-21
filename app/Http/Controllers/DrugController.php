@@ -67,10 +67,87 @@ class DrugController extends Controller
     {
         // Get all the drugs
         // Without details, when pressing on each drug we get its details
-        $drugs = Drug::all();
+        $shapes = DrugShape::all();
+        $categories = DrugCategory::all();
+        $companies = Company::all();
 
         // Return the appropriate view
-        return view('drug.index')->withDrugs($drugs);
+        return view('drug.index')->with([
+            'shapes' => $shapes,
+            'categories' => $categories,
+            'companies' => $companies
+        ]);
+    }
+
+    /**
+     * Filter drugs.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $shape_id = $request->shape;
+        $category_id = $request->category;
+        $company_id = $request->company;
+
+        $drugs = null;
+
+        if ($shape_id != 0 && $category_id != 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['category_id', $category_id],
+                ['company_id', $company_id],
+            ])->get();
+        }
+
+        if ($shape_id != 0 && $category_id != 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['category_id', $category_id],
+            ])->get();
+        }
+
+        if ($shape_id != 0 && $category_id == 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['company_id', $company_id],
+            ])->get();
+        }
+
+        if ($shape_id == 0 && $category_id != 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['category_id', $category_id],
+                ['company_id', $company_id],
+            ])->get();
+        }
+
+        if ($shape_id != 0 && $category_id == 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id]
+            ])->get();
+        }
+
+        if ($shape_id == 0 && $category_id != 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['category_id', $category_id],
+            ])->get();
+        }
+
+        if ($shape_id == 0 && $category_id == 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['company_id', $company_id],
+            ])->get();
+        }
+
+        if ($shape_id == 0 && $category_id == 0 && $company_id == 0) {
+            $drugs = null;
+        }
+
+        if($drugs == null) {
+            return redirect()->route('drug.index');
+        }
+
+        return view('drug.filter')->withDrugs($drugs);
     }
 
     /**

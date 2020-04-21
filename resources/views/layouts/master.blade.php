@@ -89,15 +89,17 @@
                 /*
                 * Initialse DataTables, with no sorting on the 'details' column
                 */
-                var oTable = $('#hidden-table-info').dataTable({
-                    "aoColumnDefs": [{
-                        "bSortable": false,
-                        "aTargets": [0]
-                    }],
-                    "aaSorting": [
-                        [1, 'asc']
-                    ]
-                });
+                if ($('#hidden-table-info tr').length > 2){
+                    var oTable = $('#hidden-table-info').dataTable({
+                        "aoColumnDefs": [{
+                            "bSortable": false,
+                            "aTargets": [0]
+                        }],
+                        "aaSorting": [
+                            [1, 'asc']
+                        ]
+                    });
+                }
                 /* Add event listener for opening and closing details
                 * Note that the indicator for showing which row is open is not controlled by DataTables,
                 * rather it is done here

@@ -71,6 +71,8 @@ Route::get('/orders/show/{order_id}', 'InvoiceController@show_order')->name('ord
 // Drugs and Drugs Repo Routes
 // Drugs list
 Route::get('/drugs', 'DrugController@index')->name('drug.index');
+// Drugs filtering
+Route::post('/drugs', 'DrugController@filter')->name('drug.filter');
 // Create a new Drug View
 Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
