@@ -172,7 +172,7 @@ drug_shapes
 drugs
 =====
 
-|                     name_english                      | company_id |                          chemical_composition                           |             volume_unit              | shpae_id |   |
+|                     name_english                      | company_id |                          chemical_composition                           |             volume_unit              | shape_id |   |
 |-------------------------------------------------------|------------|-------------------------------------------------------------------------|--------------------------------------|----------|---|
 | ADACARD CTD TAB.                                      | 1          | NICARDIPINE                                                             | 20 MG/CTD TAB.                       | 12       |   |
 | ADACARD CTD TAB.                                      | 1          | NICARDIPINE                                                             | 20 MG/CTD TAB.                       | 12       |   |

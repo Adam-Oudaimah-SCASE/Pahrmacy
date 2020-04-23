@@ -9,6 +9,7 @@ use App\Models\DrugCategory;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\WareHouse;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -18,6 +19,41 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('permission:report-show');
+    }
+
+    /**
+     * Display the required report.
+     */
+    public function filter(Request $request)
+    {
+        // Get the report's type
+        $report_type = $request->type;
+        switch ($report_type) {
+            case 1:
+                $this->companies_report();
+                break;
+            case 2:
+                $this->companies_sales_report();
+                break;
+            case 3:
+                $this->daily_sales_report();
+                break;
+            case 4:
+                $this->earnings_report($request);
+                break;
+            case 5:
+                $this->expenses_report($request);
+                break;
+            case 6:
+                $this->orders_report($request);
+                break;
+            case 7:
+                $this->expired_drug_report($request);
+                break;
+            case 8:
+                $this->warehouses_report();
+                break;
+        }
     }
 
     /**
@@ -102,7 +138,7 @@ class ReportController extends Controller
         // Contains the final result
         $result = array();
         // Get all invoices for the current day
-        $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime('2020-03-01')), date('Y-m-d', strtotime('2020-04-01'))])->get();
+        $invoices = Invoice::whereBetween('date', [date('Y-m-d'), date('Y-m-d')])->get();
         // Return the appropriate view
         return view('reports.DailySalesReport')->with(['invoices' => $invoices]);
     }
@@ -113,12 +149,12 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function earnings_report()
+    function earnings_report(Request $request)
     {
         // Contains the final result
         $result = array();
         // Get all invoices for the current day
-        $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime('2020-03-01')), date('Y-m-d', strtotime('2020-04-01'))])->get();
+        $invoices = Invoice::whereBetween('date', [date('Y-m-d', $request->input('start-date')), date('Y-m-d', $request->input('end-date'))])->get();
         $sells = 0;
         $un_paid_sells = 0;
         // Loop over the invoices
@@ -127,7 +163,7 @@ class ReportController extends Controller
             $un_paid_sells += $invoice->sell_price_after_discount - $invoice->operations->sum('amount');
         }
         // Get all orders for the current day
-        $orders = Order::whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])->get();
+        $orders = Order::whereBetween('date', [date('Y-m-d', $request->input('start-date')), date('Y-m-d', $request->input('end-date'))])->get();
         $sells_orders = 0;
         $un_paid_orders = 0;
         // Loop over the invoices
@@ -151,11 +187,11 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function expenses_report()
+    function expenses_report(Request $request)
     {
         // Get all the accounting operations (which now made by an invoice or an order)
         $operations = AccountingOperation::where('operationable_id', null)
-                        ->whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])
+                        ->whereBetween('date', [date('Y-m-d', $request->input('start-date')), date('Y-m-d', $request->input('end-date'))])
                         ->get();
         // Return the appropriate view
         return view('reports.ExpenseReport')->with(['operations' => $operations]);
@@ -168,10 +204,10 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function orders_report()
+    function orders_report(Request $request)
     {
         // Get all orders for the current day
-        $orders = Order::whereBetween('date', [date('Y-m-d', strtotime('2020-02-28')), date('Y-m-d', strtotime('2020-04-01'))])->get();
+        $orders = Order::whereBetween('date', [date('Y-m-d', $request->input('start-date')), date('Y-m-d', $request->input('end-date'))])->get();
         // Return the appropriate view
         return view('reports.PurchasesReport')->with(['orders' => $orders]);
     }
@@ -182,14 +218,14 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function expired_drug_report()
+    function expired_drug_report(Request $request)
     {
         $result = array();
         // Get all drugs
         $drugs = Drug::all();
         // Add the expired drugs only
         foreach ($drugs as $drug) {
-            foreach ($drug->repo()->whereDate('exp_date', '<', date('Y-m-d'))->get() as $drug_repo) {
+            foreach ($drug->repo()->whereDate('exp_date', '<', date('Y-m-d', $request->input('end-date')))->get() as $drug_repo) {
                 array_push($result, $drug_repo);
             }
         }

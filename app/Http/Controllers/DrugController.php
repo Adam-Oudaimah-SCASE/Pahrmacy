@@ -338,8 +338,8 @@ class DrugController extends Controller
     public function editDrug($id)
     {
         // Get all the required data
-        $drugs = Drug::find($id);
-        return view('drug.editDrug')->with('drugs',  $drugs);
+        $drug = Drug::find($id);
+        return view('drug.editDrug')->with('drug',  $drug);
     }
 
     /**

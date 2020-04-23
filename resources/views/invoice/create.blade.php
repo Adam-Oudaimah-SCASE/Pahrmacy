@@ -204,9 +204,10 @@
             let amount = document.getElementById("amount").value;
             let discount_amount = document.getElementById("discount_amount").value;
             let discount_reason = document.getElementById("discount_reason").value;
+
             $.ajax({
                 method: 'POST', // Type of response
-                url: '{{ route("invoice.store") }}', // This is the url we gave in the route
+                url: "{{ route('invoice.store') }}", // This is the url we gave in the route
                 data: {
                     "_token": "{{ csrf_token() }}",
                     'drugs' : drugs,

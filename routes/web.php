@@ -41,7 +41,7 @@ Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->
 Route::get('/invoices/createInsuranceInvoice', 'InvoiceController@create_sell_invoice_insurance')->name('invoice.create_with_insurance');
 // Store the new invoice
 Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
-// Bayment for an invoice
+// Payment for an invoice
 Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
 // Show invoice
 Route::get('/invoices/show/{invoice_id}', 'InvoiceController@show_sell_invoice')->name('invoice.show');
@@ -72,7 +72,7 @@ Route::get('/orders/show/{order_id}', 'InvoiceController@show_order')->name('ord
 // Drugs list
 Route::get('/drugs', 'DrugController@index')->name('drug.index');
 // Drugs filtering
-Route::post('/drugs', 'DrugController@filter')->name('drug.filter');
+Route::post('/drugs/filter', 'DrugController@filter')->name('drug.filter');
 // Create a new Drug View
 Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
@@ -114,7 +114,12 @@ Route::get('/', function () {
 Auth::routes();
 
 // Reports Routes
-Route::get('reports',function () { return view('reports.index');})->name('report.index');
+// Report Index
+Route::get('reports', function () {
+    return view('reports.index');
+})->name('report.index');
+// Filter the reports
+Route::get('reports/filter', 'ReportController@filter')->name('report.filter');
 // Categories report
 Route::get('reports/category/{category_id}', 'ReportController@category_report')->name('report.category');
 // Categories sales report
@@ -137,5 +142,5 @@ Route::get('reports/expired', 'ReportController@expired_drug_report')->name('rep
 Route::get('reports/warehouses', 'ReportController@warehouses_report')->name('report.warehouses');
 
 // Roles Routes
-Route::resource('roles','RoleController');
-Route::resource('users','UserController');
+Route::resource('roles', 'RoleController');
+Route::resource('users', 'UserController');

@@ -33,7 +33,7 @@ class InvoiceController extends Controller
             ['only' => ['get_sell_invoices', 'show_sell_invoice', 'get_all_orders', 'show_order', 'get_drug_by_id_for_prescription', 'calculate_prices']]
         );
         $this->middleware(
-            'permission:invoice-sell-create|invoice-sell-insurance-create',
+            'permission:invoice-sell-create|invoice-sell-insurance-create|drug-repo-update-sell',
             ['only' => ['create_sell_invoice', 'create_sell_invoice_insurance', 'store_invoice', 'handle_sell_invoice']]
         );
         $this->middleware('permission:invoice-pay', ['only' => ['pay_for_invoice', 'do_pay_for_invoice']]);
@@ -364,7 +364,7 @@ class InvoiceController extends Controller
      */
     function handle_buy_receive_invoice($repo_controller, $request)
     {
-        // Get the drugs isds and information
+        // Get the drugs ids and information
         $order_id = $request->input('order_id');
         $order = Order::find($order_id);
         $drugs_ids = $request->input('drugs.ids.*');

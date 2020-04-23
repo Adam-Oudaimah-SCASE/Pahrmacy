@@ -9,22 +9,20 @@
             <div class="col-lg-12">
                 <div class="form-panel">
                     <br>
-                    <form class="form-horizontal style-form" action="" method="POST">
+                    <form class="form-horizontal style-form" action="{{ route('report.filter') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group" dir="rtl">
                           <label class="col-sm-2 col-sm-2 control-label">نوع التقرير</label>
                           <div class="col-sm-10">
-                              <select class="form-control" name="report-type">
-                                  <option value="">تقرير الأصناف</option>
-                                  <option value="">تقرير مبيعات الأصناف</option>
-                                  <option value="">تقرير الشركات</option>
-                                  <option value="">تقرير مبيعات الشركات</option>
-                                  <option value="">تقرير المبيعات اليومية</option>
-                                  <option value="">تقرير الميزانية و الأرباح</option>
-                                  <option value="">تقرير المصاريف</option>
-                                  <option value="">تقرير المشتريات</option>
-                                  <option value="">تقرير كميات الأدوية منتهية الصلاحية</option>
-                                  <option value="">تقرير طلبيات المستودع</option>
+                              <select class="form-control" name="type">
+                                  <option value="1">تقرير الشركات</option>
+                                  <option value="2">تقرير مبيعات الشركات</option>
+                                  <option value="3">تقرير المبيعات اليومية</option>
+                                  <option value="4">تقرير الميزانية و الأرباح</option>
+                                  <option value="5">تقرير المصاريف</option>
+                                  <option value="6">تقرير المشتريات</option>
+                                  <option value="7">تقرير كميات الأدوية منتهية الصلاحية</option>
+                                  <option value="8">تقرير طلبيات المستودع</option>
                               </select>
                           </div>
                         </div>

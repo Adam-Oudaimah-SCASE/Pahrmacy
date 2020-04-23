@@ -6,7 +6,7 @@
     <div class="row mt">
       <div class="col-md-12">
         <div class="content-panel">
-          <table class="table table-striped table-advance table-hover">
+            <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
             <h3 class="mr"><i class="fa fa-angle-left"></i>الأدوية</h4>
               <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء</a>
               <hr>

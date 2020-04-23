@@ -54,6 +54,7 @@ class PermissionTableSeeder extends Seeder
             'invoice-order-create',
             'invoice-order-list',
             'invoice-order-show',
+            'invoice-order-receive',
             'invoice-type-list',
             'invoice-type-create',
             'invoice-type-update',
