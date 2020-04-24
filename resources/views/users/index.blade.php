@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
 @section('content')
-<div id="main-content" style="margin-right: 300px;">
+<div id="main-content" >
     <div class="wrapper">
+
+          <h2><i class="fa fa-angle-left mr"></i>Users Management</h2>
+
         <div class="row">
             <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
-                    <h2>Users Management</h2>
-                </div>
-                <div class="pull-right">
+                <div class="form-panel">
+                <div class="mb">
                     <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
                 </div>
-            </div>
-        </div>
+
 
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -52,7 +52,9 @@
         </table>
 
         {!! $data->render() !!}
+      </div>
     </div>
+   </div>
+  </div>
 </div>
-
 @endsection
