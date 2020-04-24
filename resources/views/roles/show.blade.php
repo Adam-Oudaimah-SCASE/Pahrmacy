@@ -4,6 +4,7 @@
     <section class="wrapper" dir="rtl">
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
+                <div class="form-panel">
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-left">
@@ -34,6 +35,7 @@
                         </div>
                     </div>
                 </div>
+              </div>
             </div>
         </div>
     </section>

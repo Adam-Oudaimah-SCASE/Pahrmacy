@@ -1,20 +1,22 @@
 @extends('layouts.master')
 
 @section('content')
-<div id="main-content" style="margin-right: 300px;">
-    <div class="wrapper">
-        <div class="row">
+<section id="main-content" >
+    <section class="wrapper">
+      <h1><i class="fa fa-angle-left mr"></i>Role Management </h1>
+
+
+        <div class="row mt">
             <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
-                    <h2>Role Management</h2>
-                </div>
-                <div class="pull-right">
+
+              <div class="form-panel">
+
+                <div class="mb">
                 @can('role-create')
                     <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
                     @endcan
                 </div>
-            </div>
-        </div>
+
 
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -46,6 +48,9 @@
             </tr>
             @endforeach
         </table>
+       </div>
+      </div>
     </div>
-</div>
+    </section>
+</section>
 @endsection
