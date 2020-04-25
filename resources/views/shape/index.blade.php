@@ -15,8 +15,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($shapes as $shape)
                             <tr>
-                                @foreach($shapes as $shape)
+
                                 <td>
                                     {{ $shape->name }}
                                 </td>

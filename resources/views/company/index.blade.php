@@ -13,7 +13,7 @@
                             <hr>
                             <thead>
                                 <tr>
-                                    <th><i class="fa fa-bullhorn ml"></i>اسم الشركة</th>
+                                    <th style="width:200px;"><i class="fa fa-bullhorn ml"></i>اسم الشركة</th>
                                     <th><i class="fa fa-bullhorn ml"></i>اسم المندوب</th>
                                     <th class="hidden-phone "><i class="fa fa-question-circle ml"></i>رقم الهاتف</th>
                                     <th><i class="fa fa-bookmark ml"></i>العنوان</th>
