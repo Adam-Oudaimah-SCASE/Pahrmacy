@@ -23,7 +23,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">التركيبة الكيميائية</label>
                             <div class="col-sm-10">
@@ -41,11 +40,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الباركود المحلي</label>
                             <div class="col-sm-4">
@@ -56,7 +50,6 @@
                                 <input type="text" class="form-control" name="global_barcode" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')"  required>
                             </div>
                         </div>
-
 
                         <div class="form-group" dir="rtl">
                             <label class="col-sm-2 col-sm-2 control-label">الشركة</label>
@@ -84,8 +77,6 @@
                                 </select>
                             </div>
                         </div>
-
-
 
                         <button type="submit" class="btn btn-theme">إضافة</button>
                     </form>

@@ -36,13 +36,13 @@ Route::resource('accountingOperation', 'AccountingOperationController')->except(
 // Invoices list
 Route::get('/invoices', 'InvoiceController@get_sell_invoices')->name('invoice.index');
 // Create a new sell invoice view
-Route::get('/invoices/createInvoice', 'InvoiceController@create_sell_invoice')->name('invoice.create');
+Route::get('/invoices/create', 'InvoiceController@create_sell_invoice')->name('invoice.create');
 // Create a new sell invoice with insurance view
-Route::get('/invoices/createInsuranceInvoice', 'InvoiceController@create_sell_invoice_insurance')->name('invoice.create_with_insurance');
+Route::get('/invoices/create-insurance', 'InvoiceController@create_sell_invoice_insurance')->name('invoice.create_with_insurance');
 // Store the new invoice
-Route::post('/invoices/createInvoice', 'InvoiceController@store_invoice')->name('invoice.store');
+Route::post('/invoices/create', 'InvoiceController@store_invoice')->name('invoice.store');
 // Payment for an invoice
-Route::post('/invoices/createInvoice/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
+Route::post('/invoices/pay', 'InvoiceController@handle_accounting')->name('invoice.pay');
 // Show invoice
 Route::get('/invoices/show/{invoice_id}', 'InvoiceController@show_sell_invoice')->name('invoice.show');
 // Payment view for an invoice
@@ -77,18 +77,22 @@ Route::post('/drugs/filter', 'DrugController@filter')->name('drug.filter');
 Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
 // Store a new Drug
 Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
-// Show Drug details
-Route::get('/drugs/show/{id}', 'DrugController@show')->name('drug.show');
-// Edit Drug Repo details
-Route::get('/drugs/edit/{id}', 'DrugController@edit')->name('drug.edit');
 // Edit Drug details
-Route::get('/drugs/editDrug/{id}', 'DrugController@editDrug')->name('drug.editDrug');
-// Update Drug Repo Details
-Route::post('/drugs/update/{id}', 'DrugController@update')->name('drug.update');
+Route::get('/drugs/edit/{id}', 'DrugController@edit')->name('drug.edit');
 // Update Drug Details
-Route::post('/drugs/updateDrug/{id}', 'DrugController@update_drug')->name('drug.updateDrug');
+Route::post('/drugs/update/{id}', 'DrugController@update')->name('drug.update');
 // Calculate the net and sell prices
 Route::post('/drugs/calculate', 'DrugController@calculate_prices')->name('drug.calculate');
+// Show Drug details
+Route::get('/drugs/repo/show/{id}', 'DrugController@show_repo')->name('drug.repo.show');
+// Add new Drug Repo
+Route::get('/drugs/repo/create/{id}', 'DrugController@create_repo')->name('drug.repo.create');
+// Add new Drug Repo
+Route::post('/drugs/repo/create/{id}', 'DrugController@store_repo')->name('drug.repo.store');
+// Edit Drug Repo details
+Route::get('/drugs/repo/edit/{id}', 'DrugController@edit_repo')->name('drug.repo.edit');
+// Update Drug Repo Details
+Route::post('/drugs/repo/update/{id}', 'DrugController@update_repo')->name('drug.repo.update');
 
 // Perscription  routes
 Route::get('/prescriptions', 'PrescriptionController@index')->name('prescription.index');
@@ -115,11 +119,9 @@ Auth::routes();
 
 // Reports Routes
 // Report Index
-Route::get('reports', function () {
-    return view('reports.index');
-})->name('report.index');
+Route::get('reports', 'ReportController@index')->name('report.index');
 // Filter the reports
-Route::get('reports/filter', 'ReportController@filter')->name('report.filter');
+Route::post('reports/filter', 'ReportController@filter')->name('report.filter');
 // Categories report
 Route::get('reports/category/{category_id}', 'ReportController@category_report')->name('report.category');
 // Categories sales report

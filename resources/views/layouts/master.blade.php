@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Dashboard">
-        <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="Dashboard" />
+        <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina" />
         <title>برنامج إدارة الصيدليات</title>
 
         <!-- Favicons -->
         <link href="/img/favicon.png" rel="icon">
-        <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
-        <link href="/fonts/Droid Sans Arabic.ttf">
+        <link href="/img/apple-touch-icon.png" rel="apple-touch-icon" />
+        <link href="/fonts/Droid Sans Arabic.ttf" />
         <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <!--external css-->
         <link href="/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -49,7 +49,7 @@
         <script type="text/javascript" src="/lib/form-component.js"></script>
 
         <!-- Custom Scripts -->
-        @yield('custom-cdns')
+        @yield('custom-css')
     </head>
     <body dir="rtl">
         @include('layouts.header')
@@ -74,19 +74,6 @@
             }
             $(document).ready(function() {
                 /*
-                * Insert a 'details' column to the table
-                */
-                var nCloneTh = document.createElement('th');
-                var nCloneTd = document.createElement('td');
-                nCloneTd.innerHTML = '<img src="lib/advanced-datatable/css/images/details_open.png">';
-                nCloneTd.className = "center";
-                $('#hidden-table-info thead tr').each(function() {
-                    this.insertBefore(nCloneTh, this.childNodes[0]);
-                });
-                $('#hidden-table-info tbody tr').each(function() {
-                    this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
-                });
-                /*
                 * Initialse DataTables, with no sorting on the 'details' column
                 */
                 if ($('#hidden-table-info tr').length > 2){
@@ -108,11 +95,9 @@
                     var nTr = $(this).parents('tr')[0];
                     if (oTable.fnIsOpen(nTr)) {
                         /* This row is already open - close it */
-                        this.src = "lib/advanced-datatable/media/images/details_open.png";
                         oTable.fnClose(nTr);
                     } else {
                         /* Open this row */
-                        this.src = "lib/advanced-datatable/css/images/details_close.png";
                         oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
                     }
                 });

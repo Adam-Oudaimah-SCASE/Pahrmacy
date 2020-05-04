@@ -65,8 +65,6 @@ class DrugController extends Controller
      */
     public function index()
     {
-        // Get all the drugs
-        // Without details, when pressing on each drug we get its details
         $shapes = DrugShape::all();
         $categories = DrugCategory::all();
         $companies = Company::all();
@@ -80,6 +78,67 @@ class DrugController extends Controller
     }
 
     /**
+     * Helper method to filter drugs.
+     */
+    private function get_drugs_by_filter($shape_id, $category_id, $company_id)
+    {
+        $drugs = null;
+
+        if ($shape_id != 0 && $category_id != 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['category_id', $category_id],
+                ['company_id', $company_id],
+            ]);
+        }
+
+        if ($shape_id != 0 && $category_id != 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['category_id', $category_id],
+            ]);
+        }
+
+        if ($shape_id != 0 && $category_id == 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id],
+                ['company_id', $company_id],
+            ]);
+        }
+
+        if ($shape_id == 0 && $category_id != 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['category_id', $category_id],
+                ['company_id', $company_id],
+            ]);
+        }
+
+        if ($shape_id != 0 && $category_id == 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['shape_id', $shape_id]
+            ]);
+        }
+
+        if ($shape_id == 0 && $category_id != 0 && $company_id == 0) {
+            $drugs = Drug::where([
+                ['category_id', $category_id],
+            ]);
+        }
+
+        if ($shape_id == 0 && $category_id == 0 && $company_id != 0) {
+            $drugs = Drug::where([
+                ['company_id', $company_id],
+            ]);
+        }
+
+        if ($shape_id == 0 && $category_id == 0 && $company_id == 0) {
+            $drugs = null;
+        }
+
+        return $drugs;
+    }
+
+    /**
      * Filter drugs.
      *
      * @return \Illuminate\Http\Response
@@ -90,64 +149,13 @@ class DrugController extends Controller
         $category_id = $request->category;
         $company_id = $request->company;
 
-        $drugs = null;
+        $drugs = $this->get_drugs_by_filter($shape_id, $category_id, $company_id);
 
-        if ($shape_id != 0 && $category_id != 0 && $company_id != 0) {
-            $drugs = Drug::where([
-                ['shape_id', $shape_id],
-                ['category_id', $category_id],
-                ['company_id', $company_id],
-            ])->get();
-        }
-
-        if ($shape_id != 0 && $category_id != 0 && $company_id == 0) {
-            $drugs = Drug::where([
-                ['shape_id', $shape_id],
-                ['category_id', $category_id],
-            ])->get();
-        }
-
-        if ($shape_id != 0 && $category_id == 0 && $company_id != 0) {
-            $drugs = Drug::where([
-                ['shape_id', $shape_id],
-                ['company_id', $company_id],
-            ])->get();
-        }
-
-        if ($shape_id == 0 && $category_id != 0 && $company_id != 0) {
-            $drugs = Drug::where([
-                ['category_id', $category_id],
-                ['company_id', $company_id],
-            ])->get();
-        }
-
-        if ($shape_id != 0 && $category_id == 0 && $company_id == 0) {
-            $drugs = Drug::where([
-                ['shape_id', $shape_id]
-            ])->get();
-        }
-
-        if ($shape_id == 0 && $category_id != 0 && $company_id == 0) {
-            $drugs = Drug::where([
-                ['category_id', $category_id],
-            ])->get();
-        }
-
-        if ($shape_id == 0 && $category_id == 0 && $company_id != 0) {
-            $drugs = Drug::where([
-                ['company_id', $company_id],
-            ])->get();
-        }
-
-        if ($shape_id == 0 && $category_id == 0 && $company_id == 0) {
-            $drugs = null;
-        }
-
-        if($drugs == null) {
+        if ($drugs == null) {
             return redirect()->route('drug.index');
         }
 
-        return view('drug.filter')->withDrugs($drugs);
+        return view('drug.filter')->withDrugs($drugs->get());
     }
 
     /**
@@ -157,23 +165,43 @@ class DrugController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->search;
-            if ($search == ' ' || $search == '' || $search == null) {
-                $drugs = null;
-                return json_encode(null);
-            } else {
-                $drugs = Drug::where('name_english', 'like', '%' . $search . '%')
-                    ->orWhere('name_arabic', 'like', '%' . $search . '%')
-                    ->orWhere('chemical_composition', 'like', '%' . $search . '%')
-                    ->get();
-                $response = array();
-                foreach ($drugs as $drug) {
-                    $response[] = array(
-                        "id" => $drug->id,
-                        "text" => $drug->name_arabic
-                    );
+            $search_by = $request->query("searchBy");
+            $shape_id = $request->shape;
+            $category_id = $request->category;
+            $company_id = $request->company;
+            $drugs = $this->get_drugs_by_filter($shape_id, $category_id, $company_id);
+            if ($search_by == "search_name_arabic") {
+                if ($drugs == null ) {
+                    $drugs = Drug::where('name_arabic', 'like', '%' . $search . '%')->get();
+                } else {
+                    $drugs = $drugs->where('name_arabic', 'like', '%' . $search . '%')->get();
                 }
-                return json_encode($response);
             }
+            if ($search_by == "search_name_english") {
+                if ($drugs == null ) {
+                    $drugs = Drug::where('name_english', 'like', '%' . $search . '%')->get();
+                } else {
+                    $drugs = $drugs->where('name_english', 'like', '%' . $search . '%')->get();
+                }
+            }
+            if ($search_by == "search_composition") {
+                if ($drugs == null ) {
+                    $drugs = Drug::where('chemical_composition', 'like', '%' . $search . '%')->get();
+                } else {
+                    $drugs = $drugs->where('chemical_composition', 'like', '%' . $search . '%')->get();
+                }
+            }
+            if ($drugs == null) {
+                return json_encode(null);
+            }
+            $response = array();
+            foreach ($drugs as $drug) {
+                $response[] = array(
+                    "id" => $drug->id,
+                    "text" => $drug->name_arabic . " / " . $drug->name_english
+                );
+            }
+            return json_encode($response);
         }
     }
 
@@ -307,15 +335,75 @@ class DrugController extends Controller
     }
 
     /**
+     * Create a new repo for a certain drug.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_repo($drug_id)
+    {
+        $drug = Drug::find($drug_id);
+        return view('drug.create-drug-repo')->with(['drug' => $drug]);
+    }
+
+    /**
+     * Store a newly drug repo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_repo(Request $request, $drug_id)
+    {
+        // Create the new drug entry
+        $drug = Drug::find($drug_id);
+        $drug_repo = new DrugsRepo;
+
+        // Assign the default unit number for this drug
+        $drug_repo->unit_number = $request->input('unit_number') == null ? 1 : $request->input('unit_number');
+        // Add the appropriate drugs repo record
+        $drug_repo->pro_date = $request->input('pro_date');
+        $drug_repo->exp_date = $request->input('exp_date');
+
+        // Check if units are inserted
+        if ($request->input('units_number') != null || $request->input('units_number') != "0") {
+            $drug_repo->packages_number = (int) ($request->input('units_number') / $drug_repo->unit_number);
+            $drug_repo->units_number = $request->input('units_number');
+        } else {
+            $drug_repo->packages_number = $request->input('packages_number');
+            $drug_repo->units_number = $request->input('packages_number') * $drug_repo->unit_number;
+        }
+
+        // Set the prices
+        $drug_repo->package_sell_price = $request->input('package_sell_price');
+        if ($request->input('unit_sell_price') == null || strval($request->input('unit_sell_price')) == "0") {
+            $drug_repo->unit_sell_price = (int) $drug_repo->package_sell_price / $drug_repo->unit_number;
+        } else {
+            $drug_repo->unit_sell_price = $request->input('unit_sell_price');
+        }
+        $drug_repo->package_net_price = $request->input('package_net_price');
+        if ($request->input('unit_net_price') == null || strval($request->input('unit_net_price')) == "0") {
+            $drug_repo->unit_net_price = (int) $drug_repo->package_net_price / $drug_repo->unit_number;
+        } else {
+            $drug_repo->unit_net_price = $request->input('unit_net_price');
+        }
+
+        // Publish the new attributes to the repo and bind it with the appropriate drug
+        $drug_repo->drug()->associate($drug);
+        $drug_repo->save();
+
+        // Return the appropriate view
+        return redirect()->route('drug.index');
+    }
+
+    /**
      * Show the drug repo info.
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_repo($id)
     {
         // Get all the required data
         $drug = Drug::find($id);
-        return view('drug.show')->with('drug',  $drug);
+        return view('drug.show-repo')->with('drug',  $drug);
     }
 
     /**
@@ -323,11 +411,11 @@ class DrugController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_repo($id)
     {
         // Get all the required data
         $drug_repo = DrugsRepo::find($id);
-        return view('drug.edit')->with('drug_repo',  $drug_repo);
+        return view('drug.edit-repo')->with('drug_repo',  $drug_repo);
     }
 
     /**
@@ -335,11 +423,11 @@ class DrugController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function editDrug($id)
+    public function edit($id)
     {
         // Get all the required data
         $drug = Drug::find($id);
-        return view('drug.editDrug')->with('drug',  $drug);
+        return view('drug.edit')->with('drug',  $drug);
     }
 
     /**
@@ -418,7 +506,7 @@ class DrugController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_repo(Request $request, $id)
     {
         // Get the targeted Drug
         $drug_repo = DrugsRepo::find($id);
@@ -458,7 +546,7 @@ class DrugController extends Controller
         // Get all the drugs
         $drug = Drug::find($drug_repo->drug_id);
         // Return the appropriate view
-        return view('drug.show')->with('drug',  $drug);
+        return view('drug.show-repo')->with('drug',  $drug);
     }
 
     /**
@@ -469,7 +557,7 @@ class DrugController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update_drug(Request $request, $id)
+    public function update(Request $request, $id)
     {
         // Get the targeted drug
         $drug =  Drug::find($id);

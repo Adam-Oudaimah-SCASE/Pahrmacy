@@ -16,13 +16,15 @@
                           <div class="col-sm-10" id="styled-select">
                               <select class="form-control" name="type">
                                   <option value="1">تقرير الشركات</option>
-                                  <option  value="2">تقرير مبيعات الشركات</option>
+                                  <option value="2">تقرير مبيعات الشركات</option>
                                   <option value="3">تقرير المبيعات اليومية</option>
                                   <option value="4">تقرير الميزانية و الأرباح</option>
                                   <option value="5">تقرير المصاريف</option>
                                   <option value="6">تقرير المشتريات</option>
                                   <option value="7">تقرير كميات الأدوية منتهية الصلاحية</option>
                                   <option value="8">تقرير طلبيات المستودع</option>
+                                  <option value="9">تقرير الأقسام</option>
+                                  <option value="10">تقرير مبيعات الأقسام</option>
                               </select>
                           </div>
                         </div>
@@ -30,12 +32,23 @@
                         <div class="form-group optional referral" dir="rtl" style="display:none;">
                           <label class="col-sm-2 col-sm-2 control-label">تاريخ البداية</label>
                           <div class="col-sm-4">
-                            <input type="date" class="form-control" name="start-date" oninvalid="this.setCustomValidity("هذا الحقل إلزامي")" onchange="this.setCustomValidity("")"  required>
+                            <input type="date" class="form-control" name="start-date" oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')">
                           </div>
                           <label class="col-sm-2 col-sm-2 control-label">تاريخ النهاية</label>
                           <div class="col-sm-4">
-                            <input type="date" class="form-control" name="end-date"oninvalid="this.setCustomValidity("هذا الحقل إلزامي")" onchange="this.setCustomValidity("")"  required>
+                            <input type="date" class="form-control" name="end-date"oninvalid="this.setCustomValidity('هذا الحقل إلزامي')" onchange="this.setCustomValidity('')">
                           </div>
+                        </div>
+
+                        <div class="form-group categories" dir="rtl" style="display:none;">
+                            <label class="col-sm-2 col-sm-2 control-label">اختر قسم</label>
+                            <div class="col-sm-10" id="styled-select">
+                                <select class="form-control" name="category">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-theme">عرض التقرير</button>
                     </form>
@@ -55,10 +68,14 @@
 $("select").change(function () {
     // hide all optional elements
     $('.optional').css('display','none');
+    $('.categories').css('display','none');
 
     $("select option:selected").each(function () {
-        if($(this).val() == "2"||$(this).val() == "4") {
+        if($(this).val() == "4"||$(this).val() == "5"||$(this).val() == "6"||$(this).val() == "7") {
             $('.referral').css('display','block');
+        }
+        if($(this).val() == "9"||$(this).val() == "10") {
+            $('.categories').css('display','block');
         }
     });
 });

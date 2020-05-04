@@ -1,7 +1,7 @@
 @extends('layouts.master')
-@section('custom-cdns')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+@section('custom-css')
+    <link rel="stylesheet" type="text/css" href="/css/select2.min.css" />
+    <script type="text/javascript" src="/js/select2.min.js"></script>
 @endsection
 @section('content')
 <!--main content start-->
@@ -25,34 +25,91 @@
                         </div>
                         <!-- /pull-right -->
                         <div class="clearfix"></div>
-                        <br>
                         <div class="row">
                             <div class="col-md-9"></div>
                             <!-- /col-md-9 -->
                             <div class="col-md-3">
-                                <br>
-                                <div>
-                                    <div class="pull-left">رقم الفاتورة:</div>
-                                    <div class="pull-right"></div>
-                                    <div class="clearfix"></div>
-                                </div>
                                 <div>
                                     <!-- /col-md-3 -->
                                     <div class="pull-left">تاريخ الفاتورة:</div>
                                     <div class="pull-right">{{ date('Y-m-d') }}</div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <!-- /row -->
-                                <br>
                             </div>
                             <!-- /invoice-body -->
                         </div>
                         <!-- /col-lg-10 -->
                         <input type="text" name="search" id="search" style="display:none" autofocus/>
-                        <label for="search_drugs">
-                            أبحث عن الدواء
-                            <select class="js-states form-control" multiple="multiple" id="search_drugs"></select>
-                        </label>
+                        <div class="row">
+                            <label>اختر معايير البحث:</label>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="form-group" dir="rtl">
+                                <label class="col-sm-6 control-label">الأشكال الدوائية</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="shape">
+                                        <option value="0" default>اختر شكل دوائي</option>
+                                        @foreach ($shapes as $shape)
+                                          <option value="{{ $shape->id }}">{{ $shape->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" dir="rtl">
+                                <label class="col-sm-6 control-label">الأصناف الدوائية</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="category">
+                                        <option value="0" default>اختر صنف</option>
+                                        @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" dir="rtl">
+                                <label class="col-sm-6 control-label">الشركات الدوائية</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" id="company">
+                                        <option value="0" default>اختر شركة دوائية</option>
+                                        @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <input type="radio" name="search_type" id="search_name_arabic" value="search_name_arabic" checked>
+                                </span>
+                                <label>حسب الاسم العربي</label>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <input type="radio" name="search_type" id="search_name_english" value="search_name_english">
+                                </span>
+                                <label>حسب الاسم الأجبني</label>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                  <span class="input-group-addon">
+                                    <input type="radio" name="search_type" id="search_composition" value="search_composition">
+                                  </span>
+                                  <label>حسب التركيبة الكيميائية</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="search_drugs">
+                                أبحث عن الدواء
+                            </label>
+                            <select class="js-states form-control" multiple="multiple" id="search_drugs" style="width: 50%"></select>
+                        </div>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -141,15 +198,14 @@
     <script>
         $('#discount_amount').keypress(function(event){
             if (event.keyCode === 13) {
-                if (document.getElementById("discount_amount").value != null) {
-                    document.getElementById("sell_price_after_discount").value = document.getElementById("sell_price").value - document.getElementById("discount_amount").value;
+                if ($("#discount_amount").val() != null) {
+                    $("#sell_price_after_discount").val($("#sell_price").val() - $("#discount_amount").val());
                 }
             }
         });
     </script>
     <script>
-        document.getElementById("calculate_price").onclick = calculate_price;
-        function calculate_price() {
+        $("#calculate_price").click( function () {
             let drugs = {
                 'ids' : [],
                 'packages_number' : [],
@@ -157,7 +213,7 @@
                 'modified_drugs_package_sell_price' : [],
                 'modified_drugs_unit_sell_price' : []
             };
-            let table_rows = document.getElementById('drugs').children;
+            let table_rows = $('#drugs').children();
             for (let i = 0; i < table_rows.length; i++) {
                 drugs['ids'].push(table_rows[i].children[0].innerHTML);
                 drugs['packages_number'].push(table_rows[i].children[3].firstElementChild.value);
@@ -172,20 +228,19 @@
                     "_token": "{{ csrf_token() }}",
                     'drugs' : drugs }, // a JSON object to send back
                 success: function(response){ // What to do if we succeed
-                    document.getElementById("net_price").value = response[0];
-                    document.getElementById("sell_price").value = response[1];
-                    document.getElementById("sell_price_after_discount").value = response[1];
+                    $("#net_price").val(response[0]);
+                    $("#sell_price").val(response[1]);
+                    $("#sell_price_after_discount").val(response[1]);
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
             });
-        }
+        });
     </script>
     <script>
-        document.getElementById("submit_invoice").onclick = submit_invoice;
-        function submit_invoice() {
+        $("#submit_invoice").click(function() {
             let drugs = {
                 'ids' : [],
                 'packages_number' : [],
@@ -193,7 +248,7 @@
                 'modified_drugs_package_sell_price' : [],
                 'modified_drugs_unit_sell_price' : []
             };
-            let table_rows = document.getElementById('drugs').children;
+            let table_rows = $('#drugs').children();
             for (let i = 0; i < table_rows.length; i++) {
                 drugs['ids'].push(table_rows[i].children[0].innerHTML);
                 drugs['packages_number'].push(table_rows[i].children[3].firstElementChild.value);
@@ -201,9 +256,9 @@
                 drugs['modified_drugs_unit_sell_price'].push(table_rows[i].children[5].firstElementChild.value);
                 drugs['modified_drugs_package_sell_price'].push(table_rows[i].children[6].firstElementChild.value);
             }
-            let amount = document.getElementById("amount").value;
-            let discount_amount = document.getElementById("discount_amount").value;
-            let discount_reason = document.getElementById("discount_reason").value;
+            let amount = $("#amount").val();
+            let discount_amount = $("#discount_amount").val();
+            let discount_reason = $("#discount_reason").val();
 
             $.ajax({
                 method: 'POST', // Type of response
@@ -223,61 +278,77 @@
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
             });
-        }
+        });
     </script>
     <script>
     $(document).ready(function() {
         // Search for drug using select2
-        $("#search_drugs").select2( {
+        $("#search_drugs").select2({
+            dir: "rtl",
+            minimumInputLength: 3,
             ajax: {
-            url: "{{ route('drug.search') }}",
-            type: "GET",
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    search: params.term // search term
-                };
+                delay: 500,
+                url: "{{ route('drug.search') }}",
+                type: "GET",
+                dataType: 'json',
+                data: function (params) {
+                    var query_params =  {
+                        search: params.term,
+                        searchBy: $('input[name=search_type]:checked').val(),
+                        shape: $("#shape").children("option:selected").val(),
+                        category: $("#category").children("option:selected").val(),
+                        company: $("#company").children("option:selected").val()
+                    }
+                    return query_params;
+                },
+                processResults: function (response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
             },
-            processResults: function (response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
+            "language": {
+                "noResults": function() {
+                    return "لا توجد أي نتائج";
+                },
+                "inputTooShort": function () {
+                    return "يجب أن تكتب 3 أحرف أو أكثر للبحث";
+                }
             }
-      });
+        });
 
-      // This function will be called when a selection is made
-      function fetch_drugs(drug = '')
-      {
-       $.ajax ({
-        url:"{{ route('drug.get_repo_by_id_for_sell') }}",
-        method:'GET',
-        data:{drug_id:drug},
-        dataType:'json',
-        success:function(data)
+        // This function will be called when a selection is made
+        function fetch_drugs(drug = '')
         {
-            $('#drugs').append(data.table_data);
+            $.ajax ({
+                url:"{{ route('drug.get_repo_by_id_for_sell') }}",
+                method:'GET',
+                data:{drug_id:drug},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#drugs').append(data.table_data);
+                }
+            })
         }
-       })
-      }
 
-      // The selection event
-      $('#search_drugs').on("select2:select", function(e) {
-          var drug = e.params.data;
-          fetch_drugs(drug);
-      });
+        // The selection event
+        $('#search_drugs').on("select2:select", function(e) {
+            var drug = e.params.data;
+            fetch_drugs(drug);
+        });
 
-      // Unselect event
-      $('#search_drugs').on("select2:unselect", function(e) {
-          var drug = e.params.data.text;
-          var table_rows = document.getElementById('drugs').children;
-          for (i = 0; i < table_rows.length; i++) {
-              if (table_rows[i].children[1].innerHTML === drug) {
-                  table_rows[i].remove();
-              }
-          }
-      });
+        // Unselect event
+        $('#search_drugs').on("select2:unselect", function(e) {
+            var drug = e.params.data.text;
+            var table_rows = $('#drugs').children();
+            for (i = 0; i < table_rows.length; i++) {
+                if (table_rows[i].children[1].innerHTML === drug) {
+                    table_rows[i].remove();
+                }
+            }
+        });
     });
     </script>
 @endsection

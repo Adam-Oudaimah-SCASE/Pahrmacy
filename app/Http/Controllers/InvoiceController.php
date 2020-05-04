@@ -16,6 +16,8 @@ use App\Models\Balance;
 use App\Models\AccountingType;
 use App\Models\AccountingOperation;
 use App\Http\Controllers\DrugController;
+use App\Models\DrugCategory;
+use App\Models\DrugShape;
 
 class InvoiceController extends Controller
 {
@@ -52,7 +54,16 @@ class InvoiceController extends Controller
      */
     function create_sell_invoice()
     {
-        return view('invoice.create');
+        $shapes = DrugShape::all();
+        $categories = DrugCategory::all();
+        $companies = Company::all();
+
+        // Return the appropriate view
+        return view('invoice.create')->with([
+            'shapes' => $shapes,
+            'categories' => $categories,
+            'companies' => $companies
+        ]);
     }
 
     /**
@@ -62,9 +73,18 @@ class InvoiceController extends Controller
      */
     function create_sell_invoice_insurance()
     {
-        // Return the appropriate view
         $insurance_companies = InsuranceCompany::all();
-        return view('invoice.create_with_insurance')->with(['insurance_companies' => $insurance_companies]);
+        $shapes = DrugShape::all();
+        $categories = DrugCategory::all();
+        $companies = Company::all();
+
+        // Return the appropriate view
+        return view('invoice.create_with_insurance')->with([
+            'shapes' => $shapes,
+            'categories' => $categories,
+            'companies' => $companies,
+            'insurance_companies' => $insurance_companies
+        ]);
     }
 
     /**

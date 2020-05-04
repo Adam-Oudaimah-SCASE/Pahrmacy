@@ -9,7 +9,8 @@
                         <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered"
                             id="hidden-table-info">
                             <h3><i class="fa fa-angle-left mr"></i> الفواتير</h3>
-                            <a type="submit" class="btn btn-theme mr" href="{{ route('invoice.create') }}">إضافة فاتورة</a>
+                            <a type="submit" class="btn btn-theme mr" href="{{ route('invoice.create') }}">إضافة فاتورة بدون تأمين</a>
+                            <a type="submit" class="btn btn-theme mr" href="{{ route('invoice.create_with_insurance') }}">إضافة فاتورة مع تأمين</a>
                             <hr>
                             <thead>
                                 <tr>

@@ -3,10 +3,12 @@
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <h3><i class="fa fa-angle-right mr"></i>اختر أحد الخيارات التالية لعرض الأدوية المناسبة</h3>
+        <h3><i class="fa fa-angle-right mr"></i> اختر أحد الخيارات التالية لعرض الأدوية المناسبة</h3>
         <!-- BASIC FORM ELELEMNTS -->
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
+                <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء بلا مخزن</a>
+                <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء مع مخزن</a>
                 <div class="form-panel">
                     <br>
                     <form class="form-horizontal style-form" action="{{ route('drug.filter') }}" method="POST">

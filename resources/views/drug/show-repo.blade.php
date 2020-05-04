@@ -25,7 +25,7 @@
                                     <td>{{ $drug_repo->units_number }}</td>
                                     <td>{{ $drug_repo->packages_number }}</td>
                                     <td>
-                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.edit', $drug_repo->id) }}">تعديل الدفعة</a>
+                                        <a type="submit" class="btn btn-theme mr " href="{{ route('drug.repo.edit', $drug_repo->id) }}">تعديل الدفعة</a>
                                     </td>
                                     @endforeach
                                 </tr>

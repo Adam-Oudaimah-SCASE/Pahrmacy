@@ -66,9 +66,8 @@
                     </a>
                     <ul class="sub">
                         <li><a href="#">معلومات الصيدلية</a></li>
-                        <li><a href="#">الموظفين</a></li>
+                        <li><a href="{{ route('users.index') }}">الموظفين</a></li>
                         <li><a href="#">الحالة المالية</a></li>
-                        <li><a href="#"></a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -107,12 +106,19 @@
                         <span>الفواتير</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{ route('invoice.create') }}">فاتورة مبيعات</a></li>
-                        <li><a href="{{ route('order.create') }}">فاتورة مشتريات</a></li>
-                        <li><a href="{{ route('order.index') }}">عرض فواتير الشراء</a></li>
+                        <li><a href="{{ route('invoice.index') }}">عرض الفواتير</a></li>
+                        <li><a href="{{ route('invoice.create') }}">فاتورة بيع بدون تأمين</a></li>
                         <li><a href="{{ route('invoice.create_with_insurance') }}">فاتورة بيع مع تأمين</a></li>
-                        <li><a href="#">فاتورة مرتجع</a></li>
-                        <li><a href="#">فاتورة تالف</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>الطلبيات</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{ route('order.index') }}">عرض الطلبيات</a></li>
+                        <li><a href="{{ route('order.create') }}">إضافة طلبية</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">

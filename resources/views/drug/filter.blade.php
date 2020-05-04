@@ -8,7 +8,6 @@
         <div class="content-panel">
             <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
             <h3 class="mr"><i class="fa fa-angle-left"></i>الأدوية</h4>
-              <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء</a>
               <hr>
               <thead>
                 <tr>
@@ -29,8 +28,9 @@
                   <td>{{ $drug->volume_unit }}</td>
                   <td>{{ $drug->lic_palte }}</td>
                   <td>
-                    <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('drug.show', $drug->id) }}'"><i class="fa fa-eye"></i></button>
-                    <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('drug.editDrug', $drug->id) }}'"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('drug.repo.show', $drug->id) }}'"><i class="fa fa-eye"></i></button>
+                    <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('drug.edit', $drug->id) }}'"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('drug.repo.create', $drug->id) }}'"><i class="fa fa-plus"></i></button>
                     <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                   </td>
                 </tr>

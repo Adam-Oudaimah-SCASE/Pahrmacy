@@ -1,7 +1,7 @@
 @extends('layouts.master')
-@section('custom-cdns')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+@section('custom-css')
+    <link rel="stylesheet" type="text/css" href="/css/select2.min.css" />
+    <script type="text/javascript" src="/js/select2.min.js"></script>
 @endsection
 @section('content')
 <section id="main-content">
