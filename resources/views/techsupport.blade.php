@@ -5,55 +5,109 @@
     <div class="row mt">
 
       <!-- /col-lg-12 -->
-      <div class="col-lg-12 mt">
+      <div class="col-lg-12 mt ">
         <div class="row content-panel">
 
-          <!-- /panel-heading -->
-          <div class="panel-body">
 
 
-              <div id="contact" class="tab-pane">
-                <div class="row">
 
-                  <!-- /col-md-6 -->
                   <div class="col-md-12 detailed">
-                    <h4></h4>
-                        <h4 class="">الدعم التقني</h4>
-                    <div class="col-md-8 col-md-offset-2 mt">
-                      <p>
-                        Postal Address<br/> PO BOX 12988, Sutter Ave<br/> Brownsville, New York.
-                      </p>
-                      <br>
-                      <p>
-                        Headquarters<br/> 844 Sutter Ave,<br/> 9003, New York.
-                      </p>
-                    </div>
 
-                    <div class="col-md-8 col-md-offset-2 mt">
-                      <p>
-                        Phone: +33 4898-4303<br/> Cell: 48 4389-4393<br/>
-                      </p>
-                      <br>
-                      <p>
-                        Email: hello@dashiotheme.com<br/> Skype: UseDashio<br/> Website: http://Alvarez.is
-                      </p>
-                    </div>
+                        <h2 class="">الدعم التقني</h2>
+
                   </div>
                   <!-- /col-md-6 -->
-                </div>
-                <!-- /row -->
-              </div>
 
-              <!-- /tab-pane -->
-
-            <!-- /tab-content -->
-          </div>
           <!-- /panel-body -->
         </div>
         <!-- /col-lg-12 -->
       </div>
       <!-- /row -->
     </div>
+    <div class="row mt mb">
+
+      <div class="col-lg-12">
+
+        <br>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="dmbox">
+            <div class="service-icon">
+              <a class="" href="#"><i class="dm-icon fa fa-address-book fa-3x"></i></a>
+            </div>
+            <h4>1. المركز  الفلان</h4>
+            <p>
+              أسماء<br/> أسم أسم<br/>  أسم أسم
+            </p>
+            <br>
+            <p>
+              هاتف: +33 4898-4303<br/> جوال: 48 4389-4393<br/>
+            </p>
+            <br>
+            <p>
+            عنوان <br/>شارع كذا<br/> مدينة كذا.
+            </p>
+            <br>
+            <p>
+              أوقات التواجد<br/> يوم:22:00->11:00<br/> يوم:22:00->11:00
+            </p>
+              <br>
+              </div>
+            </div>
+        <!-- end dmbox -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="dmbox">
+            <div class="service-icon">
+              <a class="" href="faq.html#"><i class="dm-icon fa fa-address-book fa-3x"></i></a>
+            </div>
+            <h4>2. المركز الفلاني</h4>
+            <p>
+              أسماء<br/> أسم أسم<br/>  أسم أسم
+            </p>
+            <br>
+            <p>
+              هاتف: +33 4898-4303<br/> جوال: 48 4389-4393<br/>
+            </p>
+            <br>
+            <p>
+            عنوان <br/>شارع كذا<br/> مدينة كذا.
+            </p>
+            <br>
+            <p>
+              أوقات التواجد<br/> يوم:22:00->11:00<br/> يوم:22:00->11:00
+            </p>
+              <br>
+              </div>
+        </div>
+        <!-- end dmbox -->
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="dmbox">
+            <div class="service-icon">
+              <a class="" href="faq.html#"><i class="dm-icon fa fa-address-book fa-3x"></i></a>
+            </div>
+            <h4>3.المركز الفلاني</h4>
+            <p>
+              أسماء<br/> أسم أسم<br/>  أسم أسم
+            </p>
+            <br>
+            <p>
+              هاتف: +33 4898-4303<br/> جوال: 48 4389-4393<br/>
+            </p>
+            <br>
+            <p>
+            عنوان <br/>شارع كذا<br/> مدينة كذا.
+            </p>
+            <br>
+            <p>
+              أوقات التواجد<br/> يوم:22:00->11:00<br/> يوم:22:00->11:00
+            </p>
+              <br>
+              </div>
+        </div>
+        <!-- end dmbox -->
+      </div>
+      <!--  /col-lg-12 -->
+    </div>
+
     <!-- /container -->
   </section>
   <!-- /wrapper -->

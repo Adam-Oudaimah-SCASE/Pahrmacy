@@ -2,7 +2,7 @@
     <footer class="site-footer" style="margin-top:320px">
       <div class="text-center">
         <p>
-          &copy; جميع الحقوق محفوظة
+         2020   &copy; All Right Reserved For NODES L.L.C
         </p>
 
         <a href="form_component.html#" class="go-top">
