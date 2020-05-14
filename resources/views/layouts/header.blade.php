@@ -130,7 +130,7 @@
                         <li><a href="{{ route('report.index') }}">اختر تقرير</a></li>
                     </ul>
                     <li>
-                        <a href="#">
+                        <a href="{{URL('/techsupport')}}">
                             <i class="fa fa-gears"></i>
                             <span>الدعم التقني</span>
                         </a>

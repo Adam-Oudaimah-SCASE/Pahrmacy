@@ -2084,12 +2084,11 @@ profile-text p {
 	height: 45px;
 }
 
-.detailed h4 {
+.detailed h2 {
 	text-align: center;
 	text-transform: uppercase;
-	border-bottom: 1px solid #e2e2e2;
 	font-weight: 700;
-	color: #48cfad;
+	color: rgb(43,173,74);;
 }
 
 ul.my-friends {
@@ -2259,7 +2258,7 @@ ul.my-friends li .friends-pic {
 	text-align: center;
 	position: relative;
 	z-index: 1;
-	background:#2B2E31;
+	background:rgb(2,26,41,1);;
 	color: #ffffff;
 }
 .dm-icon:after {
@@ -3509,11 +3508,12 @@ ul.chat-available-user li a:hover {
 .mr{
   margin-right: 10px;
 }
+
 .ml{
   margin-left: 10px;
 }
 .mt{
-  margin-top: 15px;
+  margin-top: 30px;
 }
 .mb{
   margin-bottom: 15px;

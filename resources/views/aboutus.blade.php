@@ -3,119 +3,62 @@
 <!--main content start-->
 <section id="main-content">
   <section class="wrapper site-min-height">
+    <div class="row mt">
+
+      <!-- /col-lg-12 -->
+      <div class="col-lg-12 mt ">
+        <div class="row content-panel">
+
+
+
+
+                  <div class="col-md-12 detailed">
+
+                        <h2 class="">من نحن</h2>
+
+                  </div>
+                  <!-- /col-md-6 -->
+
+          <!-- /panel-body -->
+        </div>
+        <!-- /col-lg-12 -->
+      </div>
+      <!-- /row -->
+    </div>
     <div class="row mt mb">
       <div class="col-lg-12">
-        <h3><i class="fa fa-angle-right"></i>من نحن</h3>
-        <br>
-        <div class="col-lg-4 col-md-4 col-sm-12">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
           <div class="dmbox">
             <div class="service-icon">
-              <a class="" href="faq.html#"><i class="dm-icon fa fa-question fa-3x"></i></a>
+              <a class="" href="#"><i class="dm-icon " style="	width: 285px;
+              	height: 285px;font-size:40px">logo</i></a>
             </div>
-            <h4>1. Knowledge-Base</h4>
+            <h2> NODES LLC</h2>
+            <p><a target="_blank" href="https://www.nodesllc.com">www.nodesllc.com</a></p>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
+
+            <br>
+            <p>
+              Headquarters:844 Sutter Ave, 9003, New York.
+            </p>
+            <p>
+              Phone: +33 4898-4303<br/> Cell: 48 4389-4393<br/>
+            </p>
+          
+
           </div>
         </div>
-        <!-- end dmbox -->
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="dmbox">
-            <div class="service-icon">
-              <a class="" href="faq.html#"><i class="dm-icon fa fa-envelope-o fa-3x"></i></a>
-            </div>
-            <h4>2. Report a Bug</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
-          </div>
-        </div>
-        <!-- end dmbox -->
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div class="dmbox">
-            <div class="service-icon">
-              <a class="" href="faq.html#"><i class="dm-icon fa fa-random fa-3x"></i></a>
-            </div>
-            <h4>3. Submit a Ticket</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s..</p>
-          </div>
-        </div>
+
         <!-- end dmbox -->
       </div>
       <!--  /col-lg-12 -->
     </div>
     <!-- /row -->
-    <div class="row content-panel">
-      <h2 class="centered">Most Asked Questions</h2>
-      <div class="col-md-10 col-md-offset-1 mt mb">
-        <div class="accordion" id="accordion2">
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="faq.html#collapseOne">
-                <em class="glyphicon glyphicon-chevron-right icon-fixed-width"></em>How to purchase this template?
-                </a>
-            </div>
-            <div id="collapseOne" class="accordion-body collapse in">
-              <div class="accordion-inner">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="faq.html#collapseTwo">
-                <em class="glyphicon glyphicon-chevron-right icon-fixed-width"></em>How can I install my server?
-                </a>
-            </div>
-            <div id="collapseTwo" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="faq.html#collapseThree">
-                <em class="glyphicon glyphicon-chevron-right icon-fixed-width"></em>How to change color schemes?
-                </a>
-            </div>
-            <div id="collapseThree" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="faq.html#collapseFour">
-                <em class="glyphicon glyphicon-chevron-right icon-fixed-width"></em>How to integrate Revolution Slider?
-                </a>
-            </div>
-            <div id="collapseFour" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="faq.html#collapseFive">
-                <em class="glyphicon glyphicon-chevron-right icon-fixed-width"></em>How Can I get Support?
-                </a>
-            </div>
-            <div id="collapseFive" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end accordion -->
-      </div>
-      <!-- col-md-10 -->
-    </div>
-    <!--  /row -->
+
   </section>
   <!-- /wrapper -->
 </section>
