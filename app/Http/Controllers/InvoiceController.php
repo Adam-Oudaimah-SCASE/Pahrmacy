@@ -94,7 +94,7 @@ class InvoiceController extends Controller
      */
     function get_sell_invoices()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::orderBy('date', 'desc')->get();
         return view('invoice.index')->with(['invoices' => $invoices]);
     }
 
@@ -180,12 +180,21 @@ class InvoiceController extends Controller
      */
     function create_buy_order_invoice()
     {
+        $shapes = DrugShape::all();
+        $categories = DrugCategory::all();
+        $companies = Company::all();
         // Get all companies
         $companies = Company::all();
         // Get all warehouses
         $warehouses = WareHouse::all();
         // Return the appropriate view
-        return view('order.create')->with(['companies' => $companies, 'warehouses' => $warehouses]);
+        return view('order.create')->with([
+            'companies' => $companies,
+            'warehouses' => $warehouses,
+            'shapes' => $shapes,
+            'categories' => $categories,
+            'companies' => $companies
+        ]);
     }
 
     /**
@@ -349,7 +358,7 @@ class InvoiceController extends Controller
     {
         // Create a new Order instance.
         $order = new Order;
-        $order->date = $request->input('date');
+        $order->date = date('Y-m-d');
         $order->net_price = 0;
 
         // Check if the supplier is a company or a warehouse, and bind it to the order
@@ -444,5 +453,35 @@ class InvoiceController extends Controller
         $balance->save();
 
         exit;
+    }
+
+    /**
+     * Delete an invoice with all its resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function delete($id)
+    {
+        $invoice = Invoice::find($id);
+        $paid_amount = $invoice->operations->sum('amount');
+        foreach ($invoice->drug_repo as $drug_repo) {
+            $drug_repo->packages_number += $drug_repo->pivot->drug_package_number;
+            $drug_repo->units_number += $drug_repo->pivot->drug_unit_number;
+        }
+        $invoice->push();
+
+        // Delete invoice payments
+        foreach ($invoice->operations as $operation) {
+            $operation->delete();
+        }
+
+        $invoice->delete();
+
+        // Remove it to the balance table
+        $balance = Balance::all()[0];
+        $balance->balance -= $paid_amount;
+        $balance->save();
+
+        return redirect()->route('invoice.index');
     }
 }

@@ -20,8 +20,8 @@ class CreateDrugInvoiceTable extends Migration
             $table->float('modified_drug_unit_sell_price')->nullable();
             $table->unsignedBigInteger('drug_id')->nullable();
             $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('drug_id')->references('id')->on('drugs')->onUpdate('cascade')->onDelete('set null');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('drug_id')->references('id')->on('drugs')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -34,11 +34,14 @@
                                   <td>{{ $invoice->sell_price }}</td>
 
                                     <td>
-                                        <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('invoice.payment', $invoice->id) }}';"><i class="fa fa-money"></i></button>
+                                        @if($invoice->is_paid == 0)
+                                            <button id="payment" class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('invoice.payment', $invoice->id) }}';"><i class="fa fa-money"></i></button>
+                                        @endif
                                         <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('invoice.show', $invoice->id) }}';"><i class="fa fa-eye"></i></button>
                                         <a href=""><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
-                                        <form class="delete-form" action="" method="">
-                                            <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i class="fa fa-trash-o "></i></button>
+                                        <form class="delete-form" action="{{ route('invoice.delete', $invoice->id) }}" method="post">
+                                            @csrf
+                                            <button class="btn btn-danger btn-xs" onClick="alert('Are you sure!!')"><i class="fa fa-trash-o"></i></button>
                                         </form>
                                     </td>
                                 </tr>

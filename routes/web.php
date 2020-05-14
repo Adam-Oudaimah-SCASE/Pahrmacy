@@ -55,6 +55,8 @@ Route::get('/drugs/search', 'DrugController@search_drugs')->name('drug.search');
 Route::get('/drugs/repo/sell', 'DrugController@get_drug_repo_by_id_for_sell')->name('drug.get_repo_by_id_for_sell');
 // Get drug by drug ID (after selecting fom a Select2 event)
 Route::get('/drugs/search/prescription', 'DrugController@get_drug_by_id_for_prescription')->name('drug.get_drug_by_id_for_prescription');
+// Delete an invoice
+Route::post('invoices/delete/{id}', 'InvoiceController@delete')->name('invoice.delete');
 
 // Order routes
 // View all orders

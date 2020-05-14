@@ -679,6 +679,7 @@ class DrugController extends Controller
             $drugs_invoice = new DrugInvoice;
             $drugs_invoice->drug_id = $drug_id;
             $drugs_invoice->invoice_id = $invoice_id;
+            $drugs_invoice->drug_repo_id = $drug_repo->id;
 
             // Manipulate the quantity and the price
             if ($drug_units_number != null) {

@@ -22,7 +22,7 @@
                                   </thead>
                                   <tbody>
                                       @foreach ($warehouses as $warehouse)
-                                          @foreach ($warehouse->orders as $order)
+                                          @foreach ($warehouse->orders->whereBetween('date', [date('Y-m-d 00:00:00', strtotime($start_date)), date('Y-m-d 23:59:59', strtotime($end_date))]) as $order)
                                               <tr>
                                                   <td>{{ $order->orderable->name }}</td>
                                                   <td class="numeric">{{ $order->date }}</td>

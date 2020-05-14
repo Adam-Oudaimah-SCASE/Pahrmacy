@@ -33,12 +33,15 @@
                                     @endif
                                     <td>{{ $order->orderable()->get()[0]->name }}</td>
                                     <td>
-                                        <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('order.receive', $order->id) }}';"><i class="fa fa-check"></i></button>
+                                        @if($order->is_delivered == 0)
+                                            <button class="btn btn-success btn-xs" onclick="window.location.href = '{{ route('order.receive', $order->id) }}';"><i class="fa fa-check"></i></button>
+                                        @endif
                                         <button class="btn btn-primary btn-xs" onclick="window.location.href = '{{ route('order.show', $order->id) }}';"><i class="fa fa-eye"></i></button>
-                                        <a href=""><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a>
-                                        <form class="delete-form" action="" method="">
-                                            <button class="btn btn-danger btn-xs" onClick="alert('are you sure')"><i class="fa fa-trash-o "></i></button>
-                                        </form>
+                                        @if($order->is_delivered == 0)
+                                            <form class="delete-form" action="" method="post">
+                                                <button class="btn btn-danger btn-xs" onClick="alert('Are you sure!!')"><i class="fa fa-trash-o "></i></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

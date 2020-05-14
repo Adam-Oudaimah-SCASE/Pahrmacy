@@ -27,9 +27,17 @@
                             <tr>
                                 <td>{{ $drug->drug->name_arabic }}</td>
                                 <td>{{ $drug->ordered_packages_number }}</td>
-                                <td>{{ $drug->order->drugs_receive()->where('order_id', $drug->order_id)->where('drug_id', $drug->drug_id)->first()->recieved_packages_number }}</td>
+                                @if($order->is_delivered == 0)
+                                    <td>0</td>
+                                @else
+                                    <td>{{ $drug->order->drugs_receive()->where('order_id', $drug->order_id)->where('drug_id', $drug->drug_id)->first()->recieved_packages_number }}</td>
+                                @endif
                                 <td>{{ $drug->ordered_units_number }}</td>
-                                <td>{{ $drug->order->drugs_receive()->where('order_id', $drug->order_id)->where('drug_id', $drug->drug_id)->first()->recieved_units_number }}</td>
+                                @if($order->is_delivered == 0)
+                                    <td>0</td>
+                                @else
+                                    <td>{{ $drug->order->drugs_receive()->where('order_id', $drug->order_id)->where('drug_id', $drug->drug_id)->first()->recieved_units_number }}</td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

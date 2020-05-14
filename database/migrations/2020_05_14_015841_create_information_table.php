@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellInvoicePaymentsTable extends Migration
+class CreateInformationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateSellInvoicePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sell_invoice_payments', function (Blueprint $table) {
+        Schema::create('information', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('payment_amount');
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onUpdate('cascade')->onDelete('set null');
+            $table->string('owner');
+            $table->string('phone');
+            $table->string('pharmacy_name');
+            $table->string('address');
+            $table->string('lic_plate');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateSellInvoicePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_payments');
+        Schema::dropIfExists('information');
     }
 }

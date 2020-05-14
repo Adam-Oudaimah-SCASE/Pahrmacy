@@ -9,6 +9,7 @@ use App\Models\DrugCategory;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\WareHouse;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -27,8 +28,9 @@ class ReportController extends Controller
     public function index()
     {
         $categories = DrugCategory::all();
+        $warehouses = WareHouse::all();
 
-        return view('reports.index')->with(['categories' => $categories]);
+        return view('reports.index')->with(['categories' => $categories, 'warehouses' => $warehouses]);
     }
 
     /**
@@ -43,7 +45,7 @@ class ReportController extends Controller
                 return $this->companies_report();
                 break;
             case "2":
-                return $this->companies_sales_report();
+                return $this->companies_sales_report($request);
                 break;
             case "3":
                 return $this->daily_sales_report();
@@ -61,7 +63,7 @@ class ReportController extends Controller
                 return $this->expired_drug_report($request);
                 break;
             case "8":
-                return $this->warehouses_report();
+                return $this->warehouses_report($request);
                 break;
             case "9":
                 return $this->category_report($request);
@@ -122,7 +124,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function companies_sales_report()
+    function companies_sales_report($request)
     {
         // Contains the final result
         $result = array();
@@ -130,13 +132,18 @@ class ReportController extends Controller
         $companies = Company::all();
         foreach ($companies as $company) {
             $info = array();
-            array_push($info, $company->name);
             $sell_prices = 0;
             foreach ($company->drugs as $drug) {
-                $sell_prices = $drug->invoices->sum('sell_price_after_discount');
+                $sell_prices += $drug->invoices
+                    ->whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])
+                    ->sum('sell_price_after_discount');
             }
-            array_push($info, $sell_prices);
-            array_push($result, $info);
+            // No need to return the company sales if there are not any sales
+            if ($sell_prices != 0) {
+                array_push($info, $company->name);
+                array_push($info, $sell_prices);
+                array_push($result, $info);
+            }
         }
         // Return the appropriate view
         return view('reports.companiesSalesReport')->with(['companies' => $result]);
@@ -154,7 +161,7 @@ class ReportController extends Controller
         // Contains the final result
         $result = array();
         // Get all invoices for the current day
-        $invoices = Invoice::whereBetween('date', [date('Y-m-d'), date('Y-m-d')])->get();
+        $invoices = Invoice::whereBetween('date', [date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])->get();
         // Return the appropriate view
         return view('reports.DailySalesReport')->with(['invoices' => $invoices]);
     }
@@ -170,7 +177,7 @@ class ReportController extends Controller
         // Contains the final result
         $result = array();
         // Get all invoices for the current day
-        $invoices = Invoice::whereBetween('date', [date('Y-m-d', strtotime($request->input('start-date'))), date('Y-m-d', strtotime($request->input('end-date')))])->get();
+        $invoices = Invoice::whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])->get();
         $sells = 0;
         $un_paid_sells = 0;
         // Loop over the invoices
@@ -179,7 +186,7 @@ class ReportController extends Controller
             $un_paid_sells += $invoice->sell_price_after_discount - $invoice->operations->sum('amount');
         }
         // Get all orders for the current day
-        $orders = Order::whereBetween('date', [date('Y-m-d', strtotime($request->input('start-date'))), date('Y-m-d', strtotime($request->input('end-date')))])->get();
+        $orders = Order::whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])->get();
         $sells_orders = 0;
         $un_paid_orders = 0;
         // Loop over the invoices
@@ -189,7 +196,7 @@ class ReportController extends Controller
         }
         // Get all the accounting operations (which now made by an invoice or an order)
         $expenses = 0;
-        $operations = AccountingOperation::where('operationable_id', null)->whereBetween('date', [date('Y-m-d', strtotime($request->input('start-date'))), date('Y-m-d', strtotime($request->input('end-date')))])->get();
+        $operations = AccountingOperation::where('operationable_id', null)->whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])->get();
         foreach ($operations as $operation) {
             $expenses += $operation->amount;
         }
@@ -207,8 +214,8 @@ class ReportController extends Controller
     {
         // Get all the accounting operations (which now made by an invoice or an order)
         $operations = AccountingOperation::where('operationable_id', null)
-                        ->whereBetween('date', [date('Y-m-d', strtotime($request->input('start-date'))), date('Y-m-d', strtotime($request->input('end-date')))])
-                        ->get();
+            ->whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])
+            ->get();
         // Return the appropriate view
         return view('reports.ExpenseReport')->with(['operations' => $operations]);
     }
@@ -223,7 +230,7 @@ class ReportController extends Controller
     function orders_report(Request $request)
     {
         // Get all orders for the current day
-        $orders = Order::whereBetween('date', [date('Y-m-d', strtotime($request->input('start-date'))), date('Y-m-d', strtotime($request->input('end-date')))])->get();
+        $orders = Order::whereBetween('date', [date('Y-m-d 00:00:00', strtotime($request->input('start-date'))), date('Y-m-d 23:59:59', strtotime($request->input('end-date')))])->get();
         // Return the appropriate view
         return view('reports.PurchasesReport')->with(['orders' => $orders]);
     }
@@ -236,17 +243,20 @@ class ReportController extends Controller
      */
     function expired_drug_report(Request $request)
     {
+        // Remaining months
+        $months = $request->months;
+        // Final result
         $result = array();
         // Get all drugs
         $drugs = Drug::all();
         // Add the expired drugs only
         foreach ($drugs as $drug) {
-            foreach ($drug->repo()->whereDate('exp_date', '<', date('Y-m-d', strtotime($request->input('end-date'))))->get() as $drug_repo) {
+            foreach ($drug->repo()->whereDate('exp_date', '<', date('Y-m-d', strtotime("+$months months", strtotime(date('Y-m-d')))))->get() as $drug_repo) {
                 array_push($result, $drug_repo);
             }
         }
         // Return the appropriate view
-        return view('reports.QuantitiesOfExpiredDrugs')->with(['drugs' => $result]);
+        return view('reports.QuantitiesOfExpiredDrugs')->with(['drugs' => $result, 'months' => $months]);
     }
 
     /**
@@ -254,11 +264,15 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function warehouses_report()
+    function warehouses_report($request)
     {
         // Get all orders for the current day
-        $warehouses = WareHouse::all();
+        if ($request->warehouse != "") {
+            $warehouses = WareHouse::where('id', $request->warehouse)->get();
+        } else {
+            $warehouses = WareHouse::all();
+        }
         // Return the appropriate view
-        return view('reports.WarehouseOrdersReport')->with(['warehouses' => $warehouses]);
+        return view('reports.WarehouseOrdersReport')->with(['warehouses' => $warehouses, 'start_date' => $request->input('start-date'), 'end_date' => $request->input('end-date')]);
     }
 }

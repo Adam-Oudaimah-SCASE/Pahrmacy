@@ -240,45 +240,57 @@
         });
     </script>
     <script>
-        $("#submit_invoice").click(function() {
-            let drugs = {
-                'ids' : [],
-                'packages_number' : [],
-                'units_number' : [],
-                'modified_drugs_package_sell_price' : [],
-                'modified_drugs_unit_sell_price' : []
-            };
-            let table_rows = $('#drugs').children();
-            for (let i = 0; i < table_rows.length; i++) {
-                drugs['ids'].push(table_rows[i].children[0].innerHTML);
-                drugs['packages_number'].push(table_rows[i].children[3].firstElementChild.value);
-                drugs['units_number'].push(table_rows[i].children[4].firstElementChild.value);
-                drugs['modified_drugs_unit_sell_price'].push(table_rows[i].children[5].firstElementChild.value);
-                drugs['modified_drugs_package_sell_price'].push(table_rows[i].children[6].firstElementChild.value);
+        // Disable the submit button if the amout is empty
+        if ($("#amount").val() == "") {
+            $("#submit_invoice").prop('disabled', true);
+        }
+        $('#amount').keyup(function() {
+            if($(this).val() != '') {
+                $('#submit_invoice').prop('disabled', false);
             }
-            let amount = $("#amount").val();
-            let discount_amount = $("#discount_amount").val();
-            let discount_reason = $("#discount_reason").val();
-
-            $.ajax({
-                method: 'POST', // Type of response
-                url: "{{ route('invoice.store') }}", // This is the url we gave in the route
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'drugs' : drugs,
-                    'amount' : amount,
-                    'discount_amount' : discount_amount,
-                    'discount_reason' : discount_reason,
-                    'invoice_type_id' : 1}, // a JSON object to send back
-                success: function(response){ // What to do if we succeed
-                    window.location.href = "/invoices"
-                },
-                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                    console.log(JSON.stringify(jqXHR));
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                }
-            });
+            if($(this).val() == '') {
+                $("#submit_invoice").prop('disabled', true);
+            }
         });
+        $("#submit_invoice").click(function() {
+        let drugs = {
+            'ids' : [],
+            'packages_number' : [],
+            'units_number' : [],
+            'modified_drugs_package_sell_price' : [],
+            'modified_drugs_unit_sell_price' : []
+        };
+        let table_rows = $('#drugs').children();
+        for (let i = 0; i < table_rows.length; i++) {
+            drugs['ids'].push(table_rows[i].children[0].innerHTML);
+            drugs['packages_number'].push(table_rows[i].children[3].firstElementChild.value);
+            drugs['units_number'].push(table_rows[i].children[4].firstElementChild.value);
+            drugs['modified_drugs_unit_sell_price'].push(table_rows[i].children[5].firstElementChild.value);
+            drugs['modified_drugs_package_sell_price'].push(table_rows[i].children[6].firstElementChild.value);
+        }
+        let amount = $("#amount").val();
+        let discount_amount = $("#discount_amount").val();
+        let discount_reason = $("#discount_reason").val();
+
+        $.ajax({
+            method: 'POST', // Type of response
+            url: "{{ route('invoice.store') }}", // This is the url we gave in the route
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'drugs' : drugs,
+                'amount' : amount,
+                'discount_amount' : discount_amount,
+                'discount_reason' : discount_reason,
+                'invoice_type_id' : 1}, // a JSON object to send back
+            success: function(response){ // What to do if we succeed
+                window.location.href = "/invoices"
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        });
+    });
     </script>
     <script>
     $(document).ready(function() {

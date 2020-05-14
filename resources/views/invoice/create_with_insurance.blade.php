@@ -253,6 +253,18 @@
         });
     </script>
     <script>
+        // Disable the submit button if the amout is empty
+        if ($("#amount").val() == "") {
+            $("#submit_invoice").prop('disabled', true);
+        }
+        $('#amount').keyup(function() {
+            if($(this).val() != '') {
+                $('#submit_invoice').prop('disabled', false);
+            }
+            if($(this).val() == '') {
+                $("#submit_invoice").prop('disabled', true);
+            }
+        });
         $("#submit_invoice").click( function() {
             let drugs = {
                 'ids' : [],

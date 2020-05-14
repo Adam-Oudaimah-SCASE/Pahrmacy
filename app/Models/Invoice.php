@@ -38,6 +38,14 @@ class Invoice extends Model
     }
 
     /**
+     * Get the invoices which contains this drug.
+     */
+    public function drug_repo()
+    {
+        return $this->belongsToMany(DrugsRepo::class, 'drug_invoice', 'id', 'drug_repo_id')->withPivot('drug_package_number', 'drug_unit_number');
+    }
+
+    /**
      * Get the payments for this invoice.
      */
     public function operations()
