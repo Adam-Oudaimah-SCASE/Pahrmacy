@@ -67,7 +67,8 @@
                     <ul class="sub">
                         <li><a href="#">معلومات الصيدلية</a></li>
                         <li><a href="{{ route('users.index') }}">الموظفين</a></li>
-                        <li><a href="#">الحالة المالية</a></li>
+                        <li><a href="{{ route('accountingOperation.index') }}">مدفوعات الصيدلية</a></li>
+                        <li><a href="{{ route('accountingType.index') }}">أنواع المدفوعات</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
