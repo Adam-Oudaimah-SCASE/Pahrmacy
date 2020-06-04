@@ -7300,7 +7300,7 @@ drugs
 drugs
 =====
 
-|                      name_english                       | company_id |                          chemical_composition                           |                   volume_unit                   | shpae_id |
+|                      name_english                       | company_id |                          chemical_composition                           |                   volume_unit                   | shape_id |
 |---------------------------------------------------------|------------|-------------------------------------------------------------------------|-------------------------------------------------|----------|
 | AMINOPHYLLIN ADULT SUPP.                                | 39         | AMINOPHYLLINE                                                           | 360 MG/SUPP.                                    | 24       |
 | AMINOPHYLLIN ADULT SUPP.                                | 39         | AMINOPHYLLINE                                                           | 360 MG/SUPP.                                    | 24       |

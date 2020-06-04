@@ -77,6 +77,8 @@ Route::get('/drugs', 'DrugController@index')->name('drug.index');
 Route::post('/drugs/filter', 'DrugController@filter')->name('drug.filter');
 // Create a new Drug View
 Route::get('/drugs/create', 'DrugController@create')->name('drug.create');
+// Create a new Drug View
+Route::get('/drugs/create-without-repo', 'DrugController@create_without_repo')->name('drug.create.no.repo');
 // Store a new Drug
 Route::post('/drugs/create', 'DrugController@store')->name('drug.store');
 // Edit Drug details

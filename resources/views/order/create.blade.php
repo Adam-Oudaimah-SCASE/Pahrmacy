@@ -163,7 +163,7 @@
                     window.location.href = "/orders";
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                    alert("حدث خطأ أثناء عملية استقبال فاتورة الشراء");
+                    alert("حدث خطأ أثناء عملية إنشاء فاتورة الشراء");
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
@@ -211,16 +211,20 @@
           // This function will be called when a selection is made
           function fetch_drugs(drug = '')
           {
-           $.ajax ({
-            url:"{{ route('drug.get_repo_by_id_for_order') }}",
-            method:'GET',
-            data:{drug_id:drug},
-            dataType:'json',
-            success:function(data)
-            {
-                $('#drugs').append(data.table_data);
-            }
-           })
+            $.ajax ({
+                url:"{{ route('drug.get_repo_by_id_for_order') }}",
+                method:'GET',
+                data:{drug_id:drug["id"]},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#drugs').append(data.table_data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            })
           }
 
           // The selection event
@@ -232,12 +236,17 @@
           // Unselect event
           $('#search_drugs').on("select2:unselect", function(e) {
               var drug = e.params.data.text;
-              var table_rows = document.getElementById('drugs').children;
-              for (i = 0; i < table_rows.length; i++) {
-                  if (table_rows[i].children[1].innerHTML === drug) {
-                      table_rows[i].remove();
-                  }
-              }
+              var table_rows = $('#drugs').children();
+              if (table_rows.length === 1) {
+                table_rows[0].remove();
+            }
+            else {
+                for (i = 0; i < table_rows.length; i++) {
+                    if (table_rows[i].children[1].innerHTML === drug) {
+                        table_rows[i].remove();
+                    }
+                }
+            }
           });
         });
     </script>

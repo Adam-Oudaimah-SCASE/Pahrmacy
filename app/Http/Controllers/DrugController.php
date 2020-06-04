@@ -171,21 +171,21 @@ class DrugController extends Controller
             $company_id = $request->company;
             $drugs = $this->get_drugs_by_filter($shape_id, $category_id, $company_id);
             if ($search_by == "search_name_arabic") {
-                if ($drugs == null ) {
+                if ($drugs == null) {
                     $drugs = Drug::where('name_arabic', 'like', '%' . $search . '%')->get();
                 } else {
                     $drugs = $drugs->where('name_arabic', 'like', '%' . $search . '%')->get();
                 }
             }
             if ($search_by == "search_name_english") {
-                if ($drugs == null ) {
+                if ($drugs == null) {
                     $drugs = Drug::where('name_english', 'like', '%' . $search . '%')->get();
                 } else {
                     $drugs = $drugs->where('name_english', 'like', '%' . $search . '%')->get();
                 }
             }
             if ($search_by == "search_composition") {
-                if ($drugs == null ) {
+                if ($drugs == null) {
                     $drugs = Drug::where('chemical_composition', 'like', '%' . $search . '%')->get();
                 } else {
                     $drugs = $drugs->where('chemical_composition', 'like', '%' . $search . '%')->get();
@@ -224,16 +224,24 @@ class DrugController extends Controller
                 </tr>
                 ';
             }
-            $output = '
+            if ($drug->repo()->count() == 0) {
+                $output = '
+                <tr>
+                 <td align="center" colspan="5">لا يوجد مخازن لهذا الدواء</td>
+                </tr>
+                ';
+            } else {
+                $output = '
             <tr>
-                <td id="drug_id" style="display:none">' . $drug[0]->id . '</td>
-                <td>' . $drug[0]->name_arabic . '</td>
-                <td class="text-left">' . $drug[0]->repo()->orderBy('exp_date', 'asc')->first()->exp_date . '</td>
+                <td id="drug_id" style="display:none">' . $drug->id . '</td>
+                <td>' . $drug->name_arabic . '</td>
+                <td class="text-left">' . $drug->repo()->orderBy('exp_date', 'asc')->first()->exp_date . '</td>
                 <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="modified_drug_unit_sell_price"></td>
                 <td class="text-center"><input type="text" class="form-control" id="modified_drug_package_sell_price"></td>
             </tr>';
+            }
             $data = array(
                 'table_data'  => $output
             );
@@ -261,16 +269,29 @@ class DrugController extends Controller
                 </tr>
                 ';
             }
-            $output = '
+            if ($drug->repo()->count() == 0) {
+                $output = '
             <tr>
-                <td id="drug_id" style="display:none">' . $drug[0]->id . '</td>
-                <td>' . $drug[0]->name_arabic . '</td>
-                <td class="text-left">' . $drug[0]->repo()->orderBy('exp_date', 'asc')->first()->exp_date . '</td>
-                <td class="text-center">' . $drug[0]->repo()->sum('packages_number') . '</td>
-                <td class="text-center">' . $drug[0]->repo()->sum('units_number') . '</td>
+                <td id="drug_id" style="display:none">' . $drug->id . '</td>
+                <td>' . $drug->name_arabic . '</td>
+                <td class="text-left"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
                 <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
             </tr>';
+            } else {
+                $output = '
+            <tr>
+                <td id="drug_id" style="display:none">' . $drug->id . '</td>
+                <td>' . $drug->name_arabic . '</td>
+                <td class="text-left">' . $drug->repo()->orderBy('exp_date', 'asc')->first()->exp_date . '</td>
+                <td class="text-center">' . $drug->repo()->sum('packages_number') . '</td>
+                <td class="text-center">' . $drug->repo()->sum('units_number') . '</td>
+                <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
+                <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
+            </tr>';
+            }
             $data = array(
                 'table_data'  => $output
             );
@@ -300,8 +321,8 @@ class DrugController extends Controller
             }
             $output = '
             <tr>
-                <td id="drug_id" style="display:none">' . $drug[0]->id . '</td>
-                <td>' . $drug[0]->name_arabic . '</td>
+                <td id="drug_id" style="display:none">' . $drug->id . '</td>
+                <td>' . $drug->name_arabic . '</td>
                 <td class="text-center"><input type="text" class="form-control" id="packages_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="units_number"></td>
                 <td class="text-center"><input type="text" class="form-control" id="modified_drug_package_sell_price"></td>
@@ -328,6 +349,25 @@ class DrugController extends Controller
         $shapes = DrugShape::all();
         $companies = Company::all();
         return view('drug.create')->with([
+            'categories' => $categories,
+            'shapes' => $shapes,
+            'companies' => $companies,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_without_repo()
+    {
+        // Get all the required data
+        $categories = DrugCategory::all();
+        $drugs = Drug::all();
+        $shapes = DrugShape::all();
+        $companies = Company::all();
+        return view('drug.create-drug')->with([
             'categories' => $categories,
             'shapes' => $shapes,
             'companies' => $companies,
@@ -492,10 +532,40 @@ class DrugController extends Controller
         $drug_repo->drug()->associate($drug);
         $drug_repo->save();
 
-        // Get all the drugs
-        $drugs = Drug::all();
         // Return the appropriate view
-        return view('drug.index')->withDrugs($drugs);
+        return redirect()->route('drug.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_without_repo(Request $request)
+    {
+        // Create the new drug entry
+        $drug = new Drug;
+
+        // Grab the drug data
+        $drug->name_english = $request->input('name_english');
+        $drug->name_arabic = $request->input('name_arabic');
+        $drug->chemical_composition = $request->input('chemical_composition');
+        $drug->volume_unit = $request->input('volume_unit');
+        $drug->lic_palte = $request->input('lic_palte');
+        $drug->local_barcode = $request->input('local_barcode');
+        $drug->global_barcode = $request->input('global_barcode');
+
+        // Associate the foreign keys
+        $drug->company()->associate(Company::find($request->input('company_id')));
+        $drug->category()->associate(DrugCategory::find($request->input('category_id')));
+        $drug->shape()->associate(DrugShape::find($request->input('shape_id')));
+
+        // Save the new drug
+        $drug->save();
+
+        // Return the appropriate view
+        return redirect()->route('drug.index');
     }
 
     /**

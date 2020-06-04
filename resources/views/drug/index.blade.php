@@ -7,7 +7,7 @@
         <!-- BASIC FORM ELELEMNTS -->
         <div class="row mt" dir="rtl">
             <div class="col-lg-12">
-                <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء بلا مخزن</a>
+                <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create.no.repo' )}}">إضافة دواء بلا مخزن</a>
                 <a type="submit" class="btn btn-theme mr " href="{{ route('drug.create' )}}">إضافة دواء مع مخزن</a>
                 <div class="form-panel">
                     <br>

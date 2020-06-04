@@ -336,7 +336,7 @@
             $.ajax ({
                 url:"{{ route('drug.get_repo_by_id_for_sell') }}",
                 method:'GET',
-                data:{drug_id:drug},
+                data:{drug_id:drug["id"]},
                 dataType:'json',
                 success:function(data)
                 {
@@ -355,9 +355,14 @@
         $('#search_drugs').on("select2:unselect", function(e) {
             var drug = e.params.data.text;
             var table_rows = $('#drugs').children();
-            for (i = 0; i < table_rows.length; i++) {
-                if (table_rows[i].children[1].innerHTML === drug) {
-                    table_rows[i].remove();
+            if (table_rows.length === 1) {
+                table_rows[0].remove();
+            }
+            else {
+                for (i = 0; i < table_rows.length; i++) {
+                    if (table_rows[i].children[1].innerHTML === drug) {
+                        table_rows[i].remove();
+                    }
                 }
             }
         });
